@@ -162,11 +162,47 @@
     { asset: "USDT", out: "99.10", btn: "USDT received", status: "On-ramp · withdrawn", tilt: false },
     { asset: "INR", out: "8,339.27", btn: "Cash out", status: "Off-ramp · rupees sent", tilt: true },
   ];
+  // Everything below is rendered once by app.js, so look it up once instead of every frame.
+  const els = {
+    hubs: $$(".rail-hub"),
+    railPills: $$(".rail-steps [data-step]"),
+    rails: $$(".rail").map((rail) => ({
+      from: rail.dataset.from || "Customer",
+      to: rail.dataset.to || "Wallet",
+      caption: rail.querySelector("[data-rail-caption]"),
+    })),
+    stackPhase: $("#stack-phase"),
+    stackA: $("#stack-a"),
+    stackB: $("#stack-b"),
+    payLines: $$(".pay-line"),
+    themeAsset: $("#theme-asset"),
+    themeOut: $("#theme-out"),
+    themePay: $("#theme-pay"),
+    themeStatus: $("#theme-status"),
+    methods: $$("#method-grid .method"),
+    subs: $$("#sub-list button"),
+    settleRows: $$("#settle-card .mini-row"),
+    settlePhase: $("#settle-phase"),
+    rate: $("#success-rate"),
+    payoutBar: $("#payout-bar"),
+    payoutLeft: $("#payout-left"),
+    payoutFile: $("#payout-file"),
+    radios: $$(".receive-box input"),
+    recvStatus: $("#recv-status"),
+    splitNow: $$(".split-now"),
+    splitLater: $$(".split-later"),
+    switches: $$(".mock-checkout .switch"),
+  };
+
   let last = performance.now();
   const tick = (now) => {
     const dt = Math.min(48, now - last);
     last = now;
     const hidden = document.hidden;
+    if (hidden) {
+      requestAnimationFrame(tick);
+      return;
+    }
 
     if (widgetLive && !widgetPaused && integrateVisible && !hidden) {
       widgetAcc += dt;
@@ -193,70 +229,60 @@
     const step = forward < 0.34 ? 1 : forward < 0.7 ? 2 : 3;
     const story = (going ? onRampStory : offRampStory)[step - 1];
 
-    $$(".rail-hub").forEach((hub) => {
-      const tilt = Math.sin(forward * Math.PI) * (going ? 7 : -7);
-      hub.setAttribute("transform", "rotate(" + tilt.toFixed(2) + " 210 78)");
-    });
-    $$(".rail-steps [data-step]").forEach((pill) => {
+    const tilt = (Math.sin(forward * Math.PI) * (going ? 7 : -7)).toFixed(2);
+    els.hubs.forEach((hub) => hub.setAttribute("transform", "rotate(" + tilt + " 210 78)"));
+    els.railPills.forEach((pill) => {
       pill.classList.toggle("is-on", pill.dataset.step === String(step));
     });
-    $$(".rail").forEach((rail) => {
-      const from = rail.dataset.from || "Customer";
-      const to = rail.dataset.to || "Wallet";
+    els.rails.forEach((rail) => {
       const caption = going
-        ? "On-ramp · " + from + " pays in. " + to + " receives the token."
-        : "Off-ramp · " + to + " sends the token back. " + from + " is paid out.";
-      write(rail.querySelector("[data-rail-caption]"), caption);
+        ? "On-ramp · " + rail.from + " pays in. " + rail.to + " receives the token."
+        : "Off-ramp · " + rail.to + " sends the token back. " + rail.from + " is paid out.";
+      write(rail.caption, caption);
     });
 
-    write($("#stack-phase"), story[0]);
-    write($("#stack-a"), story[1]);
-    write($("#stack-b"), story[2]);
+    write(els.stackPhase, story[0]);
+    write(els.stackA, story[1]);
+    write(els.stackB, story[2]);
     const hotLine = going ? (step === 1 ? 0 : 2) : (step === 3 ? 3 : 2);
-    $$(".pay-line").forEach((line, index) => line.classList.toggle("is-hot", index === hotLine));
+    els.payLines.forEach((line, index) => line.classList.toggle("is-hot", index === hotLine));
 
     const quarter = Math.floor(local / 2);
     if (themeLive) {
       const frame = themeFrames[quarter];
-      write($("#theme-asset"), frame.asset);
-      write($("#theme-out"), frame.out);
-      write($("#theme-pay"), frame.btn);
-      write($("#theme-status"), frame.status);
+      write(els.themeAsset, frame.asset);
+      write(els.themeOut, frame.out);
+      write(els.themePay, frame.btn);
+      write(els.themeStatus, frame.status);
       themePhone?.classList.toggle("is-tilt", frame.tilt);
     }
 
-    $$("#method-grid .method").forEach((method, index, list) => {
-      method.classList.toggle("is-hot", index === Math.floor(local / 8 * list.length));
-    });
+    const hotMethod = Math.floor(local / 8 * els.methods.length);
+    els.methods.forEach((method, index) => method.classList.toggle("is-hot", index === hotMethod));
     if (subsLive) {
-      const buttons = $$("#sub-list button");
-      const index = Math.floor(local / 2.7) % Math.max(1, buttons.length);
-      buttons.forEach((button, i) => button.classList.toggle("is-on", i === index));
+      const index = Math.floor(local / 2.7) % Math.max(1, els.subs.length);
+      els.subs.forEach((button, i) => button.classList.toggle("is-on", i === index));
     }
-    const settleRows = $$("#settle-card .mini-row");
-    settleRows.forEach((row, index) => row.classList.toggle("is-hot", index === step - 1));
-    write($("#settle-phase"), story[0]);
-    const rate = $("#success-rate");
-    if (rate) write(rate, (98.2 + Math.sin((local / 8) * Math.PI * 2) * 0.4).toFixed(1) + "%");
+    els.settleRows.forEach((row, index) => row.classList.toggle("is-hot", index === step - 1));
+    write(els.settlePhase, story[0]);
+    if (els.rate) write(els.rate, (98.2 + Math.sin((local / 8) * Math.PI * 2) * 0.4).toFixed(1) + "%");
 
     const left = Math.max(0, Math.round(38 * (1 - local / 8)));
-    const bar = $("#payout-bar");
-    if (bar) bar.style.width = ((38 - left) / 38 * 100).toFixed(1) + "%";
-    write($("#payout-left"), left === 0 ? "186 done · paid out" : (186 - left) + " done · " + left + " left");
-    write($("#payout-file"), left === 0 ? "Payroll_Apr.xlsx · 186 rows · paid" : "Payroll_Apr.xlsx · 186 rows · paying out");
+    if (els.payoutBar) els.payoutBar.style.width = ((38 - left) / 38 * 100).toFixed(1) + "%";
+    write(els.payoutLeft, left === 0 ? "186 done · paid out" : (186 - left) + " done · " + left + " left");
+    write(els.payoutFile, left === 0 ? "Payroll_Apr.xlsx · 186 rows · paid" : "Payroll_Apr.xlsx · 186 rows · paying out");
     if (recvLive) {
-      const radios = $$(".receive-box input");
-      const index = Math.min(radios.length - 1, Math.floor((local / 8) * radios.length));
-      radios.forEach((radio, i) => { radio.checked = i === index; });
+      const index = Math.min(els.radios.length - 1, Math.floor((local / 8) * els.radios.length));
+      els.radios.forEach((radio, i) => { radio.checked = i === index; });
       const names = ["UPI", "Bank account", "Wallet"];
-      write($("#recv-status"), left === 0 ? "Paid out" : "Sending via " + (names[index] || "UPI"));
+      write(els.recvStatus, left === 0 ? "Paid out" : "Sending via " + (names[index] || "UPI"));
     }
 
     const prepaid = Math.round(100 + (local / 8) * 1920);
     const later = Math.max(0, 2120 - prepaid);
-    $$(".split-now").forEach((el) => write(el, "Pay ₹" + prepaid.toLocaleString("en-IN") + " now"));
-    $$(".split-later").forEach((el) => write(el, "₹" + later.toLocaleString("en-IN") + " on delivery"));
-    $$(".mock-checkout .switch").forEach((knob) => knob.classList.toggle("is-off", !going));
+    els.splitNow.forEach((el) => write(el, "Pay ₹" + prepaid.toLocaleString("en-IN") + " now"));
+    els.splitLater.forEach((el) => write(el, "₹" + later.toLocaleString("en-IN") + " on delivery"));
+    els.switches.forEach((knob) => knob.classList.toggle("is-off", !going));
 
     if (langTick === null) langTick = Math.floor(now / 8000);
     const nextLangTick = Math.floor(now / 8000);

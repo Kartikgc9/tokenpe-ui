@@ -93,7 +93,7 @@ function toast(message) {
 }
 
 function renderStatic() {
-  const group = `<div class="marquee-group">${features.map((n, i) => `<span class="word ${["", "s", "u", "g", "r", "p"][i % 6]}">${n}</span>`).join("")}</div>`;
+  const group = `<div class="marquee-group">${features.map((n) => `<span class="word">${n}</span>`).join("")}</div>`;
   $("#marquee").innerHTML = group + group.replace("<div", '<div aria-hidden="true"');
 
   $("#cover-grid").innerHTML = products.map((p, i) => `
@@ -153,11 +153,14 @@ function renderStatic() {
   ].map((p, i) => `
     <article class="payout-item ${i === 0 ? "is-open" : ""}">
       <header><button type="button" aria-expanded="${i === 0}"><span class="ic" style="width:18px">${icon("bank")}</span> ${p.title}</button></header>
+      <div class="payout-collapse"><div>
       <div class="payout-body">
         <div><p>${p.body}</p><button class="btn btn-green btn-sm" type="button" data-open="docs" data-doc="payouts">Learn more</button></div>
         ${p.visual === "bulk" ? `<div class="bulk"><div class="file" id="payout-file">Payroll_Apr.xlsx · 186 rows · updated 2m ago</div><div class="line"><span>Engineering</span><b>₹58.2L</b></div><div class="line"><span>Sales</span><b>₹31.6L</b></div><div class="line"><span>Contract staff</span><span id="payout-left">148 done · 38 left</span></div><div class="bar"><span id="payout-bar"></span></div></div>` : `<div class="receive-box"><b>Receive ₹2,500</b><label><span>UPI</span><input type="radio" name="recv" checked></label><label><span>Bank account</span><input type="radio" name="recv"></label><label><span>Wallet</span><input type="radio" name="recv"></label><p class="flow-status" id="recv-status">Waiting for a method</p><button class="btn btn-green" type="button" id="recv-go" style="width:100%;margin-top:8px">Receive payout</button></div>`}
       </div>
+      </div></div>
     </article>`).join("");
+  syncPayoutInert();
 
   $("#industry-pills").innerHTML = industries.map((ind, i) =>
     `<button type="button" data-industry="${ind.id}" class="${i === 0 ? "is-on" : ""}">${ind.label}</button>`).join("");
@@ -201,9 +204,18 @@ function fillSelect(el, values) {
 function renderFaq(name) {
   $("#faq-list").innerHTML = faqs[name].map(([q, a], i) => `
     <div class="faq-item ${i === 0 ? "is-open" : ""}">
-      <button class="q" type="button" aria-expanded="${i === 0}">${q}<span class="pm">${i === 0 ? "–" : "+"}</span></button>
-      <div class="a">${a}</div>
+      <button class="q" type="button" aria-expanded="${i === 0}" aria-controls="faq-a-${i}">${q}<span class="pm" aria-hidden="true">${i === 0 ? "–" : "+"}</span></button>
+      <div class="a" id="faq-a-${i}"><div ${i === 0 ? "" : "inert"}>${a}</div></div>
     </div>`).join("");
+}
+
+// Collapsed accordion content stays in the DOM for the height animation,
+// so take it out of the tab order and the accessibility tree while closed.
+function syncPayoutInert() {
+  $$(".payout-item").forEach((item) => {
+    const inner = $(".payout-collapse > div", item);
+    if (inner) inner.inert = !item.classList.contains("is-open");
+  });
 }
 
 function setCode(lang) {
@@ -257,7 +269,17 @@ function applyTheme(color) {
   $("#theme-query").textContent = `themeColor=${encodeURIComponent(color)}&colorMode=LIGHT`;
 }
 
+let lastFocus = null;
+function rememberFocus() {
+  if (!$("#backdrop").classList.contains("is-on")) lastFocus = document.activeElement;
+}
+
 function openModal(html, titleId) {
+  rememberFocus();
+  if ($("#drawer").classList.contains("is-on")) {
+    $("#drawer").classList.remove("is-on");
+    $("#drawer").setAttribute("aria-hidden", "true");
+  }
   const modal = $("#modal");
   modal.innerHTML = `<button class="close-x" type="button" data-close aria-label="Close">×</button>${html}`;
   modal.classList.add("is-on");
@@ -270,21 +292,40 @@ function openModal(html, titleId) {
 }
 
 function openDrawer(html) {
+  rememberFocus();
+  $("#modal").classList.remove("is-on");
   $("#drawer").innerHTML = `<button class="close-x" type="button" data-close aria-label="Close">×</button>${html}`;
   $("#drawer").classList.add("is-on");
   $("#drawer").setAttribute("aria-hidden", "false");
   $("#backdrop").classList.add("is-on");
   $("#backdrop").hidden = false;
   document.body.classList.add("modal-open");
+  $("#drawer .close-x").focus({ preventScroll: true });
 }
 
 function closeOverlays() {
+  const wasOpen = $("#backdrop").classList.contains("is-on");
   $("#modal").classList.remove("is-on");
   $("#drawer").classList.remove("is-on");
   $("#drawer").setAttribute("aria-hidden", "true");
   $("#backdrop").classList.remove("is-on");
   $("#backdrop").hidden = true;
   document.body.classList.remove("modal-open");
+  if (wasOpen && lastFocus && document.contains(lastFocus)) lastFocus.focus({ preventScroll: true });
+  lastFocus = null;
+}
+
+// Keep Tab inside whichever overlay is open.
+function trapFocus(e) {
+  if (e.key !== "Tab") return;
+  const box = $("#modal.is-on") || $("#drawer.is-on");
+  if (!box) return;
+  const items = $$("a[href], button:not([disabled]), input:not([disabled]), select, textarea", box).filter((el) => el.offsetParent !== null);
+  if (!items.length) return;
+  const first = items[0];
+  const last = items[items.length - 1];
+  if (e.shiftKey && (document.activeElement === first || !box.contains(document.activeElement))) { e.preventDefault(); last.focus(); }
+  else if (!e.shiftKey && (document.activeElement === last || !box.contains(document.activeElement))) { e.preventDefault(); first.focus(); }
 }
 
 function formShell(title, text, fields, submitLabel) {
@@ -316,10 +357,19 @@ function bind() {
   $("#tab-biz").addEventListener("click", () => setAudience("business"));
 
   $(".burger").addEventListener("click", () => {
-    const open = $(".burger").getAttribute("aria-expanded") === "true";
-    $(".burger").setAttribute("aria-expanded", String(!open));
-    $("#nav-links").classList.toggle("is-open", !open);
-    $(".nav-actions").classList.toggle("is-open", !open);
+    setMobileNav($(".burger").getAttribute("aria-expanded") !== "true");
+  });
+  window.addEventListener("resize", () => {
+    if (window.innerWidth > 980 && $(".burger").getAttribute("aria-expanded") === "true") setMobileNav(false);
+    positionSegThumb(false);
+  }, { passive: true });
+
+  $("#cover-grid").addEventListener("pointermove", (e) => {
+    const card = e.target.closest(".cover-card");
+    if (!card) return;
+    const box = card.getBoundingClientRect();
+    card.style.setProperty("--mx", `${e.clientX - box.left}px`);
+    card.style.setProperty("--my", `${e.clientY - box.top}px`);
   });
 
   $$(".menu-btn").forEach((btn) => {
@@ -356,7 +406,11 @@ function bind() {
       const open = item.classList.toggle("is-open");
       q.setAttribute("aria-expanded", open);
       $(".pm", q).textContent = open ? "–" : "+";
+      const answer = $(".a > div", item);
+      if (answer) answer.inert = !open;
     }
+    const navLink = e.target.closest("#nav-links a, .nav-actions button");
+    if (navLink && $(".burger").getAttribute("aria-expanded") === "true") setMobileNav(false);
     const doc = e.target.closest("[data-doc]");
     if (doc) openDocs(doc.dataset.doc);
     const open = e.target.closest("[data-open]");
@@ -477,6 +531,7 @@ function bind() {
       el.classList.toggle("is-open", on);
       $("header button", el).setAttribute("aria-expanded", on);
     });
+    syncPayoutInert();
   });
   document.addEventListener("click", (e) => {
     if (e.target.id === "recv-go") toast("Payout link ready. The recipient still has to choose an account.");
@@ -514,9 +569,22 @@ function bind() {
     });
   }
 
-  window.addEventListener("scroll", onScroll, { passive: true });
+  let scrollQueued = false;
+  window.addEventListener("scroll", () => {
+    if (scrollQueued) return;
+    scrollQueued = true;
+    requestAnimationFrame(() => { scrollQueued = false; onScroll(); });
+  }, { passive: true });
   onScroll();
-  document.addEventListener("keydown", (e) => { if (e.key === "Escape") closeOverlays(); });
+  document.addEventListener("keydown", (e) => {
+    if (e.key === "Escape") {
+      if ($(".burger").getAttribute("aria-expanded") === "true") setMobileNav(false);
+      closeOverlays();
+    }
+    trapFocus(e);
+  });
+  positionSegThumb(false);
+  if (document.fonts && document.fonts.ready) document.fonts.ready.then(() => positionSegThumb(false));
 
   const liveTimer = setInterval(() => {
     const el = $("#live-count");
@@ -538,6 +606,24 @@ function setAudience(mode) {
   $("#tab-biz").classList.toggle("is-on", mode === "business");
   $("#tab-ind").setAttribute("aria-selected", mode === "individual");
   $("#tab-biz").setAttribute("aria-selected", mode === "business");
+  positionSegThumb(true);
+}
+
+function positionSegThumb(animate) {
+  const seg = $(".seg");
+  const on = seg && $("button.is-on", seg);
+  if (!on || !on.offsetWidth) return;
+  seg.classList.toggle("no-anim", !animate);
+  seg.style.setProperty("--thumb-x", `${on.offsetLeft}px`);
+  seg.style.setProperty("--thumb-w", `${on.offsetWidth}px`);
+  seg.classList.add("has-thumb");
+}
+
+function setMobileNav(open) {
+  $(".burger").setAttribute("aria-expanded", String(open));
+  $("#nav-links").classList.toggle("is-open", open);
+  $(".nav-actions").classList.toggle("is-open", open);
+  document.body.classList.toggle("modal-open", open);
 }
 
 function showUsecase(id) {
