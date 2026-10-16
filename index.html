@@ -1,0 +1,481 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>TokenPe — The token payment rail for any financial application</title>
+  <meta name="description" content="TokenPe is the on-ramp, off-ramp, and India payments stack for wallets, exchanges, and businesses. UPI, cards, payouts, KYC, and white-label APIs.">
+  <link rel="icon" href="assets/favicon.svg">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+  <a class="skip" href="#main">Skip to content</a>
+  <div class="sticky-wrap" id="sticky">
+    <div class="topbar">
+      <span class="only-biz">Move large stablecoin flows at live rates with TokenPe OTC.</span>
+      <span class="only-ind">Buy USDT, USDC, and BTC with UPI. The rate is shown before you pay.</span>
+      <a href="#faq" data-open="terms">Learn more</a>
+    </div>
+    <header class="nav container">
+      <a class="brand" href="#top" aria-label="TokenPe home">TokenPe</a>
+      <div class="seg" role="tablist" aria-label="Audience">
+        <button type="button" role="tab" id="tab-ind" aria-selected="false">Individual</button>
+        <button type="button" role="tab" id="tab-biz" class="is-on" aria-selected="true">Business</button>
+      </div>
+      <button class="burger" type="button" aria-expanded="false" aria-controls="nav-links">
+        <span></span><span></span><span></span>
+        <span class="sr" style="position:absolute;left:-999px">Menu</span>
+      </button>
+      <nav class="nav-links" id="nav-links" aria-label="Primary">
+        <div class="menu">
+          <button class="menu-btn" type="button" aria-expanded="false">Products <svg class="caret" viewBox="0 0 12 12"><path d="M2 4l4 4 4-4" fill="none" stroke="currentColor" stroke-width="1.5"/></svg></button>
+          <div class="menu-panel">
+            <a href="#covered"><strong>On-ramps and off-ramps</strong><span>Widget or white-label checkout</span></a>
+            <a href="#collect"><strong>Checkout</strong><span>UPI, cards, and netbanking</span></a>
+            <a href="#collect"><strong>Payment links</strong><span>Collect without a website</span></a>
+            <a href="#collect"><strong>Subscriptions</strong><span>UPI Autopay and cards</span></a>
+            <a href="#disburse"><strong>Payouts</strong><span>Bank, UPI, and wallets</span></a>
+          </div>
+        </div>
+        <div class="menu">
+          <button class="menu-btn" type="button" aria-expanded="false">Use cases <svg class="caret" viewBox="0 0 12 12"><path d="M2 4l4 4 4-4" fill="none" stroke="currentColor" stroke-width="1.5"/></svg></button>
+          <div class="menu-panel">
+            <a href="#usecases" data-usecase="wallets"><strong>Wallets</strong><span>Ramps inside your app</span></a>
+            <a href="#usecases" data-usecase="exchanges"><strong>Exchanges</strong><span>Deposits without a second KYC</span></a>
+            <a href="#usecases" data-usecase="neobanks"><strong>Neobanks</strong><span>Named accounts to stablecoins</span></a>
+            <a href="#usecases" data-usecase="remittance"><strong>Remittance</strong><span>Local in, local out</span></a>
+            <a href="#usecases" data-usecase="payroll"><strong>Payroll</strong><span>Salary in fiat or stablecoin</span></a>
+          </div>
+        </div>
+        <div class="menu">
+          <button class="menu-btn" type="button" aria-expanded="false">Developers <svg class="caret" viewBox="0 0 12 12"><path d="M2 4l4 4 4-4" fill="none" stroke="currentColor" stroke-width="1.5"/></svg></button>
+          <div class="menu-panel">
+            <a href="#integrate" data-open="docs" data-doc="widget"><strong>Widget</strong><span>Drop-in on-ramp</span></a>
+            <a href="#developers" data-open="docs" data-doc="orders"><strong>API reference</strong><span>Quotes, orders, payouts</span></a>
+            <a href="#developers"><strong>SDKs and webhooks</strong><span>Node, Python, and events</span></a>
+          </div>
+        </div>
+        <div class="menu">
+          <button class="menu-btn" type="button" aria-expanded="false">Resources <svg class="caret" viewBox="0 0 12 12"><path d="M2 4l4 4 4-4" fill="none" stroke="currentColor" stroke-width="1.5"/></svg></button>
+          <div class="menu-panel">
+            <a href="#faq"><strong>FAQ</strong><span>Fees, setup, and support</span></a>
+            <a href="#" data-open="status"><strong>Status</strong><span>Platform availability</span></a>
+          </div>
+        </div>
+      </nav>
+      <div class="nav-actions">
+        <button class="btn btn-ghost btn-sm" type="button" data-open="signin">Sign in</button>
+        <button class="btn btn-black btn-sm only-biz" type="button" data-open="signup">Get started</button>
+        <button class="btn btn-blue btn-sm only-ind" type="button" data-open="signup">Buy crypto</button>
+      </div>
+    </header>
+  </div>
+
+  <main id="main">
+    <section class="horizon" id="top" aria-label="Hero">
+      <div class="horizon-stage">
+        <div class="horizon-lines" aria-hidden="true"></div>
+        <div class="horizon-drift" aria-hidden="true"></div>
+        <div class="horizon-streaks" aria-hidden="true">
+          <span style="--left:2%;--sx:0.68;--sy:0.79;--peak:0.2;--dur:7s;--delay:0s"></span>
+          <span style="--left:10%;--sx:0.54;--sy:0.65;--peak:0.16;--dur:9s;--delay:3.2s"></span>
+          <span style="--left:29%;--sx:0.63;--sy:0.92;--peak:0.22;--dur:8s;--delay:1.4s"></span>
+          <span style="--left:41%;--sx:1;--sy:0.66;--peak:0.21;--dur:10s;--delay:5.1s"></span>
+          <span style="--left:67%;--sx:0.71;--sy:0.65;--peak:0.26;--dur:7.5s;--delay:2.3s"></span>
+          <span style="--left:81%;--sx:0.86;--sy:0.9;--peak:0.18;--dur:8.5s;--delay:4.4s"></span>
+        </div>
+        <div class="horizon-copy">
+          <p class="horizon-eyebrow only-biz">On-ramps, checkout, and payouts</p>
+          <p class="horizon-eyebrow only-ind">UPI, cards, and a rate you can see</p>
+          <h1 class="horizon-title">
+            <span class="only-biz">One rail for tokens.</span>
+            <span class="only-ind">Buy and sell crypto.</span>
+          </h1>
+          <div class="horizon-actions">
+            <button class="horizon-primary only-biz" type="button" data-open="signup">Get started</button>
+            <a class="horizon-secondary only-biz" href="#developers">Learn more</a>
+            <button class="horizon-primary only-ind" type="button" data-widget-mode="buy">Get started</button>
+            <a class="horizon-secondary only-ind" href="#integrate">Learn more</a>
+          </div>
+        </div>
+        <div class="horizon-halo" aria-hidden="true">
+          <div class="orb orb-halo"><div class="halo-fill"></div></div>
+        </div>
+        <div class="horizon-planet" aria-hidden="true">
+          <div class="rim-clip">
+            <div class="rim-filter">
+              <div class="rim-layer rim-soft"><div class="orb orb-rim orb-rim-soft"></div></div>
+              <div class="rim-layer rim-sharp"><div class="orb orb-rim orb-rim-sharp"></div></div>
+            </div>
+          </div>
+          <div class="orb orb-disk"></div>
+          <div class="orb orb-edge horizon-edge">
+            <svg viewBox="0 0 1000 1000" aria-hidden="true">
+              <defs>
+                <linearGradient id="horizon-edge" x1="0" x2="0" y1="0" y2="1">
+                  <stop offset="0" stop-color="#f4f4f5" stop-opacity="0.5"/>
+                  <stop offset="0.33" stop-color="#f4f4f5" stop-opacity="0"/>
+                </linearGradient>
+              </defs>
+              <circle cx="500" cy="500" r="500" fill="none" stroke="url(#horizon-edge)" stroke-width="1.5"/>
+            </svg>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <button class="offer only-biz" type="button" data-open="terms">
+      <div class="offer-num">0% <s>1.95%</s></div>
+      <div>
+        <p>Platform fees on the first ₹20L of volume.</p>
+        <ul>
+          <li>Next-day settlement</li>
+          <li>Dedicated manager</li>
+          <li>Go live in minutes</li>
+        </ul>
+      </div>
+    </button>
+
+    <section class="section" id="covered">
+      <div class="container">
+        <p class="eyebrow">We've got you covered</p>
+        <h2 class="section-title">Everything you need from KYC to virtual accounts, cards, and coverage</h2>
+        <div class="cover-grid" id="cover-grid"></div>
+      </div>
+    </section>
+
+    <section class="marquee-wrap" aria-label="Features">
+      <p class="marquee-label">FEATURES</p>
+      <div class="marquee">
+        <div class="marquee-track" id="marquee"></div>
+      </div>
+    </section>
+
+    <section class="section stack" id="stack">
+      <div class="container">
+        <div class="sim" id="pay-sim">
+          <p class="sim-status" id="sim-status" aria-live="polite">Name your business, set an amount, then run the simulation.</p>
+          <div class="sim-steps" aria-hidden="true">
+            <span data-sim-step="1">1. Customer pays</span>
+            <span data-sim-step="2">2. TokenPe treasury</span>
+            <span data-sim-step="3">3. You withdraw</span>
+          </div>
+          <div class="sim-board">
+            <svg viewBox="0 0 1000 300" aria-hidden="true">
+              <path id="sim-route" d="M150 118 C 300 196, 400 160, 480 130 C 560 160, 720 196, 860 118" fill="none" stroke="#7aa2ff" stroke-width="2.5" stroke-linecap="round"/>
+              <circle id="sim-packet" cx="190" cy="158" r="7" fill="#fff"/>
+              <circle id="sim-packet-glow" cx="190" cy="158" r="14" fill="#fff" opacity="0.28"/>
+            </svg>
+            <article class="sim-node left" id="sim-left">
+              <b id="sim-left-kicker">Acme</b>
+              <strong id="sim-left-title">Your website</strong>
+              <span id="sim-left-sub">Customer checkout sits here</span>
+            </article>
+            <article class="sim-card" id="sim-card">
+              <header>
+                <span id="sim-card-kicker">Hosted checkout</span>
+                <span>Illustrative</span>
+              </header>
+              <div class="sim-amount" id="sim-amount">$100.00</div>
+              <p id="sim-card-where">USD on Acme</p>
+              <p class="sim-wait" id="sim-wait">Waiting for the customer.</p>
+              <div class="sim-wallets" id="sim-wallets" hidden>
+                <p>Supported wallet</p>
+                <div class="sim-icons" aria-hidden="true">
+                  <i style="background:#f6851b"></i><i style="background:#ab9ff2"></i><i style="background:#ffd84d"></i><i style="background:#0052ff"></i>
+                  <i style="background:#e11d48"></i><i style="background:#14b8a6"></i><i style="background:#a3e635"></i><i style="background:#111"></i>
+                </div>
+              </div>
+              <div class="sim-qr" id="sim-qr" hidden></div>
+              <button class="sim-open" id="sim-open" type="button">Open TokenPe</button>
+              <div class="sim-paid" id="sim-paid" hidden>Payment paid</div>
+            </article>
+            <article class="sim-node right" id="sim-right">
+              <b>TokenPe treasury</b>
+              <strong id="sim-right-title">USDC</strong>
+              <span id="sim-right-sub">Any payment lands here</span>
+            </article>
+          </div>
+          <div class="sim-controls">
+            <label>Business name
+              <input id="sim-business" type="text" value="Acme" maxlength="32" autocomplete="off">
+            </label>
+            <label>Amount USD
+              <input id="sim-usd" type="text" inputmode="decimal" value="100.00" autocomplete="off">
+            </label>
+            <div class="sim-field">
+              <span>Checkout</span>
+              <div class="sim-seg" role="group" aria-label="Checkout">
+                <button type="button" data-sim-mode="hosted" class="is-on">Hosted</button>
+                <button type="button" data-sim-mode="embedded">Embedded</button>
+              </div>
+            </div>
+            <div class="sim-field">
+              <span>Buyer pays with</span>
+              <div class="sim-seg" role="group" aria-label="Buyer pays with">
+                <button type="button" data-sim-pay="wallet" class="is-on">Wallet</button>
+                <button type="button" data-sim-pay="qr">QR</button>
+              </div>
+            </div>
+            <button class="sim-run" id="sim-run" type="button">Run simulation</button>
+          </div>
+          <p class="sim-note">Fiat, cards, UPI, Apple Pay, and bank transfer are not shown in this simulation.</p>
+        </div>
+        <div class="stack-stage">
+          <article class="float-card chart">
+            <div class="chart-top"><span>Live payments</span><b id="live-count">2,847</b></div>
+            <svg class="spark" viewBox="0 0 220 74" aria-hidden="true">
+              <path class="spark-line" pathLength="100" d="M0 50 C 30 48, 40 30, 70 34 S 110 60, 140 28 190 18, 220 22" fill="none" stroke="#1f7a3a" stroke-width="3"/>
+              <path d="M0 50 C 30 48, 40 30, 70 34 S 110 60, 140 28 190 18, 220 22 V 74 H 0 Z" fill="#c6f27b" opacity=".45"/>
+            </svg>
+          </article>
+          <article class="float-card pay">
+            <div class="mini-row pay-line"><span><i class="dot" style="background:#1461db"></i>UPI</span><span>₹2,450</span></div>
+            <div class="mini-row pay-line"><span><i class="dot" style="background:#12b76a"></i>Card</span><span>₹899</span></div>
+            <div class="mini-row pay-line"><span><i class="dot" style="background:#7a3e9d"></i>USDT</span><span>120</span></div>
+            <div class="mini-row pay-line"><span><i class="dot" style="background:#e08a3c"></i>Netbanking</span><span>₹5,000</span></div>
+          </article>
+          <article class="float-card chat">
+            <div class="bubble" id="stack-a">Payment of ₹2,450 settled.</div>
+            <div class="bubble" id="stack-b">USDT 29.05 landed in the wallet.</div>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="collect" style="padding-top:10px">
+      <div class="container">
+        <p class="eyebrow">Collect</p>
+        <h2 class="section-title">Every way your customer wants to pay</h2>
+        <p class="lede">Online, in person, on WhatsApp, or inside a wallet. One integration covers the fiat methods and the token rail.</p>
+        <div class="bento" style="margin-top:28px">
+          <article class="bento-card checkout">
+            <h3>TokenPe Checkout</h3>
+            <p>Opens fast, keeps returning customers on a saved method, and settles the token or the rupee you asked for.</p>
+            <div class="stat"><div><span>Success, last hour</span><b id="success-rate">98.4%</b></div></div>
+          </article>
+          <article class="bento-card methods">
+            <h3>Payment gateway</h3>
+            <p>UPI, cards, EMI, netbanking, and wallets, plus USDT and USDC on the same order.</p>
+            <div class="ui-panel method-grid" id="method-grid"></div>
+          </article>
+          <article class="bento-card subs">
+            <h3>Subscriptions</h3>
+            <p>Customers approve once with UPI Autopay, cards, or eNACH. Failed renewals retry on their own.</p>
+            <div class="ui-panel pay-list" id="sub-list">
+              <div style="padding:8px 8px 0;font-weight:700">Recurring · Monthly</div>
+            </div>
+          </article>
+          <article class="bento-card links">
+            <h3>Payment links</h3>
+            <p>Collect over WhatsApp, SMS, or email. No website and no developer required.</p>
+            <div class="wa">
+              <b>TokenPe</b>
+              Hi, your invoice for March is ready.
+              <div class="note">Pay ₹1,499<br><a href="#" data-open="paylink">pay.tokenpe.in/a91k</a></div>
+            </div>
+          </article>
+          <article class="bento-card forms">
+            <h3>Payment forms</h3>
+            <p>A branded form that collects the payment and the customer details. No code.</p>
+            <form class="ui-panel" style="padding:14px" id="mini-form">
+              <label>Name<br><input name="name" required style="width:100%;margin-top:4px;border:1px solid #e4e7ec;border-radius:8px;padding:8px"></label>
+              <label style="display:block;margin-top:8px">Amount<br><input name="amount" value="1499" style="width:100%;margin-top:4px;border:1px solid #e4e7ec;border-radius:8px;padding:8px"></label>
+              <button class="btn btn-blue btn-sm" style="margin-top:10px;width:100%" type="submit">Pay now</button>
+              <p id="mini-form-note" style="min-height:1.2em;font-size:13px"></p>
+            </form>
+          </article>
+          <article class="bento-card settle">
+            <h3>Instant settlements</h3>
+            <p>Sales money in your account in minutes. Pick a schedule or pull it on demand.</p>
+            <div class="ui-panel" id="settle-card" style="padding:14px"></div>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="integrate">
+      <div class="container">
+        <p class="eyebrow">Integrate your way</p>
+        <h2 class="section-title">Ship in minutes or build it your way.</h2>
+        <div class="integrate-grid">
+          <article class="integrate-card">
+            <h3>Widget</h3>
+            <p class="sub">Plug-and-play on-ramps and off-ramps.</p>
+            <ul class="checks">
+              <li><svg width="16" height="16" viewBox="0 0 16 16"><path d="M3 8l3 3 7-7" fill="none" stroke="currentColor" stroke-width="1.8"/></svg>Pre-built compliant UI</li>
+              <li><svg width="16" height="16" viewBox="0 0 16 16"><path d="M3 8l3 3 7-7" fill="none" stroke="currentColor" stroke-width="1.8"/></svg>Theme via query parameters</li>
+              <li><svg width="16" height="16" viewBox="0 0 16 16"><path d="M3 8l3 3 7-7" fill="none" stroke="currentColor" stroke-width="1.8"/></svg>Web SDK and mobile WebView</li>
+            </ul>
+            <button class="btn btn-outline btn-sm" type="button" data-open="docs" data-doc="widget">Read widget docs</button>
+            <div class="phone-slot">
+              <div class="phone" id="widget-phone">
+                <div class="phone-bar"><span>13:13</span><span>global.tokenpe.in</span><span></span></div>
+                <div class="phone-body" id="widget-home">
+                  <div class="buy-sell" role="tablist">
+                    <button type="button" class="is-on" data-side="buy">Buy</button>
+                    <button type="button" data-side="sell">Sell</button>
+                  </div>
+                  <div class="field">
+                    <div><label id="pay-label">You pay</label><input id="pay-amount" inputmode="decimal" value="10000" aria-label="Amount you pay"></div>
+                    <select id="pay-ccy" aria-label="Pay currency"></select>
+                  </div>
+                  <div class="field">
+                    <div><label id="get-label">You receive</label><div class="receive" id="receive">0</div></div>
+                    <select id="get-asset" aria-label="Asset you receive"></select>
+                  </div>
+                  <div class="rate-line" id="rate-line"></div>
+                  <button class="btn btn-blue" type="button" id="widget-continue">Continue</button>
+                </div>
+                <div class="phone-body" id="widget-pay" hidden>
+                  <button type="button" id="widget-back" style="border:0;background:transparent;color:#1461db;padding:0">Back</button>
+                  <h3 style="margin:8px 0" id="pay-title">Pay with UPI</h3>
+                  <div class="field"><div><label id="pay-field-label">UPI ID</label><input id="upi-id" placeholder="name@upi" aria-label="UPI ID"></div></div>
+                  <p class="rate-line" id="pay-summary"></p>
+                  <button class="btn btn-blue" type="button" id="widget-confirm">Confirm</button>
+                </div>
+                <div class="phone-body" id="widget-done" hidden>
+                  <p class="rail-kicker" id="widget-done-kicker">On-ramp</p>
+                  <h3 id="widget-done-title" style="margin:8px 0">USDT landed</h3>
+                  <p class="rate-line" id="widget-done-copy">The token is in the wallet.</p>
+                  <div class="field"><span>Status</span><b id="widget-done-status">Settled</b></div>
+                </div>
+              </div>
+            </div>
+          </article>
+          <article class="integrate-card">
+            <h3>White-label APIs</h3>
+            <p class="sub">Your interface. Our infrastructure.</p>
+            <ul class="checks">
+              <li><svg width="16" height="16" viewBox="0 0 16 16"><path d="M3 8l3 3 7-7" fill="none" stroke="currentColor" stroke-width="1.8"/></svg>Full control over UI and UX</li>
+              <li><svg width="16" height="16" viewBox="0 0 16 16"><path d="M3 8l3 3 7-7" fill="none" stroke="currentColor" stroke-width="1.8"/></svg>Auth and KYC reliance</li>
+              <li><svg width="16" height="16" viewBox="0 0 16 16"><path d="M3 8l3 3 7-7" fill="none" stroke="currentColor" stroke-width="1.8"/></svg>Webhooks and WebSockets</li>
+            </ul>
+            <div class="swatches" id="theme-swatches" role="radiogroup" aria-label="Widget theme"></div>
+            <div class="query" id="theme-query"></div>
+            <button class="btn btn-outline btn-sm" type="button" data-open="docs" data-doc="orders">Read API docs</button>
+            <div class="phone-slot">
+              <div class="phone" id="theme-phone">
+                <div class="phone-bar"><span>13:13</span><span>Buy crypto</span></div>
+                <div class="phone-body">
+                  <div style="font-size:40px;font-weight:750;letter-spacing:-.04em">100 <small style="font-size:16px" id="theme-ccy">USD</small></div>
+                  <div class="field"><span id="theme-asset">USDT</span><span id="theme-out">99.10</span></div>
+                  <p class="rate-line" id="theme-status" aria-hidden="true">On-ramp · card to USDT</p>
+                  <button class="btn btn-blue" type="button" id="theme-pay">Apple Pay</button>
+                </div>
+              </div>
+            </div>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="usecases">
+      <div class="container">
+        <p class="eyebrow">Use cases</p>
+        <h2 class="section-title">Whatever you ship, TokenPe's rail powers it.</h2>
+        <div class="pills" id="usecase-pills" role="tablist"></div>
+        <div id="usecase-panels"></div>
+      </div>
+    </section>
+
+    <section class="section" id="disburse">
+      <div class="container">
+        <p class="eyebrow">Disburse</p>
+        <h2 class="section-title">Payouts and refunds, done in seconds.</h2>
+        <div class="payout-stack" id="payouts"></div>
+      </div>
+    </section>
+
+    <section class="section" id="industries">
+      <div class="container">
+        <p class="eyebrow">Industry solutions</p>
+        <h2 class="section-title">Your industry's payment problems, already solved.</h2>
+        <p class="lede">Payments configured for the way you sell, not a one-size gateway.</p>
+        <div class="pills" id="industry-pills"></div>
+        <div id="industry-panels"></div>
+      </div>
+    </section>
+
+    <section class="section" id="developers">
+      <div class="container">
+        <p class="eyebrow">Developer experience</p>
+        <h2 class="section-title">Infrastructure your engineers will vouch for.</h2>
+        <p class="lede">REST APIs, SDKs, webhooks, and a sandbox that matches production.</p>
+        <div class="dev-grid">
+          <article class="dev-card">
+            <h3>API-first</h3>
+            <p>If it happens on the platform, there is an endpoint for it.</p>
+            <div class="lang" id="code-langs">
+              <button type="button" class="is-on" data-lang="curl">curl</button>
+              <button type="button" data-lang="node">Node</button>
+              <button type="button" data-lang="python">Python</button>
+            </div>
+            <div class="code"><button class="copy" type="button" id="copy-code">Copy</button><pre id="code-block" style="margin:0;white-space:pre-wrap"></pre></div>
+          </article>
+          <article class="dev-card">
+            <h3>Sandbox quotes</h3>
+            <p>Request a rate, then create an order from it. The sandbox key is in the docs drawer.</p>
+            <button class="btn btn-outline btn-sm" type="button" data-open="docs" data-doc="quotes">Open docs</button>
+          </article>
+          <article class="dev-card">
+            <h3>Go live fast</h3>
+            <p>Create a quote, confirm a sandbox payment, and read the webhook. The path below is the same shape as production.</p>
+            <button class="btn btn-blue btn-sm" type="button" id="sandbox-run">Run sandbox quote</button>
+            <p id="sandbox-out" style="font-family:ui-monospace,monospace;font-size:12.5px"></p>
+          </article>
+        </div>
+        <div class="branch-fit" id="branch-demo" data-branching-demo data-autoplay="true"></div>
+      </div>
+    </section>
+
+    <section class="section" id="faq">
+      <div class="container">
+        <h2 class="section-title">Frequently asked questions</h2>
+        <div class="pills" id="faq-pills"></div>
+        <div class="faq-list" id="faq-list"></div>
+      </div>
+    </section>
+
+  </main>
+
+  <div id="site-footer"></div>
+  <div hidden>
+    <button type="button" data-open="sales">Talk to sales</button>
+    <button type="button" data-open="privacy">Privacy notice</button>
+  </div>
+
+  <nav class="section-nav is-hidden" id="section-nav" aria-label="Page sections">
+    <a href="#collect">Collect</a>
+    <a href="#disburse">Disburse</a>
+  </nav>
+  <div class="cookie" id="cookie" role="dialog" aria-label="Cookies">
+    <div>
+      <p>We use cookies to run the site and, with your consent, to understand which pages help. Read the <a href="#" data-open="privacy">privacy notice</a>.</p>
+      <div class="cookie-panel">
+        <label><input type="checkbox" checked disabled> Strictly necessary (always on)</label><br>
+        <label><input type="checkbox" id="cookie-analytics"> Analytics</label>
+      </div>
+    </div>
+    <div class="actions">
+      <button class="btn btn-ghost btn-sm" type="button" id="cookie-settings">Cookies settings</button>
+      <button class="btn btn-blue btn-sm" type="button" id="cookie-reject">Reject all</button>
+      <button class="btn btn-blue btn-sm" type="button" id="cookie-accept">Accept all cookies</button>
+    </div>
+  </div>
+
+  <div class="backdrop" id="backdrop" hidden></div>
+  <div class="modal" id="modal" role="dialog" aria-modal="true" aria-labelledby="modal-title"></div>
+  <aside class="drawer" id="drawer" aria-hidden="true"></aside>
+  <div class="toast" id="toast" role="status"></div>
+  <script src="js/hero.js"></script>
+  <script src="js/app.js"></script>
+  <script src="js/branching.js"></script>
+  <script src="js/footer.js"></script>
+  <script src="js/flow.js"></script>
+  <script src="js/sim.js"></script>
+</body>
+</html>

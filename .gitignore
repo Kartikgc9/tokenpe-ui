@@ -1,0 +1,10 @@
+# Local reference recordings (kept out of the public repo)
+*.mov
+*.mp4
+
+# Build output and tooling
+dist/
+node_modules/
+.netlify/
+.DS_Store
+Thumbs.db
