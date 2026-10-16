@@ -291,9 +291,31 @@ a { color: inherit; }
   pointer-events: none;
   color: rgba(255, 255, 255, 0.035);
   background-image: repeating-linear-gradient(to right, currentColor 0 1px, transparent 1px 8px);
-  animation: horizon-lines 22s linear infinite;
+  animation: horizon-lines 6s linear infinite, horizon-lines-flicker 3.2s ease-in-out infinite;
 }
-@keyframes horizon-lines { to { background-position: 8px 0; } }
+@keyframes horizon-lines { to { background-position: 16px 0; } }
+@keyframes horizon-lines-flicker {
+  0%, 100% { color: rgba(255, 255, 255, 0.03); }
+  50% { color: rgba(255, 255, 255, 0.06); }
+}
+/* Pointer spotlight, positioned by hero.js. */
+.horizon-spot {
+  position: absolute;
+  z-index: 11;
+  left: 0;
+  top: 0;
+  width: 560px;
+  height: 560px;
+  margin: -280px 0 0 -280px;
+  pointer-events: none;
+  border-radius: 50%;
+  background: radial-gradient(closest-side, rgba(59, 130, 246, 0.3), rgba(45, 212, 191, 0.09) 55%, transparent);
+  opacity: 0;
+  transform: translate3d(var(--spot-x, 50vw), var(--spot-y, 40%), 0);
+  transition: opacity 0.6s ease;
+  will-change: transform;
+}
+.horizon.is-pointer .horizon-spot { opacity: 1; }
 .horizon-drift {
   position: absolute;
   z-index: 12;
@@ -302,15 +324,20 @@ a { color: inherit; }
   left: -8%;
   top: 18%;
   pointer-events: none;
-  background: radial-gradient(circle, rgba(20, 97, 219, 0.34), rgba(45, 212, 191, 0.08) 42%, transparent 70%);
+  background: radial-gradient(closest-side, rgba(20, 97, 219, 0.34), rgba(45, 212, 191, 0.08) 60%, transparent);
   filter: blur(10px);
-  animation: horizon-drift 14s ease-in-out infinite;
+  animation: horizon-drift 7s ease-in-out infinite;
 }
 @keyframes horizon-drift {
-  0%, 100% { transform: translate3d(0, 0, 0) scale(1); opacity: 0.55; }
-  50% { transform: translate3d(62%, 8%, 0) scale(1.08); opacity: 1; }
+  0%, 100% { transform: translate3d(0, 0, 0) scale(1); opacity: 0.6; }
+  33% { transform: translate3d(95%, -6%, 0) scale(1.12); opacity: 1; }
+  66% { transform: translate3d(180%, 10%, 0) scale(0.96); opacity: 0.8; }
 }
-.horizon-streaks { position: absolute; inset: 0; overflow: hidden; pointer-events: none; }
+.horizon-streaks {
+  position: absolute; inset: 0; overflow: hidden; pointer-events: none;
+  -webkit-mask-image: linear-gradient(to bottom, #000 72%, transparent 90%);
+  mask-image: linear-gradient(to bottom, #000 72%, transparent 90%);
+}
 .horizon-streaks span {
   position: absolute;
   top: 0;
@@ -321,10 +348,25 @@ a { color: inherit; }
   background: linear-gradient(transparent, rgba(255, 255, 255, 0.5) 50%, transparent);
   animation: horizon-streak var(--dur) linear var(--delay) infinite;
 }
+/* JS-generated streaks: a meteor with a bright head that falls toward the horizon. */
+.horizon-streaks span.meteor {
+  width: var(--w, 2px);
+  height: var(--len, 240px);
+  border-radius: 2px;
+  background: linear-gradient(to bottom, transparent, var(--tint, rgba(255, 255, 255, 0.55)) 78%, #fff);
+  box-shadow: 0 0 10px 1px var(--tint, rgba(255, 255, 255, 0.35));
+  animation: horizon-meteor var(--dur) cubic-bezier(0.45, 0, 0.75, 1) var(--delay) infinite;
+}
 @keyframes horizon-streak {
   0% { transform: translateY(-100%) scale(var(--sx), var(--sy)); opacity: 0; }
   12% { opacity: var(--peak); }
   100% { transform: translateY(260%) scale(var(--sx), var(--sy)); opacity: 0; }
+}
+@keyframes horizon-meteor {
+  0% { transform: translate3d(0, -110%, 0); opacity: 0; }
+  10% { opacity: var(--peak); }
+  82% { opacity: var(--peak); }
+  100% { transform: translate3d(0, var(--fall, 85vh), 0); opacity: 0; }
 }
 .horizon-copy {
   position: absolute;
@@ -352,7 +394,7 @@ a { color: inherit; }
   line-height: 0.95;
   letter-spacing: -0.024em;
   color: #fafafa;
-  animation: horizon-title 6s ease-in-out 2.2s infinite;
+  animation: horizon-title 3.6s ease-in-out 2.2s infinite;
 }
 @keyframes horizon-title {
   0%, 100% { text-shadow: 0 0 0 rgba(158, 193, 255, 0); }
@@ -424,21 +466,39 @@ body.audience-individual .horizon-title > .only-ind { display: inline-block; ani
   height: calc(var(--orb) + 6px);
   margin-left: calc((var(--orb) + 6px) / -2);
   top: calc(100% - var(--cap) - 3px);
-  animation: horizon-spin 64s linear infinite reverse;
+  animation: horizon-spin 22s linear infinite reverse;
 }
 .orb-rim-sharp {
   width: calc(var(--orb) + 4px);
   height: calc(var(--orb) + 4px);
   margin-left: calc((var(--orb) + 4px) / -2);
   top: calc(100% - var(--cap) - 2px);
-  animation: horizon-spin 42s linear infinite;
+  animation: horizon-spin 14s linear infinite;
 }
 @keyframes horizon-spin { to { transform: rotate(360deg); } }
-.horizon-halo { animation: horizon-breathe 7s ease-in-out infinite; }
+/* A light that sweeps back and forth along the visible arc of the rim. */
+.orb-sweep {
+  width: calc(var(--orb) + 8px);
+  height: calc(var(--orb) + 8px);
+  margin-left: calc((var(--orb) + 8px) / -2);
+  top: calc(100% - var(--cap) - 4px);
+  background-image: conic-gradient(from 0deg at 50% 50%,
+    rgba(255, 255, 255, 0.95) 0deg, rgba(158, 193, 255, 0.5) 4deg, transparent 11deg,
+    transparent 349deg, rgba(158, 193, 255, 0.5) 356deg, rgba(255, 255, 255, 0.95) 360deg);
+  animation: horizon-sweep 3.4s cubic-bezier(0.65, 0, 0.35, 1) infinite alternate;
+}
+.rim-soft .orb-sweep { filter: blur(6px); }
+@keyframes horizon-sweep {
+  from { transform: rotate(-46deg); }
+  to { transform: rotate(46deg); }
+}
+.horizon-halo { animation: horizon-breathe 3.6s ease-in-out infinite; }
 @keyframes horizon-breathe {
-  0%, 100% { opacity: 0.72; }
+  0%, 100% { opacity: 0.62; }
   50% { opacity: 1; }
 }
+/* Pause the hero loops once it is scrolled out of view (class set by hero.js). */
+.horizon.is-offscreen *, .horizon.is-offscreen *::before, .horizon.is-offscreen *::after { animation-play-state: paused !important; }
 .orb-disk, .orb-edge {
   width: var(--orb);
   height: var(--orb);
@@ -1643,7 +1703,7 @@ body.cookie-open .section-nav { display: none; }
   .halo-fill, .horizon-copy { transform: none; }
   .rim-filter { filter: none; }
   .spark-line, .rail-dash, .offer-num, .note, .horizon-lines, .horizon-drift, .orb-rim-soft, .orb-rim-sharp, .horizon-halo, .horizon-title { animation: none; }
-  .horizon-drift { display: none; }
+  .horizon-drift, .orb-sweep, .horizon-spot { display: none; }
   .spark-line { stroke-dashoffset: 0; }
   .sim-card { transition: none; }
   .usecase-panel.is-on, .industry-panel.is-on, .modal.is-on, .backdrop.is-on, .success,
