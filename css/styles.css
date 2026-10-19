@@ -468,14 +468,15 @@ a { color: inherit; }
 }
 .orb-disk { background: #050505; filter: blur(0.5px); }
 .orb-edge svg { position: absolute; inset: 0; width: 100%; height: 100%; overflow: visible; }
-/* Rotating globe (js/globe.js) rising out of the dark planet, centred under the rim. */
+/* Rotating globe (js/globe.js) that fills the dark planet. The canvas covers the
+   visible band from just above the rim to the bottom of the hero; globe.js scales
+   the sphere onto the disk. */
 .horizon-globe {
   position: absolute;
-  left: 50%;
-  top: calc(100% - var(--cap) + clamp(0px, 1cqw, 1rem));
-  width: min(600px, 86%);
-  aspect-ratio: 1 / 1;
-  transform: translateX(-50%);
+  left: 0;
+  right: 0;
+  top: calc(100% - var(--cap) - 24px);
+  bottom: 0;
   pointer-events: auto;
 }
 .horizon-globe canvas {

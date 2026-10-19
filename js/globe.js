@@ -32,11 +32,17 @@ const GLOBE_CONFIG = {
 };
 
 const canvas = document.querySelector(".horizon-globe canvas");
+const disk = document.querySelector(".horizon-planet .orb-disk");
 const reduce = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+// cobe draws the sphere with a radius of 0.8 of half the canvas height (before scaling).
+const SPHERE_RADIUS = 0.8;
 
-if (canvas) {
+if (canvas && disk) {
   let phi = 0;
   let width = 0;
+  let height = 0;
+  let scale = 1;
+  let offset = [0, 0];
   let r = 0;
   let pointerInteracting = null;
   let pointerInteractionMovement = 0;
@@ -58,19 +64,39 @@ if (canvas) {
     if (pointerInteracting === null && !reduce) phi += 0.005;
     state.phi = phi + r;
     state.width = width * 2;
-    state.height = width * 2;
+    state.height = height * 2;
+    state.scale = scale;
+    state.offset = offset;
   };
 
+  // The canvas only covers the visible band of the planet. Scale and offset the
+  // sphere so it lands exactly on the dark disk: same centre, same radius.
   const onResize = () => {
-    width = canvas.offsetWidth;
+    const box = canvas.getBoundingClientRect();
+    const orb = disk.getBoundingClientRect();
+    width = box.width;
+    height = box.height;
+    if (!width || !height) return;
+    const radius = orb.width / 2;
+    const cx = orb.left + radius - box.left;
+    const cy = orb.top + radius - box.top;
+    scale = radius / (SPHERE_RADIUS * height / 2);
+    const centreX = (2 * cx) / width - 1;
+    const centreY = 1 - (2 * cy) / height;
+    offset = [(centreX * width * 2) / scale, (-centreY * height * 2) / scale];
+    // Keep cobe's glow to a thin atmosphere along the rim.
+    const mask = `radial-gradient(circle at ${cx}px ${cy}px, #000 ${radius}px, transparent ${radius + 28}px)`;
+    canvas.style.webkitMaskImage = mask;
+    canvas.style.maskImage = mask;
   };
 
   window.addEventListener("resize", onResize, { passive: true });
+  if ("ResizeObserver" in window) new ResizeObserver(onResize).observe(canvas);
   onResize();
 
   let globe = null;
   try {
-    globe = createGlobe(canvas, { ...GLOBE_CONFIG, width: width * 2, height: width * 2, onRender });
+    globe = createGlobe(canvas, { ...GLOBE_CONFIG, width: width * 2, height: height * 2, scale, offset, onRender });
   } catch (err) {
     // No WebGL: leave the planet as it was.
     canvas.closest(".horizon-globe")?.remove();
