@@ -1,77 +1,83 @@
 const $ = (sel, root = document) => root.querySelector(sel);
 const $$ = (sel, root = document) => [...root.querySelectorAll(sel)];
 
-const features = ["On-ramps", "Off-ramps", "Checkout", "UPI", "Cards", "Payouts", "KYC", "Payment links", "Subscriptions", "Settlements", "Widget", "White-label API", "Webhooks", "FlashUPI", "Passkeys"];
+const features = ["Bitcoin", "Ethereum", "Solana", "Tron", "Sui", "Base", "Polygon", "Arbitrum", "Optimism", "BNB Chain", "Avalanche"];
 
 const products = [
-  { title: "On-ramps and off-ramps", body: "White-label ramps when you want your own UI. A widget when you want to ship this week.", icon: "ramp" },
-  { title: "Virtual account payments", body: "A named account for each user. Inbound transfers credit USDT, USDC, or the balance you choose.", icon: "bank" },
-  { title: "Global coverage", body: "Local payment methods, currencies, and the licensing paperwork, handled on the corridors we support.", icon: "globe" },
-  { title: "KYC", body: "Use the hosted flow, or pass a user you already verified through KYC reliance.", icon: "kyc" },
-  { title: "Headless cards", body: "One-tap checkout with a tokenised card or Apple Pay, without a second payment page.", icon: "card" },
+  { title: "Crypto-to-Crypto", body: "Accept BTC, ETH, SOL, TRX, SUI, and USDC and USDT on supported chains. Keep it as received or convert to USDC or USDT.", icon: "ramp", drawer: "sales" },
+  { title: "Crypto-to-Fiat Payouts", body: "Pay out to bank accounts in 100+ countries. Payouts powered by our Mastercard partnership, available only where Mastercard transfers are supported.", icon: "bank", drawer: "sales" },
+  { title: "11 networks", body: "Bitcoin, Ethereum, Solana, Tron, Sui, Base, Polygon, Arbitrum, Optimism, BNB Chain and Avalanche.", icon: "globe", drawer: "assets" },
+  { title: "Compliance built in", body: "Registered with FinCEN as a Money Services Business. Every business verified. Every transfer screened.", icon: "kyc", drawer: "sales" },
+  { title: "Fiat-to-Crypto · Coming soon", body: "Let your customers buy crypto with fiat. Not available yet. Join the waitlist.", icon: "card", drawer: "waitlist" },
+];
+
+// Network, native coin (null shows a dash), USDC, USDT. Remove any tick that is not confirmed at launch.
+const supportedAssets = [
+  ["Bitcoin", "BTC", false, false],
+  ["Ethereum", "ETH", true, true],
+  ["Solana", "SOL", true, true],
+  ["Tron", "TRX", true, true],
+  ["Sui", "SUI", true, true],
+  ["Base", "ETH", true, true],
+  ["Polygon", null, true, true],
+  ["Arbitrum", "ETH", true, true],
+  ["Optimism", "ETH", true, true],
+  ["BNB Chain", null, true, true],
+  ["Avalanche", null, true, true],
 ];
 
 const useCases = [
-  { id: "wallets", label: "Wallets", title: "On and off ramps that live inside your wallet", body: "Build the checkout in your UI, or drop in the widget when you need the ramp this week.", points: ["White-label API for a checkout you own", "Widget when you need a hosted flow", "USDT, USDC, and BTC on major networks", "UPI, cards, bank transfer, and Apple Pay"], nodes: ["User", "KYC", "Wallet"] },
-  { id: "exchanges", label: "Exchanges", title: "A direct deposit flow for traders you already know", body: "Skip a second KYC. Fund the account they already have, and send withdrawals back to their bank.", points: ["Pass the session, no second login", "KYC reliance for users you verified", "Off-ramp settles to a bank account", "Traders stay inside your exchange"], nodes: ["Trader", "Auth", "Exchange"] },
-  { id: "neobanks", label: "Neobanks", title: "Leave stablecoin deposits to the rail", body: "Give every user a named account. Inbound money credits a stablecoin balance they can spend or send.", points: ["Named virtual account per user", "Inbound credits as USDT or USDC", "White-label API under your brand", "No duplicate KYC for existing users"], nodes: ["User", "Account", "Balance"] },
-  { id: "remittance", label: "Remittance", title: "Local money in. Local money out.", body: "The sender pays with a method they already use. The recipient gets a bank deposit or a stablecoin.", points: ["Licensed ramps on supported corridors", "Cards, UPI, bank transfer, Apple Pay", "Recipient gets local fiat or a token", "Me-to-me and third-party payouts where allowed"], nodes: ["Sender", "Rail", "Recipient"] },
-  { id: "payroll", label: "Payroll", title: "Salary that can land as fiat or a stablecoin", body: "Each person gets an account you can pay like any other. They choose stablecoin or local currency.", points: ["Named account per person, issued by API", "You pay it like a normal transfer", "Employee picks stablecoin or local fiat", "KYC on each person, handled by TokenPe"], nodes: ["Employer", "Account", "Employee"] },
+  { id: "stores", label: "Online stores", title: "Crypto checkout for online stores", body: "Create a payment request for each order. Customers pay from any wallet or exchange on a supported network.", points: ["A payment request for every order", "Address and QR code for the customer", "Webhook when the payment confirms", "Settle in crypto, USDC or USDT"], nodes: ["Customer", "Store"] },
+  { id: "digital", label: "Digital services", title: "Get paid for software and digital goods", body: "Take crypto from customers anywhere, with no card chargebacks on crypto payments.", points: ["BTC, ETH, SOL, TRX and SUI", "USDC and USDT on supported chains", "No card chargebacks on crypto payments", "One API for every network"], nodes: ["Customer", "Business"] },
+  { id: "marketplaces", label: "Marketplaces", title: "Collect from buyers. Pay out sellers.", body: "Accept crypto from buyers, then pay sellers in crypto or to their bank account.", points: ["Crypto payments from buyers", "Crypto payouts to seller wallets", "Single or bulk payouts by API", "Bank payouts in 100+ countries"], nodes: ["Buyer", "Seller"] },
+  { id: "partners", label: "Contractors & affiliates", title: "Pay partners worldwide from one balance", body: "Send commissions and payments to wallets or bank accounts from your TokenPe balance.", points: ["Wallet payouts, single or in bulk", "Bank payouts in 100+ countries", "See the conversion before you confirm", "Track every payout by webhook"], nodes: ["Business", "Partner"] },
+  { id: "treasury", label: "Treasury", title: "Turn crypto revenue into local currency", body: "Convert your crypto balance and pay out to your business bank account. Payouts powered by our Mastercard partnership, available only where Mastercard transfers are supported.", points: ["Convert to USDC or USDT", "Pay out to your business bank account", "Rate shown before you confirm", "Coverage confirmed during onboarding"], nodes: ["Business", "Bank"] },
 ];
 
 const industries = [
-  { id: "d2c", label: "E-commerce & D2C", title: "A checkout built for brands that ship.", body: "COD and returns eat the margin. One-click checkout lifts prepaid orders and flags risky shipments before they leave.", chips: ["One-click checkout", "Payment gateway", "Partial COD", "Subscriptions"], risk: "Medium" },
-  { id: "bfsi", label: "BFSI", title: "Disburse in seconds. Collect on schedule.", body: "Payout speed, mandate reliability, and a check on the account before money moves.", chips: ["Payment gateway", "UPI Autopay", "eNACH", "Payouts"], risk: "Low" },
-  { id: "edu", label: "Education", title: "From admission fee to EMI, one stack.", body: "Stop chasing parents by hand. Collect on a form, offer EMI, and split fees across departments.", chips: ["Payment forms", "Subscriptions", "Easy split", "EMI"], risk: "Low" },
-  { id: "smb", label: "SMB & startups", title: "Start on a link. Grow into the rest.", body: "Collect on a link, a form, or a checkout. Settle the same day. No engineering required to go live.", chips: ["Payment links", "Payment forms", "Checkout", "Instant settlements"], risk: "Medium" },
-  { id: "enterprise", label: "Enterprise", title: "The rail under high-volume brands.", body: "Direct UPI and card routes, a named manager, and custom SLAs when you outgrow a standard gateway.", chips: ["Full platform", "Risk tools", "Dedicated support", "Custom SLA"], risk: "Low" },
+  { id: "registration", label: "Registration", title: "Registered with FinCEN.", body: '[LEGAL ENTITY NAME] is registered with FinCEN as a Money Services Business, Registration No. [FINCEN MSB NUMBER]. Registration is not a licence or an endorsement. Verify it on FinCEN\'s public <a href="https://www.fincen.gov/msb-registrant-search" target="_blank" rel="noopener">MSB Registrant Search</a>.', chips: ["Money Services Business", "US company", "Bank Secrecy Act", "Public MSB search"] },
+  { id: "verification", label: "Verification", title: "Every business verified.", body: "We verify every business, its owners and its licences before it goes live. Gaming operators get enhanced due diligence.", chips: ["KYB", "Beneficial owners", "Licence checks", "Enhanced due diligence"] },
+  { id: "screening", label: "Screening", title: "Every transfer screened.", body: "We screen businesses, counterparties and wallet addresses against OFAC sanctions lists, and every transfer with blockchain analytics.", chips: ["OFAC screening", "Blockchain analytics", "Wallet screening", "Restricted jurisdictions blocked"] },
+  { id: "monitoring", label: "Monitoring", title: "Ongoing monitoring.", body: "We monitor transactions for unusual activity, report suspicious activity as the law requires, and keep records for at least five years.", chips: ["Transaction monitoring", "Suspicious activity reports", "Five-year records", "Independent testing"] },
+  { id: "security", label: "Account security", title: "Account security.", body: 'Protect your account and your team\'s access. Compliance questions: <a href="mailto:compliance@tokenpe.com">compliance@tokenpe.com</a>.', chips: ["Two-factor authentication", "Team roles", "Address allow-listing", "API key controls"] },
 ];
 
 const faqs = {
   "Getting started": [
-    ["What is the ₹20L offer?", "New businesses that finish onboarding in the offer window pay 0% platform fee on the first ₹20L of volume, then the standard rate. Next-day settlement is included. The offer applies on its own. Full terms are in the offer note."],
-    ["Can I sign up as an individual?", "Yes. Use the Individual view to buy or sell, or open a business account with a personal address proof if you do not have a registered firm yet."],
-    ["Do I need a website?", "No. Payment links and payment forms collect money without an app. A website or app is only required for the embedded widget and the white-label API."],
+    ["What is TokenPe?", "TokenPe is a US company that lets businesses accept crypto, settle in crypto, and pay out to bank accounts in 100+ countries."],
+    ["Is TokenPe registered?", 'Yes. [LEGAL ENTITY NAME] is registered with FinCEN as a Money Services Business, Registration No. [FINCEN MSB NUMBER]. You can verify it on FinCEN\'s public <a href="https://www.fincen.gov/msb-registrant-search" target="_blank" rel="noopener">MSB Registrant Search</a>. Registration is not a licence or an endorsement.'],
+    ["How do I open an account?", "Use Get started. We verify your business, its owners and its activities before you go live. TokenPe serves businesses only."],
   ],
-  "Integration": [
-    ["How long does the widget take?", "A web team usually has the widget opening in a sandbox the same day. Production waits on KYC review of the business."],
-    ["Which languages have SDKs?", "REST is enough for any stack. The docs drawer shows curl, Node, and Python for quotes and orders. Webhooks cover status changes."],
-    ["Can I theme the widget?", "Yes. themeColor, colorMode, and the background, text, and border colors are query parameters. The white-label card on this page updates the sample string."],
+  "Products": [
+    ["Which products are live?", "Crypto-to-Crypto and Crypto-to-Fiat Payouts are live. Fiat-to-Crypto is coming soon and is not available yet. You can join the waitlist."],
+    ["Which networks and assets do you support?", "Bitcoin, Ethereum, Solana, Tron, Sui, Base, Polygon, Arbitrum, Optimism, BNB Chain and Avalanche. Assets are BTC, ETH, SOL, TRX, SUI, and USDC and USDT on supported chains."],
+    ["Which countries can you pay out to?", "Bank accounts in 100+ countries. Payouts powered by our Mastercard partnership, available only where Mastercard transfers are supported. We confirm coverage for your corridors during onboarding."],
   ],
   "Payments": [
-    ["Which methods are supported?", "UPI, RuPay, Visa, Mastercard, netbanking, and wallets in India. Cards and local methods on supported international corridors. USDT and USDC on the token rail."],
-    ["How fast is settlement?", "Standard settlement is next day. Instant settlement moves eligible volume in minutes, on a schedule or on demand."],
-    ["Can I ramp and collect on one order?", "Yes. A checkout can take rupees and deliver a stablecoin, or take a stablecoin and settle INR. The quote shows the rate before the user confirms."],
+    ["Can crypto payments be charged back?", "Confirmed blockchain payments cannot be reversed by a card issuer. You can still send refunds to your customers."],
+    ["What if a customer sends on the wrong network?", 'Funds sent on the wrong network or as an unsupported token may be lost. Contact <a href="mailto:support@tokenpe.com">support@tokenpe.com</a> straight away. Recovery is not always possible.'],
+    ["How much does TokenPe cost?", "Custom pricing for your volume. Contact sales for pricing."],
   ],
-  "Support": [
-    ["When is a person available?", "Business accounts get a named contact after go-live. The sales form on this page is the path before that."],
-    ["What businesses are out of scope?", "We decline categories we cannot support under our licensing. The review happens during onboarding, before you take a live payment."],
-    ["Are NRE accounts supported?", "NRO accounts are supported for eligible individuals and organisations. NRE accounts are not."],
+  "Gaming & support": [
+    ["Do you work with gaming and casino operators?", "Yes, with operators licensed for the products and markets they serve. Every application gets a full business and licence review."],
+    ["Do you accept US players?", "Only for operators licensed by the US state where the player is located, and only where the transaction is lawful."],
+    ["How do I get help or report a security issue?", 'Email <a href="mailto:support@tokenpe.com">support@tokenpe.com</a>. For security issues, use the subject "Security".'],
   ],
 };
 
-const codeSamples = {
-  curl: `curl -X POST https://api.tokenpe.in/v1/quotes \\
-  -H "Authorization: Bearer $TOKENPE_KEY" \\
+// Match the endpoint and field names to the real API before publishing.
+const codeSample = `curl -X POST https://api.tokenpe.com/v1/payments \\
+  -H "Authorization: Bearer $TOKENPE_API_KEY" \\
   -H "Content-Type: application/json" \\
-  -d '{"side":"buy","pay":"INR","amount":"10000","receive":"USDT"}'`,
-  node: `const quote = await tokenpe.quotes.create({
-  side: "buy",
-  pay: "INR",
-  amount: "10000",
-  receive: "USDT",
-});`,
-  python: `quote = tokenpe.quotes.create(
-    side="buy",
-    pay="INR",
-    amount="10000",
-    receive="USDT",
-)`,
-};
+  -d '{
+    "amount": "100.00",
+    "currency": "USD",
+    "pay_asset": "USDT",
+    "network": "tron",
+    "order_id": "order_1234"
+  }'`;
 
-const rates = { INR: 84.15, USD: 1, EUR: 0.92, GBP: 0.78 };
-const assets = ["USDT", "USDC", "BTC"];
-const themes = ["#1461DB", "#111111", "#17803D", "#7A3E9D"];
+const checkIcon = '<svg width="16" height="16" viewBox="0 0 16 16"><path d="M3 8l3 3 7-7" fill="none" stroke="currentColor" stroke-width="1.8"/></svg>';
 
 function icon(name) {
   const paths = {
@@ -83,6 +89,8 @@ function icon(name) {
   };
   return `<svg class="ic" viewBox="0 0 24 24" aria-hidden="true">${paths[name]}</svg>`;
 }
+
+const attr = (value) => String(value).replace(/&/g, "&amp;").replace(/"/g, "&quot;").replace(/</g, "&lt;");
 
 function toast(message) {
   const el = $("#toast");
@@ -103,10 +111,10 @@ function renderStatic() {
       <p>${p.body}</p>
     </button>`).join("");
 
-  $("#method-grid").innerHTML = ["UPI", "Cards", "RuPay", "Wallets", "Netbanking", "EMI", "USDT", "USDC"]
+  $("#method-grid").innerHTML = ["BTC", "ETH", "SOL", "TRX", "SUI", "USDC", "USDT", "11 networks"]
     .map((m) => `<div class="method">${m}</div>`).join("");
 
-  const subs = ["UPI Autopay", "Visa ···· 4242", "eNACH"];
+  const subs = ["As received", "USDC", "USDT"];
   $("#sub-list").insertAdjacentHTML("beforeend", subs.map((s, i) =>
     `<button type="button" class="${i === 0 ? "is-on" : ""}">${s}</button>`).join(""));
   $("#sub-list").addEventListener("click", (e) => {
@@ -123,13 +131,13 @@ function renderStatic() {
       <div>
         <h3>${u.title}</h3>
         <p>${u.body}</p>
-        <ul class="checks">${u.points.map((pt) => `<li><svg width="16" height="16" viewBox="0 0 16 16"><path d="M3 8l3 3 7-7" fill="none" stroke="currentColor" stroke-width="1.8"/></svg>${pt}</li>`).join("")}</ul>
+        <ul class="checks">${u.points.map((pt) => `<li>${checkIcon}${pt}</li>`).join("")}</ul>
       </div>
-      <div class="rail" data-from="${u.nodes[0]}" data-to="${u.nodes[2]}">
+      <div class="rail" data-from="${u.nodes[0]}" data-to="${u.nodes[1]}">
         <div class="rail-steps" aria-hidden="true">
           <span data-step="1" class="is-on">1 · Customer pays</span>
-          <span data-step="2">2 · TokenPe treasury</span>
-          <span data-step="3">3 · You withdraw</span>
+          <span data-step="2">2 · TokenPe confirms</span>
+          <span data-step="3">3 · You settle</span>
         </div>
         <svg class="diagram" viewBox="0 0 420 230" aria-hidden="true">
           <path class="rail-track" d="M70 156 C 150 210, 270 210, 350 156" fill="none" stroke="#c5d8f7" stroke-width="3"/>
@@ -141,22 +149,22 @@ function renderStatic() {
           </g>
           <circle cx="350" cy="78" r="42" fill="#fff" stroke="#d5e4fb"/>
           <text x="70" y="83" text-anchor="middle" font-size="11" font-weight="700" fill="#1461DB">${u.nodes[0]}</text>
-          <text x="350" y="83" text-anchor="middle" font-size="11" font-weight="700" fill="#1461DB">${u.nodes[2]}</text>
+          <text x="350" y="83" text-anchor="middle" font-size="11" font-weight="700" fill="#1461DB">${u.nodes[1]}</text>
         </svg>
-        <p class="rail-caption" data-rail-caption>On-ramp and off-ramp both pass through TokenPe.</p>
+        <p class="rail-caption" data-rail-caption>Every payment is confirmed and screened by TokenPe.</p>
       </div>
     </article>`).join("");
 
   $("#payouts").innerHTML = [
-    { id: "payouts", title: "Payouts", body: "Pay anyone, including on holidays. Bank accounts, UPI IDs, cards, and wallets. Refunds, vendors, salaries, and incentives.", visual: "bulk" },
-    { id: "linkpay", title: "Link payout", body: "Send money with a link. You do not collect account details, and the recipient picks UPI, bank, or wallet.", visual: "link" },
+    { title: "Fiat payouts", body: "Convert crypto and pay out to bank accounts in 100+ countries. Payouts powered by our Mastercard partnership, available only where Mastercard transfers are supported.", cta: "Talk to sales", visual: "bulk" },
+    { title: "Crypto payouts", body: "Send crypto to wallets, one at a time or in bulk, by API.", cta: "Get API access", visual: "crypto" },
   ].map((p, i) => `
     <article class="payout-item ${i === 0 ? "is-open" : ""}">
       <header><button type="button" aria-expanded="${i === 0}"><span class="ic" style="width:18px">${icon("bank")}</span> ${p.title}</button></header>
       <div class="payout-collapse"><div>
       <div class="payout-body">
-        <div><p>${p.body}</p><button class="btn btn-green btn-sm" type="button" data-open="docs" data-doc="payouts">Learn more</button></div>
-        ${p.visual === "bulk" ? `<div class="bulk"><div class="file" id="payout-file">Payroll_Apr.xlsx · 186 rows · updated 2m ago</div><div class="line"><span>Engineering</span><b>₹58.2L</b></div><div class="line"><span>Sales</span><b>₹31.6L</b></div><div class="line"><span>Contract staff</span><span id="payout-left">148 done · 38 left</span></div><div class="bar"><span id="payout-bar"></span></div></div>` : `<div class="receive-box"><b>Receive ₹2,500</b><label><span>UPI</span><input type="radio" name="recv" checked></label><label><span>Bank account</span><input type="radio" name="recv"></label><label><span>Wallet</span><input type="radio" name="recv"></label><p class="flow-status" id="recv-status">Waiting for a method</p><button class="btn btn-green" type="button" id="recv-go" style="width:100%;margin-top:8px">Receive payout</button></div>`}
+        <div><p>${p.body}</p><button class="btn btn-green btn-sm" type="button" data-open="sales">${p.cta}</button></div>
+        ${p.visual === "bulk" ? `<div class="bulk"><div class="file" id="payout-file">Payout batch · in progress</div><div class="line"><span>Destination</span><b>Bank account</b></div><div class="line"><span>Coverage</span><b>100+ countries</b></div><div class="line"><span>Status</span><span id="payout-left">In progress</span></div><div class="bar"><span id="payout-bar"></span></div></div>` : `<div class="receive-box"><b>Send 250 USDC</b><label><span>Solana</span><input type="radio" name="recv" checked></label><label><span>Tron</span><input type="radio" name="recv"></label><label><span>Ethereum</span><input type="radio" name="recv"></label><p class="flow-status" id="recv-status">Choose a network</p><button class="btn btn-green" type="button" id="recv-go" style="width:100%;margin-top:8px">Send payout</button></div>`}
       </div>
       </div></div>
     </article>`).join("");
@@ -168,11 +176,11 @@ function renderStatic() {
     <article class="industry-panel ${i === 0 ? "is-on" : ""}" data-industry-panel="${ind.id}">
       <div class="scene">
         <div class="mock-checkout">
-          <div style="display:flex;justify-content:space-between;align-items:center">RTO risk rule <i class="switch"></i></div>
-          <div class="riskpill"><span>Low</span><span class="on">${ind.risk}</span><span>High</span></div>
+          <div style="display:flex;justify-content:space-between;align-items:center">Transfer screening <i class="switch"></i></div>
+          <div class="riskpill"><span class="on">Low</span><span>Medium</span><span>High</span></div>
           <div style="background:#0c2414;border-radius:12px;padding:10px;margin-top:8px">
-            <div>Order total ₹2,120</div>
-            <div style="display:flex;justify-content:space-between;margin-top:8px"><span class="split-now">Pay ₹100 now</span><span class="split-later">₹2,020 on delivery</span></div>
+            <div>Transfer · 250 USDC</div>
+            <div style="display:flex;justify-content:space-between;margin-top:8px"><span>Screened</span><span>Cleared</span></div>
           </div>
         </div>
         <div class="scene-copy">
@@ -187,18 +195,8 @@ function renderStatic() {
     `<button type="button" data-faq="${name}" class="${i === 0 ? "is-on" : ""}">${name}</button>`).join("");
   renderFaq("Getting started");
 
-  setCode("curl");
+  $("#code-block").textContent = codeSample;
   renderSettle();
-  $("#theme-swatches").innerHTML = themes.map((c, i) =>
-    `<button type="button" class="${i === 0 ? "is-on" : ""}" style="background:${c}" data-theme="${c}" aria-label="Theme ${c}"></button>`).join("");
-  applyTheme(themes[0]);
-  fillSelect($("#pay-ccy"), ["INR", "USD", "EUR"]);
-  fillSelect($("#get-asset"), assets);
-  updateQuote();
-}
-
-function fillSelect(el, values) {
-  el.innerHTML = values.map((v) => `<option>${v}</option>`).join("");
 }
 
 function renderFaq(name) {
@@ -218,55 +216,40 @@ function syncPayoutInert() {
   });
 }
 
-function setCode(lang) {
-  $("#code-block").textContent = codeSamples[lang];
-  $$("#code-langs button").forEach((b) => b.classList.toggle("is-on", b.dataset.lang === lang));
-}
-
 function renderSettle() {
   const rows = [
-    ["₹2,450", "UPI · just now"],
-    ["$1,800", "Card · 4m ago"],
-    ["₹899", "Link · 11m ago"],
+    ["KYB", "Every business verified"],
+    ["OFAC", "Sanctions screening"],
+    ["Analytics", "Every transfer screened"],
   ];
-  $("#settle-card").innerHTML = `<p class="settle-phase" id="settle-phase">On-ramp clearing</p>` +
+  $("#settle-card").innerHTML = `<p class="settle-phase">Screening</p>` +
     rows.map((r) => `<div class="mini-row"><b>${r[0]}</b><span>${r[1]}</span></div>`).join("") +
-    `<button class="btn btn-green btn-sm" type="button" id="settle-now" style="margin-top:8px">Settle available balance</button>`;
+    `<a class="btn btn-green btn-sm" href="/legal/aml.html" style="margin-top:8px">Read our AML policy</a>`;
 }
 
-function updateQuote() {
-  const side = $(".buy-sell button.is-on")?.dataset.side || "buy";
-  const amount = Math.max(0, Number($("#pay-amount").value) || 0);
-  const fee = 0.012;
-  let receive = 0;
-  let digits = 2;
-  if (side === "buy") {
-    const ccy = $("#pay-ccy").value;
-    const asset = $("#get-asset").value;
-    const usd = ccy === "INR" ? amount / rates.INR : amount / (rates[ccy] || 1);
-    receive = usd * (1 - fee);
-    if (asset === "BTC") { receive /= 64000; digits = 6; }
-    $("#pay-label").textContent = "You pay";
-    $("#get-label").textContent = "You receive";
-    const per = asset === "BTC" ? 64000 * (ccy === "INR" ? rates.INR : (rates[ccy] || 1)) : (ccy === "INR" ? rates.INR : (rates[ccy] || 1));
-    $("#rate-line").textContent = `1 ${asset} = ${ccy === "INR" ? "₹" : ""}${per.toLocaleString("en-IN")} · fee 1.20%`;
+function assetsTable() {
+  const mark = (on) => (on ? "✓" : "—");
+  return `<table class="assets-table">
+    <thead><tr><th scope="col">Network</th><th scope="col">Native coin</th><th scope="col">USDC</th><th scope="col">USDT</th></tr></thead>
+    <tbody>${supportedAssets.map(([net, coin, usdc, usdt]) =>
+      `<tr><th scope="row">${net}</th><td>${coin || "—"}</td><td>${mark(usdc)}</td><td>${mark(usdt)}</td></tr>`).join("")}</tbody>
+  </table>`;
+}
+
+function openProduct(p) {
+  let html = `<h2>${p.title}</h2><p>${p.body}</p>`;
+  if (p.drawer === "assets") {
+    html += assetsTable() +
+      `<p>Bitcoin does not support USDC or USDT. Stablecoins are accepted only on the networks marked ✓. Always send on the network shown in your payment request. Funds sent on the wrong network may be lost.</p>` +
+      `<button class="btn btn-blue" type="button" data-open="sales">Talk to sales</button>`;
+  } else if (p.drawer === "waitlist") {
+    html += `<p>Fiat-to-Crypto is not available yet. Join the waitlist and we will email you when it launches.</p>` +
+      `<a class="btn btn-blue" href="#waitlist" data-close>Join the waitlist</a>`;
   } else {
-    const sold = $("#pay-ccy").value;
-    const out = $("#get-asset").value;
-    const units = sold === "BTC" ? amount * 64000 : amount;
-    const usd = units * (1 - fee);
-    receive = out === "INR" ? usd * rates.INR : usd * (rates[out] || 1);
-    $("#pay-label").textContent = "You sell";
-    $("#get-label").textContent = "You receive";
-    $("#rate-line").textContent = "Fee 1.20% · rate locked for this quote";
+    html += `<p>Talk to sales to see how this works for your business. Custom pricing for your volume.</p>` +
+      `<button class="btn btn-blue" type="button" data-open="sales">Talk to sales</button>`;
   }
-  $("#receive").textContent = receive.toLocaleString("en-IN", { maximumFractionDigits: digits, minimumFractionDigits: digits > 2 ? 4 : 2 });
-}
-
-function applyTheme(color) {
-  $("#theme-phone").style.borderColor = color;
-  $("#theme-pay").style.background = color;
-  $("#theme-query").textContent = `themeColor=${encodeURIComponent(color)}&colorMode=LIGHT`;
+  openDrawer(html);
 }
 
 let lastFocus = null;
@@ -328,40 +311,113 @@ function trapFocus(e) {
   else if (!e.shiftKey && (document.activeElement === last || !box.contains(document.activeElement))) { e.preventDefault(); first.focus(); }
 }
 
-function formShell(title, text, fields, submitLabel) {
+const honeypot = '<label class="hp" aria-hidden="true">Leave this empty<input name="bot-field" tabindex="-1" autocomplete="off"></label>';
+
+function formShell(title, text, fields, submitLabel, formName) {
   return `<h2 id="modal-title">${title}</h2><p style="color:#667085">${text}</p>
-    <form class="form" data-validate>
-      ${fields.map((f) => `<label>${f.label}<input name="${f.name}" type="${f.type || "text"}" ${f.required ? "required" : ""} ${f.placeholder ? `placeholder="${f.placeholder}"` : ""}><span class="err"></span></label>`).join("")}
+    <form class="form" data-validate data-form="${formName}" novalidate>
+      <input type="hidden" name="title" value="${attr(title)}">
+      ${fields.map((f) => `<label>${f.label}${f.required ? " *" : ""}<input name="${f.name}" type="${f.type || "text"}" ${f.required ? "required" : ""} ${f.placeholder ? `placeholder="${attr(f.placeholder)}"` : ""} ${f.value ? `value="${attr(f.value)}"` : ""} ${f.autocomplete ? `autocomplete="${f.autocomplete}"` : ""}><span class="err"></span></label>`).join("")}
+      ${honeypot}
       <button class="btn btn-blue" type="submit">${submitLabel}</button>
+      <p class="err" data-form-error role="alert"></p>
     </form>`;
 }
 
+function salesForm(title, industry) {
+  return formShell(title, 'Tell us about your business. We reply by email with next steps and custom pricing for your volume. See our <a href="/legal/privacy.html">Privacy Policy</a>.', [
+    { label: "Name", name: "name", required: true, autocomplete: "name" },
+    { label: "Work email", name: "email", type: "email", required: true, autocomplete: "email" },
+    { label: "Company", name: "company", required: true, autocomplete: "organization" },
+    { label: "Website", name: "website", required: true, placeholder: "https://", autocomplete: "url" },
+    { label: "Country", name: "country", required: true, autocomplete: "country-name" },
+    { label: "Industry", name: "industry", required: true, placeholder: "e.g. Gaming & Casino", value: industry },
+    { label: "Gaming licence", name: "licence", placeholder: "Authority and licence number, if gaming" },
+  ], "Send", "sales");
+}
+
+// Posts a form to Netlify Forms. The matching static form definitions are in index.html.
+async function sendForm(name, data) {
+  if (data.get("bot-field")) return;
+  data.set("form-name", name);
+  const res = await fetch("/", {
+    method: "POST",
+    headers: { "Content-Type": "application/x-www-form-urlencoded" },
+    body: new URLSearchParams(data).toString(),
+  });
+  if (!res.ok) throw new Error(`Form ${name} failed with ${res.status}`);
+}
+
 const docs = {
-  widget: ["Widget", "Open the hosted ramp with a publishable key. themeColor changes the button and the border.", codeSamples.curl],
-  quotes: ["Quotes", "Ask for a rate before you create an order. Quotes expire in 15 minutes on this demo.", codeSamples.node],
-  orders: ["Orders", "Create an order from a quote. Listen for order.completed on your webhook.", codeSamples.python],
-  payouts: ["Payouts", "Send a payout to a bank account, a UPI ID, or a link the recipient opens.", codeSamples.curl],
+  payments: ["Payments", "Create a payment request. Show the address and QR code to your customer. Get a webhook when it confirms.", codeSample],
+  webhooks: ["Webhooks", "Get an event for every payment and payout status change. Full API documentation is shared with verified merchants during onboarding.", null],
+  payouts: ["Payouts", "Send crypto to wallets, or pay out to bank accounts in 100+ countries. Payouts powered by our Mastercard partnership, available only where Mastercard transfers are supported.", null],
 };
 
 function openDocs(key) {
-  const [title, text, code] = docs[key] || docs.orders;
+  const [title, text, code] = docs[key] || docs.payments;
   openDrawer(`<h2>${title}</h2><p>${text}</p>
     <div class="docs-side">
       ${Object.keys(docs).map((k) => `<button type="button" data-doc="${k}" class="${k === key ? "is-on" : ""}">${docs[k][0]}</button>`).join("")}
     </div>
-    <div class="code"><pre style="margin:0;white-space:pre-wrap">${code}</pre></div>`);
+    ${code ? `<div class="code"><pre style="margin:0">${code}</pre></div>` : ""}`);
+}
+
+// Cookie consent is kept for 12 months, then the banner asks again.
+const CONSENT_KEY = "tokenpe-cookie";
+const CONSENT_MAX_AGE = 365 * 24 * 60 * 60 * 1000;
+
+function readConsent() {
+  try {
+    const saved = JSON.parse(localStorage.getItem(CONSENT_KEY));
+    if (!saved || !saved.choice || Date.now() - saved.at > CONSENT_MAX_AGE) return null;
+    return saved.choice;
+  } catch (err) {
+    return null;
+  }
+}
+
+function saveConsent(choice) {
+  try { localStorage.setItem(CONSENT_KEY, JSON.stringify({ choice, at: Date.now() })); } catch (err) { /* storage blocked */ }
+  if (choice === "analytics") loadAnalytics();
+}
+
+// Analytics runs only with consent. No analytics provider is configured yet;
+// load its script here once one is chosen.
+function loadAnalytics() {}
+
+function showCookie(settings) {
+  const bar = $("#cookie");
+  if (!bar) return;
+  bar.hidden = false;
+  bar.classList.toggle("settings", Boolean(settings));
+  $("#cookie-analytics").checked = readConsent() === "analytics";
+  document.body.classList.add("cookie-open");
+}
+
+function hideCookie() {
+  const bar = $("#cookie");
+  if (bar) {
+    bar.hidden = true;
+    bar.classList.remove("settings");
+  }
+  document.body.classList.remove("cookie-open");
+}
+
+function openFromHash() {
+  const forms = { "#get-started": () => salesForm("Get started with TokenPe"), "#contact": () => salesForm("Talk to sales") };
+  const form = forms[location.hash];
+  if (!form) return;
+  openModal(form());
+  history.replaceState(null, "", location.pathname + location.search);
 }
 
 function bind() {
-  $("#tab-ind").addEventListener("click", () => setAudience("individual"));
-  $("#tab-biz").addEventListener("click", () => setAudience("business"));
-
   $(".burger").addEventListener("click", () => {
     setMobileNav($(".burger").getAttribute("aria-expanded") !== "true");
   });
   window.addEventListener("resize", () => {
     if (window.innerWidth > 980 && $(".burger").getAttribute("aria-expanded") === "true") setMobileNav(false);
-    positionSegThumb(false);
   }, { passive: true });
 
   $("#cover-grid").addEventListener("pointermove", (e) => {
@@ -385,8 +441,8 @@ function bind() {
   document.addEventListener("click", (e) => {
     const product = e.target.closest("[data-product]");
     if (product) {
-      const p = products[product.dataset.product];
-      openDrawer(`<h2>${p.title}</h2><p>${p.body}</p><p>This is the product surface on the TokenPe rail. Talk to sales to turn it on for a business, or use the widget to try a quote.</p><button class="btn btn-blue" type="button" data-open="sales">Talk to sales</button>`);
+      if (product.tagName === "A") e.preventDefault();
+      openProduct(products[product.dataset.product]);
     }
     const usecase = e.target.closest("[data-usecase]");
     if (usecase && usecase.dataset.usecase) showUsecase(usecase.dataset.usecase);
@@ -409,7 +465,7 @@ function bind() {
       const answer = $(".a > div", item);
       if (answer) answer.inert = !open;
     }
-    const navLink = e.target.closest("#nav-links a, .nav-actions button");
+    const navLink = e.target.closest("#nav-links a, .nav-actions a, .nav-actions button");
     if (navLink && $(".burger").getAttribute("aria-expanded") === "true") setMobileNav(false);
     const doc = e.target.closest("[data-doc]");
     if (doc) openDocs(doc.dataset.doc);
@@ -417,109 +473,63 @@ function bind() {
     if (open) {
       e.preventDefault();
       const name = open.dataset.open;
-      if (name === "docs") openDocs(open.dataset.doc || "orders");
-      else if (name === "sales") openModal(formShell("Talk to sales", "Tell us what you are building. We reply to the work email.", [
-        { label: "Name", name: "name", required: true },
-        { label: "Work email", name: "email", type: "email", required: true },
-        { label: "Company", name: "company", required: true },
-        { label: "Website", name: "website", placeholder: "https://" },
-      ], "Request a call"));
-      else if (name === "signup") openModal(formShell("Create your TokenPe account", "UI only. Nothing is sent to a server.", [
-        { label: "Email", name: "email", type: "email", required: true },
-        { label: "Password", name: "password", type: "password", required: true },
-      ], "Create account"));
-      else if (name === "signin") openModal(formShell("Sign in", "Partner and merchant sign-in. UI only.", [
-        { label: "Email", name: "email", type: "email", required: true },
-        { label: "Password", name: "password", type: "password", required: true },
-      ], "Sign in"));
-      else if (name === "terms") openModal(`<h2 id="modal-title">Offer terms</h2><p>0% platform fee applies to the first ₹20,00,000 of eligible domestic volume for a new business that finishes onboarding during the offer. After that, the standard platform rate applies. Instant settlement, chargebacks, and payout fees are separate. This page is a design preview and not a live offer.</p>`);
-      else if (name === "privacy") openModal(`<h2 id="modal-title">Privacy notice</h2><p>This preview stores your cookie choice in this browser only. Forms on the page are not submitted anywhere. Analytics stays off unless you accept it.</p>`);
-      else if (name === "status") openModal(`<h2 id="modal-title">Status</h2><p>All systems operational in this preview. Quotes, checkout, payouts, and webhooks are shown as design states, not live services.</p>`);
-      else if (name === "paylink") openModal(`<h2 id="modal-title">Payment link</h2><p>Invoice for ₹1,499. Choose a method and confirm. This does not charge a real account.</p><div class="rails" id="link-rails"><button type="button" class="is-on">UPI</button><button type="button">Card</button></div><button class="btn btn-green" type="button" id="link-paid" style="margin-top:12px">Pay ₹1,499</button>`);
+      if (name === "docs") openDocs(open.dataset.doc || "payments");
+      else if (name === "sales") openModal(salesForm("Talk to sales", open.dataset.presetIndustry));
+      else if (name === "signup") openModal(salesForm("Get started with TokenPe"));
     }
     if (e.target.closest("[data-close]") || e.target.id === "backdrop") closeOverlays();
-    const toastBtn = e.target.closest("[data-toast]");
-    if (toastBtn) toast(toastBtn.dataset.toast);
     const footerLink = e.target.closest("[data-footer]");
-    if (footerLink) {
+    if (footerLink && footerLink.dataset.footer === "cookies") {
       e.preventDefault();
-      const name = footerLink.dataset.footer;
-      if (name === "FAQ") { location.hash = "faq"; return; }
-      if (name === "API docs") { openDocs("orders"); return; }
-      const modalFor = { About: "status", Careers: "status", Contact: "sales", Privacy: "privacy", Terms: "terms", "Risk note": "terms", "Sign in": "signin", Status: "status" };
-      const kind = modalFor[name];
-      if (kind) document.querySelector(`[data-open="${kind}"]`)?.click();
+      showCookie(true);
     }
   });
 
-  document.addEventListener("submit", (e) => {
+  document.addEventListener("submit", async (e) => {
     const form = e.target.closest("form");
     if (!form) return;
     if (form.id === "mini-form") {
       e.preventDefault();
+      const note = $("#mini-form-note");
       const data = new FormData(form);
-      if (!data.get("name")) { $("#mini-form-note").textContent = "Add a name to continue."; return; }
-      $("#mini-form-note").textContent = `Link ready for ${data.get("name")} · ₹${data.get("amount")}.`;
+      const email = String(data.get("email") || "").trim();
+      const company = String(data.get("company") || "").trim();
+      if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email) || !company) { note.textContent = "Enter your work email and company."; return; }
+      const button = $("button[type=submit]", form);
+      button.disabled = true;
+      try {
+        await sendForm("waitlist", data);
+        note.textContent = "You are on the list. We will email you when Fiat-to-Crypto launches.";
+        form.reset();
+      } catch (err) {
+        note.textContent = "Something went wrong. Please try again or email sales@tokenpe.com.";
+      }
+      button.disabled = false;
       return;
     }
     if (form.hasAttribute("data-validate")) {
       e.preventDefault();
       let ok = true;
-      $$("input", form).forEach((input) => {
+      $$("input:not([type=hidden]):not([name=bot-field])", form).forEach((input) => {
         const err = input.parentElement.querySelector(".err");
         input.classList.remove("bad");
         err.textContent = "";
         if (input.required && !input.value.trim()) { ok = false; input.classList.add("bad"); err.textContent = "This field is required."; }
         if (input.type === "email" && input.value && !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(input.value)) { ok = false; input.classList.add("bad"); err.textContent = "Enter a valid email."; }
-        if (input.name === "password" && input.value && input.value.length < 8) { ok = false; input.classList.add("bad"); err.textContent = "Use at least 8 characters."; }
       });
       if (!ok) return;
-      form.outerHTML = `<div class="success"><strong>Saved on this page only.</strong><p>No account was created and no message was sent. This is the UI state after a valid form.</p></div>`;
+      const button = $("button[type=submit]", form);
+      const error = $("[data-form-error]", form);
+      button.disabled = true;
+      error.textContent = "";
+      try {
+        await sendForm(form.dataset.form, new FormData(form));
+        form.outerHTML = `<div class="success"><strong>Thank you.</strong><p>We have received your request and will reply by email.</p></div>`;
+      } catch (err) {
+        error.textContent = "Something went wrong. Please try again or email sales@tokenpe.com.";
+        button.disabled = false;
+      }
     }
-  });
-
-  $$(".buy-sell button").forEach((btn) => btn.addEventListener("click", () => {
-    $$(".buy-sell button").forEach((b) => b.classList.toggle("is-on", b === btn));
-    const selling = btn.dataset.side === "sell";
-    fillSelect($("#pay-ccy"), selling ? assets : ["INR", "USD", "EUR"]);
-    fillSelect($("#get-asset"), selling ? ["INR", "USD"] : assets);
-    if (selling) $("#pay-amount").value = "100";
-    else $("#pay-amount").value = "10000";
-    updateQuote();
-  }));
-  ["pay-amount", "pay-ccy", "get-asset"].forEach((id) => $(`#${id}`).addEventListener("input", updateQuote));
-  $("#widget-continue").addEventListener("click", () => {
-    $("#widget-home").hidden = true;
-    $("#widget-pay").hidden = false;
-    const side = $(".buy-sell button.is-on").dataset.side;
-    $("#pay-title").textContent = side === "buy" ? "Pay with UPI" : "Send to your bank";
-    $("#pay-summary").textContent = `${$("#pay-amount").value} ${$("#pay-ccy").value} → ${$("#receive").textContent} ${$("#get-asset").value}`;
-  });
-  $("#widget-back").addEventListener("click", () => {
-    $("#widget-pay").hidden = true;
-    $("#widget-home").hidden = false;
-  });
-  $("#widget-confirm").addEventListener("click", () => {
-    const upi = $("#upi-id").value.trim();
-    if ($("#pay-title").textContent.includes("UPI") && !upi.includes("@")) {
-      toast("Enter a UPI ID such as name@upi");
-      return;
-    }
-    toast("Quote confirmed in the preview. No payment was sent.");
-    $("#widget-pay").hidden = true;
-    $("#widget-home").hidden = false;
-  });
-  $$("[data-widget-mode]").forEach((btn) => btn.addEventListener("click", () => {
-    document.getElementById("integrate").scrollIntoView({ behavior: "smooth" });
-    const side = btn.dataset.widgetMode;
-    $(`.buy-sell button[data-side="${side}"]`).click();
-  }));
-
-  $("#theme-swatches").addEventListener("click", (e) => {
-    const btn = e.target.closest("[data-theme]");
-    if (!btn) return;
-    $$("#theme-swatches button").forEach((b) => b.classList.toggle("is-on", b === btn));
-    applyTheme(btn.dataset.theme);
   });
 
   $("#payouts").addEventListener("click", (e) => {
@@ -534,40 +544,21 @@ function bind() {
     syncPayoutInert();
   });
   document.addEventListener("click", (e) => {
-    if (e.target.id === "recv-go") toast("Payout link ready. The recipient still has to choose an account.");
-    if (e.target.id === "settle-now") toast("₹4,149 queued for instant settlement in this preview.");
-    if (e.target.id === "link-paid") { toast("₹1,499 marked paid in the preview."); closeOverlays(); }
+    if (e.target.id === "recv-go" || e.target.id === "theme-pay") toast("Preview only. No payout was sent.");
   });
 
-  $("#code-langs").addEventListener("click", (e) => {
-    const btn = e.target.closest("[data-lang]");
-    if (btn) setCode(btn.dataset.lang);
-  });
   $("#copy-code").addEventListener("click", async () => {
     try { await navigator.clipboard.writeText($("#code-block").textContent); toast("Copied"); }
     catch { toast("Copy blocked in this browser"); }
   });
-  $("#sandbox-run").addEventListener("click", () => {
-    const amount = 10000;
-    const receive = ((amount / rates.INR) * 0.988).toFixed(2);
-    $("#sandbox-out").textContent = `POST /v1/quotes 200\n{ "pay": "INR", "amount": "${amount}", "receive": "USDT", "out": "${receive}", "fee": "1.20%" }`;
-  });
 
-  const cookie = $("#cookie");
-  let saved = null;
-  try { saved = localStorage.getItem("tokenpe-cookie"); } catch (err) { saved = null; }
-  if (cookie && saved) cookie.remove();
-  if (cookie && !saved) {
-    document.body.classList.add("cookie-open");
-    $("#cookie-settings").addEventListener("click", () => cookie.classList.toggle("settings"));
-    const rememberCookie = (value) => { try { localStorage.setItem("tokenpe-cookie", value); } catch (err) { /* preview only */ } };
-    $("#cookie-reject").addEventListener("click", () => { rememberCookie("rejected"); hideCookie(); });
-    $("#cookie-accept").addEventListener("click", () => {
-      const analytics = $("#cookie-analytics") && $("#cookie-analytics").checked;
-      rememberCookie(analytics ? "analytics" : "necessary");
-      hideCookie();
-    });
-  }
+  const consent = readConsent();
+  if (consent === "analytics") loadAnalytics();
+  if (!consent) showCookie(false);
+  $("#cookie-settings").addEventListener("click", () => $("#cookie").classList.toggle("settings"));
+  $("#cookie-analytics").addEventListener("change", (e) => saveConsent(e.target.checked ? "analytics" : "necessary"));
+  $("#cookie-reject").addEventListener("click", () => { saveConsent("necessary"); hideCookie(); });
+  $("#cookie-accept").addEventListener("click", () => { saveConsent("analytics"); hideCookie(); });
 
   let scrollQueued = false;
   window.addEventListener("scroll", () => {
@@ -583,40 +574,9 @@ function bind() {
     }
     trapFocus(e);
   });
-  positionSegThumb(false);
-  if (document.fonts && document.fonts.ready) document.fonts.ready.then(() => positionSegThumb(false));
 
-  const liveTimer = setInterval(() => {
-    const el = $("#live-count");
-    const n = 2800 + Math.floor(Math.random() * 80);
-    el.textContent = n.toLocaleString("en-IN");
-  }, 2600);
-  if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) clearInterval(liveTimer);
-}
-
-function hideCookie() {
-  const bar = $("#cookie");
-  if (bar) bar.remove();
-  document.body.classList.remove("cookie-open");
-}
-
-function setAudience(mode) {
-  document.body.classList.toggle("audience-individual", mode === "individual");
-  $("#tab-ind").classList.toggle("is-on", mode === "individual");
-  $("#tab-biz").classList.toggle("is-on", mode === "business");
-  $("#tab-ind").setAttribute("aria-selected", mode === "individual");
-  $("#tab-biz").setAttribute("aria-selected", mode === "business");
-  positionSegThumb(true);
-}
-
-function positionSegThumb(animate) {
-  const seg = $(".seg");
-  const on = seg && $("button.is-on", seg);
-  if (!on || !on.offsetWidth) return;
-  seg.classList.toggle("no-anim", !animate);
-  seg.style.setProperty("--thumb-x", `${on.offsetLeft}px`);
-  seg.style.setProperty("--thumb-w", `${on.offsetWidth}px`);
-  seg.classList.add("has-thumb");
+  window.addEventListener("hashchange", openFromHash);
+  openFromHash();
 }
 
 function setMobileNav(open) {
@@ -632,7 +592,7 @@ function showUsecase(id) {
     b.classList.toggle("is-on", on);
     b.setAttribute("aria-selected", on);
   });
-  $$(".usecase-panel").forEach((p) => p.classList.toggle("is-on", p.dataset.panel === id));
+  $$("#usecase-panels .usecase-panel").forEach((p) => p.classList.toggle("is-on", p.dataset.panel === id));
 }
 
 function onScroll() {

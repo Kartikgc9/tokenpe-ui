@@ -170,6 +170,8 @@
     ".sgf-link:hover svg,.sgf-link:focus-visible svg{translate:5px 0}",
     ".sgf-link:focus-visible{outline:none}",
     ".sgf-copy{white-space:pre-line}",
+    ".sgf-copy span{display:block}",
+    ".sgf-copy span+span{margin-top:.7em}",
     ".sgf-mark{box-sizing:border-box;padding:clamp(36px,4.6cqw,64px) clamp(16px,2.6cqw,40px) clamp(14px,2.1cqw,28px)}",
     ".sgf-svg{display:block;width:100%;height:auto;overflow:hidden;fill:var(--sgf-ink)}",
     ".sgf-rise{transition:transform 1.15s cubic-bezier(.16,.84,.2,1) var(--sgf-d,0ms)}",
@@ -228,22 +230,28 @@
     node.style.setProperty("--sgf-d", delayMs + "ms");
   };
 
+  // The home page opens the sales form and the cookie banner in place. Legal pages
+  // link back to the home page instead, and to the Cookie Policy for cookie settings.
+  const onHome = Boolean(document.getElementById("cookie"));
+  const home = onHome ? "" : "/";
   const socials = [
-    { label: "About", href: "#", footer: "About" },
-    { label: "FAQ", href: "#", footer: "FAQ" },
-    { label: "Careers", href: "#", footer: "Careers" },
-    { label: "Contact", href: "#", footer: "Contact" },
-    { label: "X", href: "#", toast: "Profiles open with the public launch." },
-    { label: "LinkedIn", href: "#", toast: "Profiles open with the public launch." },
-    { label: "YouTube", href: "#", toast: "Profiles open with the public launch." },
+    { label: "Products", href: home + "#covered" },
+    { label: "Gaming & Casino", href: home + "#gaming" },
+    { label: "Developers", href: home + "#developers" },
+    { label: "FAQ", href: home + "#faq" },
+    onHome ? { label: "Contact", href: "#", open: "sales" } : { label: "Contact", href: "/#contact" },
+    { label: "Sign in", href: "https://app.tokenpe.com" },
+    onHome ? { label: "Cookie settings", href: "/legal/cookies.html", footer: "cookies" } : { label: "Cookie settings", href: "/legal/cookies.html" },
   ];
   const legal = [
-    { label: "Privacy", href: "#", footer: "Privacy" },
-    { label: "Terms", href: "#", footer: "Terms" },
-    { label: "Risk note", href: "#", footer: "Risk note" },
-    { label: "Sign in", href: "#", footer: "Sign in" },
-    { label: "API docs", href: "#", footer: "API docs" },
-    { label: "Status", href: "#", footer: "Status" },
+    { label: "Terms", href: "/legal/terms.html" },
+    { label: "Privacy", href: "/legal/privacy.html" },
+    { label: "Cookies", href: "/legal/cookies.html" },
+    { label: "AML policy", href: "/legal/aml.html" },
+    { label: "Acceptable use", href: "/legal/acceptable-use.html" },
+    { label: "Risk disclosure", href: "/legal/risk-disclosure.html" },
+    { label: "Complaints", href: "/legal/complaints.html" },
+    { label: "Gaming operators", href: "/legal/gaming-operators.html" },
   ];
 
   function scrambleLink(link) {
@@ -255,7 +263,7 @@
     a.href = link.href || "#";
     a.setAttribute("aria-label", link.label);
     if (link.footer) a.dataset.footer = link.footer;
-    if (link.toast) a.dataset.toast = link.toast;
+    if (link.open) a.dataset.open = link.open;
     const span = document.createElement("span");
     span.setAttribute("aria-hidden", "true");
     span.textContent = link.label;
@@ -298,7 +306,7 @@
   label.className = "sgf-lede";
   label.htmlFor = emailId;
   label.style.display = "block";
-  label.textContent = "Ramp notes, settlement updates, and API changes";
+  label.textContent = "Product updates and new networks";
   const field = document.createElement("div");
   field.className = "sgf-field";
   const input = document.createElement("input");
@@ -310,6 +318,12 @@
   input.spellcheck = false;
   input.placeholder = "Work email";
   input.setAttribute("aria-describedby", msgId);
+  const trap = document.createElement("input");
+  trap.className = "sr-only";
+  trap.name = "bot-field";
+  trap.tabIndex = -1;
+  trap.autocomplete = "off";
+  trap.setAttribute("aria-hidden", "true");
   const go = document.createElement("button");
   go.className = "sgf-go";
   go.type = "submit";
@@ -330,7 +344,7 @@
   message.id = msgId;
   message.className = "sgf-msg";
   message.setAttribute("aria-live", "polite");
-  form.append(label, field, message);
+  form.append(label, field, message, trap);
 
   const socialNav = document.createElement("nav");
   socialNav.setAttribute("aria-label", "Company");
@@ -342,7 +356,18 @@
   const copy = document.createElement("p");
   copy.className = "sgf-copy sgf-fade";
   delay(copy);
-  copy.textContent = "© 2024—2026\nTokenPe\nISO 27001 · SOC 2 Type II";
+  [
+    "© 2026 [LEGAL ENTITY NAME]\n[US ADDRESS]",
+    "Registered with FinCEN as a Money Services Business, Reg. No. [FINCEN MSB NUMBER]. Registration is not a licence or an endorsement.",
+    "Payouts powered by our Mastercard partnership, available only where Mastercard transfers are supported. Mastercard is a registered trademark of Mastercard International Incorporated.",
+    "Not a bank. Balances are not FDIC or SIPC insured. Crypto is volatile and transfers are irreversible.",
+    "Gaming: licensed operators only. 18+.",
+    "sales@tokenpe.com · support@tokenpe.com · compliance@tokenpe.com",
+  ].forEach((line) => {
+    const item = document.createElement("span");
+    item.textContent = line;
+    copy.appendChild(item);
+  });
 
   const legalNav = document.createElement("nav");
   legalNav.setAttribute("aria-label", "Legal");
@@ -496,10 +521,14 @@
     }
     formState = "sending";
     renderForm();
+    // Netlify Forms; the matching static "newsletter" form is in index.html.
     let ok = true;
     try {
-      await new Promise((resolve) => setTimeout(resolve, 900));
-      ok = !email.trim().toLowerCase().startsWith("fail@");
+      if (!trap.value) {
+        const body = new URLSearchParams({ "form-name": "newsletter", email: email.trim(), "bot-field": "" });
+        const res = await fetch("/", { method: "POST", headers: { "Content-Type": "application/x-www-form-urlencoded" }, body: body.toString() });
+        ok = res.ok;
+      }
     } catch (err) {
       ok = false;
     }

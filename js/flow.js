@@ -15,210 +15,61 @@
     }
   };
 
-  const phone = $("#widget-phone");
   const themePhone = $("#theme-phone");
-  let driving = false;
-  let widgetLive = true;
-  let widgetPaused = false;
-  let integrateVisible = false;
-  let widgetAcc = 0;
-  let widgetShown = -1;
-  let upiTimer = 0;
   let themeLive = true;
   let subsLive = true;
   let recvLive = true;
-  let codeLive = true;
-  let codePause = false;
-  let devVisible = false;
-  let langTick = null;
-  let sandboxLive = true;
-  let sandboxStarted = false;
 
-  const stopType = () => clearInterval(upiTimer);
-  const quoteSummary = () => {
-    const amount = $("#pay-amount");
-    const pay = $("#pay-ccy");
-    const receive = $("#receive");
-    const asset = $("#get-asset");
-    if (!amount || !pay || !receive || !asset) return "";
-    return amount.value + " " + pay.value + " → " + receive.textContent + " " + asset.value;
-  };
-  const showPanel = (id) => {
-    ["widget-home", "widget-pay", "widget-done"].forEach((key) => {
-      const panel = document.getElementById(key);
-      if (panel) panel.hidden = key !== id;
-    });
-  };
-  const typeUpi = () => {
-    const input = $("#upi-id");
-    if (!input) return;
-    const text = "priya@okaxis";
-    let i = 0;
-    input.value = "";
-    stopType();
-    upiTimer = setInterval(() => {
-      i += 1;
-      input.value = text.slice(0, i);
-      if (i >= text.length) stopType();
-    }, 48);
-  };
-  const showWidget = (name) => {
-    if (!phone) return;
-    driving = true;
-    try {
-      stopType();
-      phone.classList.toggle("is-tilt", name === "pay-buy" || name === "pay-sell");
-      if (name === "buy" || name === "sell") {
-        showPanel("widget-home");
-        const side = document.querySelector('.buy-sell button[data-side="' + name + '"]');
-        if (side) side.click();
-        return;
-      }
-      if (name === "pay-buy" || name === "pay-sell") {
-        const sell = name === "pay-sell";
-        showPanel("widget-pay");
-        write($("#pay-title"), sell ? "Send to your bank" : "Pay with UPI");
-        write($("#pay-field-label"), sell ? "Account" : "UPI ID");
-        const input = $("#upi-id");
-        if (input) {
-          input.placeholder = sell ? "Account" : "name@upi";
-          input.value = sell ? "HDFC ···· 4821" : "";
-        }
-        write($("#pay-summary"), quoteSummary());
-        if (!sell) typeUpi();
-        return;
-      }
-      const sell = name === "done-sell";
-      showPanel("widget-done");
-      write($("#widget-done-kicker"), sell ? "Off-ramp" : "On-ramp");
-      write($("#widget-done-title"), sell ? "INR sent" : "USDT landed");
-      write($("#widget-done-status"), sell ? "Paid out" : "Settled");
-      write($("#widget-done-copy"), quoteSummary());
-    } finally {
-      driving = false;
-    }
-  };
-
-  if (phone) {
-    phone.addEventListener("pointerenter", () => { widgetPaused = true; });
-    phone.addEventListener("pointerleave", () => { widgetPaused = false; });
-    phone.addEventListener("click", () => {
-      if (driving) return;
-      widgetLive = false;
-      stopType();
-    });
-    phone.addEventListener("input", () => {
-      if (driving) return;
-      widgetLive = false;
-      stopType();
-    });
-  }
-  if (themePhone) {
-    $("#theme-pay")?.addEventListener("click", () => {
-      themeLive = false;
-      if (typeof toast === "function") toast("Theme preview confirmed. No payment was sent.");
-    });
-  }
+  $("#theme-pay")?.addEventListener("click", () => { themeLive = false; });
   $("#sub-list")?.addEventListener("click", () => { subsLive = false; });
   $(".receive-box")?.addEventListener("change", () => { recvLive = false; });
-  $("#code-langs")?.addEventListener("click", () => { codeLive = false; });
-  $("#code-langs")?.closest("article")?.addEventListener("pointerenter", () => { codePause = true; });
-  $("#code-langs")?.closest("article")?.addEventListener("pointerleave", () => { codePause = false; });
-  $("#sandbox-run")?.addEventListener("click", () => { sandboxLive = false; });
 
-  const watch = (el, set) => {
-    if (!el || !("IntersectionObserver" in window)) {
-      set(true);
-      return;
-    }
-    const io = new IntersectionObserver(([entry]) => set(entry.isIntersecting), { threshold: 0.22 });
-    io.observe(el);
-  };
-  watch($("#integrate"), (on) => { integrateVisible = on; });
-  watch($("#developers"), (on) => { devVisible = on; });
-
-  const widgetSteps = [
-    { name: "buy", dur: 1700 },
-    { name: "pay-buy", dur: 1900 },
-    { name: "done-buy", dur: 1800 },
-    { name: "sell", dur: 1700 },
-    { name: "pay-sell", dur: 1900 },
-    { name: "done-sell", dur: 2100 },
+  const paymentStory = [
+    ["Payment · customer pays", "250 USDC received on Solana.", "Waiting for confirmation."],
+    ["Payment · TokenPe confirms", "Transfer confirmed on-chain.", "Screened with blockchain analytics."],
+    ["Payment · you settle", "Balance credited in USDC.", "Webhook sent to your platform."],
   ];
-  const widgetTotal = widgetSteps.reduce((sum, step) => sum + step.dur, 0);
-  const onRampStory = [
-    ["On-ramp · customer pays", "UPI collected ₹2,450.", "The quote is locked."],
-    ["On-ramp · TokenPe treasury", "Converting rupees to USDT.", "Fee 1.20% on this quote."],
-    ["On-ramp · you withdraw", "USDT 29.05 left treasury.", "Landed in the wallet."],
-  ];
-  const offRampStory = [
-    ["Off-ramp · customer pays", "Wallet sent USDT 100.", "The sell quote is locked."],
-    ["Off-ramp · TokenPe treasury", "Treasury is holding the token.", "INR payout is queued."],
-    ["Off-ramp · you withdraw", "₹8,403 paid to HDFC ···· 4821.", "Payout settled."],
+  const payoutStory = [
+    ["Payout · you request", "Payout of 250 USDC requested.", "Rate shown before you confirm."],
+    ["Payout · TokenPe converts", "Converting to local currency.", "Payout in progress."],
+    ["Payout · delivered", "Paid to the bank account.", "Tracked by webhook."],
   ];
   const themeFrames = [
-    { asset: "USDT", out: "99.10", btn: "Apple Pay", status: "On-ramp · card to USDT", tilt: false },
-    { asset: "USDT", out: "99.10", btn: "Paying…", status: "On-ramp · treasury", tilt: true },
-    { asset: "USDT", out: "99.10", btn: "USDT received", status: "On-ramp · withdrawn", tilt: false },
-    { asset: "INR", out: "8,339.27", btn: "Cash out", status: "Off-ramp · rupees sent", tilt: true },
+    { btn: "Confirm payout", status: "Rate shown before you confirm.", tilt: false },
+    { btn: "Sending…", status: "Payout in progress.", tilt: true },
+    { btn: "Payout sent", status: "Tracked by webhook.", tilt: false },
+    { btn: "Payout sent", status: "Tracked by webhook.", tilt: true },
   ];
+  const networks = ["Solana", "Tron", "Ethereum"];
   // Everything below is rendered once by app.js, so look it up once instead of every frame.
   const els = {
     hubs: $$(".rail-hub"),
     railPills: $$(".rail-steps [data-step]"),
     rails: $$(".rail").map((rail) => ({
       from: rail.dataset.from || "Customer",
-      to: rail.dataset.to || "Wallet",
+      to: rail.dataset.to || "Business",
       caption: rail.querySelector("[data-rail-caption]"),
     })),
-    stackPhase: $("#stack-phase"),
     stackA: $("#stack-a"),
     stackB: $("#stack-b"),
     payLines: $$(".pay-line"),
-    themeAsset: $("#theme-asset"),
-    themeOut: $("#theme-out"),
     themePay: $("#theme-pay"),
     themeStatus: $("#theme-status"),
     methods: $$("#method-grid .method"),
     subs: $$("#sub-list button"),
     settleRows: $$("#settle-card .mini-row"),
-    settlePhase: $("#settle-phase"),
-    rate: $("#success-rate"),
     payoutBar: $("#payout-bar"),
     payoutLeft: $("#payout-left"),
     payoutFile: $("#payout-file"),
     radios: $$(".receive-box input"),
     recvStatus: $("#recv-status"),
-    splitNow: $$(".split-now"),
-    splitLater: $$(".split-later"),
     switches: $$(".mock-checkout .switch"),
   };
 
-  let last = performance.now();
   const tick = (now) => {
-    const dt = Math.min(48, now - last);
-    last = now;
-    const hidden = document.hidden;
-    if (hidden) {
+    if (document.hidden) {
       requestAnimationFrame(tick);
       return;
-    }
-
-    if (widgetLive && !widgetPaused && integrateVisible && !hidden) {
-      widgetAcc += dt;
-      let cursor = widgetAcc % widgetTotal;
-      let index = 0;
-      for (let i = 0; i < widgetSteps.length; i++) {
-        if (cursor < widgetSteps[i].dur) {
-          index = i;
-          break;
-        }
-        cursor -= widgetSteps[i].dur;
-      }
-      if (index !== widgetShown) {
-        widgetShown = index;
-        showWidget(widgetSteps[index].name);
-      }
     }
 
     const local = (now / 1000) % 8;
@@ -227,7 +78,7 @@
     const e = ease(u);
     const forward = going ? e : 1 - e;
     const step = forward < 0.34 ? 1 : forward < 0.7 ? 2 : 3;
-    const story = (going ? onRampStory : offRampStory)[step - 1];
+    const story = (going ? paymentStory : payoutStory)[step - 1];
 
     const tilt = (Math.sin(forward * Math.PI) * (going ? 7 : -7)).toFixed(2);
     els.hubs.forEach((hub) => hub.setAttribute("transform", "rotate(" + tilt + " 210 78)"));
@@ -236,12 +87,11 @@
     });
     els.rails.forEach((rail) => {
       const caption = going
-        ? "On-ramp · " + rail.from + " pays in. " + rail.to + " receives the token."
-        : "Off-ramp · " + rail.to + " sends the token back. " + rail.from + " is paid out.";
+        ? "Payment · " + rail.from + " pays in crypto. TokenPe confirms and screens it."
+        : "Settlement · " + rail.to + " is credited in the asset it chose.";
       write(rail.caption, caption);
     });
 
-    write(els.stackPhase, story[0]);
     write(els.stackA, story[1]);
     write(els.stackB, story[2]);
     const hotLine = going ? (step === 1 ? 0 : 2) : (step === 3 ? 3 : 2);
@@ -250,8 +100,6 @@
     const quarter = Math.floor(local / 2);
     if (themeLive) {
       const frame = themeFrames[quarter];
-      write(els.themeAsset, frame.asset);
-      write(els.themeOut, frame.out);
       write(els.themePay, frame.btn);
       write(els.themeStatus, frame.status);
       themePhone?.classList.toggle("is-tilt", frame.tilt);
@@ -264,49 +112,18 @@
       els.subs.forEach((button, i) => button.classList.toggle("is-on", i === index));
     }
     els.settleRows.forEach((row, index) => row.classList.toggle("is-hot", index === step - 1));
-    write(els.settlePhase, story[0]);
-    if (els.rate) write(els.rate, (98.2 + Math.sin((local / 8) * Math.PI * 2) * 0.4).toFixed(1) + "%");
 
     const left = Math.max(0, Math.round(38 * (1 - local / 8)));
     if (els.payoutBar) els.payoutBar.style.width = ((38 - left) / 38 * 100).toFixed(1) + "%";
-    write(els.payoutLeft, left === 0 ? "186 done · paid out" : (186 - left) + " done · " + left + " left");
-    write(els.payoutFile, left === 0 ? "Payroll_Apr.xlsx · 186 rows · paid" : "Payroll_Apr.xlsx · 186 rows · paying out");
+    write(els.payoutLeft, left === 0 ? "Delivered" : "In progress");
+    write(els.payoutFile, left === 0 ? "Payout batch · delivered" : "Payout batch · in progress");
     if (recvLive) {
       const index = Math.min(els.radios.length - 1, Math.floor((local / 8) * els.radios.length));
       els.radios.forEach((radio, i) => { radio.checked = i === index; });
-      const names = ["UPI", "Bank account", "Wallet"];
-      write(els.recvStatus, left === 0 ? "Paid out" : "Sending via " + (names[index] || "UPI"));
+      write(els.recvStatus, left === 0 ? "Sent" : "Sending on " + (networks[index] || networks[0]));
     }
 
-    const prepaid = Math.round(100 + (local / 8) * 1920);
-    const later = Math.max(0, 2120 - prepaid);
-    els.splitNow.forEach((el) => write(el, "Pay ₹" + prepaid.toLocaleString("en-IN") + " now"));
-    els.splitLater.forEach((el) => write(el, "₹" + later.toLocaleString("en-IN") + " on delivery"));
     els.switches.forEach((knob) => knob.classList.toggle("is-off", !going));
-
-    if (langTick === null) langTick = Math.floor(now / 8000);
-    const nextLangTick = Math.floor(now / 8000);
-    if (devVisible && codeLive && !codePause && nextLangTick !== langTick && typeof setCode === "function") {
-      langTick = nextLangTick;
-      const order = ["curl", "node", "python"];
-      const current = $("#code-langs button.is-on")?.dataset.lang || "curl";
-      const next = order[(order.indexOf(current) + 1) % order.length];
-      setCode(next);
-    } else if (!devVisible || codePause) {
-      langTick = nextLangTick;
-    }
-
-    if (sandboxLive && devVisible && !sandboxStarted && typeof rates !== "undefined") {
-      sandboxStarted = true;
-      window.setTimeout(() => {
-        if (!sandboxLive) return;
-        const out = $("#sandbox-out");
-        if (!out || out.textContent.trim()) return;
-        const amount = 10000;
-        const receive = ((amount / rates.INR) * 0.988).toFixed(2);
-        out.textContent = 'POST /v1/quotes 200\n{ "pay": "INR", "amount": "' + amount + '", "receive": "USDT", "out": "' + receive + '", "fee": "1.20%" }';
-      }, 1100);
-    }
 
     requestAnimationFrame(tick);
   };

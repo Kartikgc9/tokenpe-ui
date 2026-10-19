@@ -38,7 +38,6 @@
     }
   }
 
-  let mode = "hosted";
   let pay = "wallet";
   let visible = false;
   let acc = 0;
@@ -75,10 +74,9 @@
   const paint = (phase, travel) => {
     const name = business();
     const sum = money();
-    const hosted = mode === "hosted";
     amountEl.textContent = sum;
     whereEl.textContent = "USD on " + name;
-    kickerEl.textContent = hosted ? "Hosted checkout" : "Embedded";
+    kickerEl.textContent = "Payment request";
     steps.forEach((step) => {
       const n = Number(step.dataset.simStep);
       const on = (phase === "in" || phase === "show" || phase === "paid" || phase === "out") && n === 1
@@ -98,14 +96,14 @@
       leftSub.textContent = sum + " through TokenPe";
     }
     if (phase === "landed") {
-      rightTitle.textContent = "Landed";
-      rightSub.textContent = sum + " USDC, net of fees";
+      rightTitle.textContent = "Confirmed";
+      rightSub.textContent = sum + " in USDC";
     } else if (phase === "done") {
-      rightTitle.textContent = "Withdrawn";
-      rightSub.textContent = "Settled as USDC";
+      rightTitle.textContent = "Settled";
+      rightSub.textContent = "Credited as USDC";
     } else {
       rightTitle.textContent = "USDC";
-      rightSub.textContent = "Any payment lands here";
+      rightSub.textContent = "Settle in crypto, USDC or USDT";
     }
     const showPay = phase === "show" || phase === "paid" || phase === "out" || phase === "landed" || phase === "done";
     show(waitEl, phase === "idle" || phase === "in");
@@ -126,13 +124,13 @@
         : "The customer connects a wallet and pays " + sum + " through TokenPe.";
       runEl.textContent = "Running";
     } else if (phase === "paid" || phase === "out") {
-      status.textContent = "TokenPe confirms the payment with a signed payment.paid event.";
+      status.textContent = "TokenPe confirms the payment on-chain, screens it and sends a webhook.";
       runEl.textContent = "Running";
     } else if (phase === "landed") {
-      status.textContent = sum + " lands in the TokenPe treasury, net of fees.";
+      status.textContent = sum + " is confirmed and credited to your balance.";
       runEl.textContent = "Running";
     } else {
-      status.textContent = "A customer at " + name + " paid through TokenPe. The amount landed in the TokenPe treasury, and " + name + " withdrew it. Nothing on this page was sent.";
+      status.textContent = "A customer at " + name + " paid through TokenPe. " + name + "'s balance was credited in USDC. Nothing on this page was sent.";
       runEl.textContent = "Run again";
     }
     let t = 0;
@@ -166,12 +164,6 @@
     return { phase: "done", travel: 1 };
   };
 
-  root.querySelectorAll("[data-sim-mode]").forEach((button) => {
-    button.addEventListener("click", () => {
-      mode = button.dataset.simMode;
-      root.querySelectorAll("[data-sim-mode]").forEach((item) => item.classList.toggle("is-on", item === button));
-    });
-  });
   root.querySelectorAll("[data-sim-pay]").forEach((button) => {
     button.addEventListener("click", () => {
       pay = button.dataset.simPay;
