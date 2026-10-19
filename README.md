@@ -14,6 +14,8 @@ Plain HTML, CSS, and JavaScript. No framework and no package install.
 | `js/app.js` | Content data, rendering, menus, forms, modals, drawer, tabs, accordions, cookie consent |
 | `js/sim.js` | "Customer pays → TokenPe confirms → you settle" payment simulation |
 | `js/flow.js` | Looping product demos (floating cards, bento cards, payout phone, payouts, rail diagrams) |
+| `js/globe.js` | Rotating cobe globe in the hero planet (port of the 21st.dev Globe component) |
+| `js/vendor/` | Vendored [cobe](https://github.com/shuding/cobe) 0.6.5 and its dependency phenomenon (MIT) |
 | `js/footer.js` | Footer with the glyph wordmark, shutter letter, and product-updates form (also used on legal pages) |
 | `21stcomps/` | Original React component references the vanilla JS was ported from (not deployed) |
 | `scripts/build.mjs` | Copies the public files into `dist/` for deployment |
