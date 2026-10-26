@@ -5,10 +5,8 @@ const features = ["Bitcoin", "Ethereum", "Solana", "Tron", "Sui", "Base", "Polyg
 
 const products = [
   { title: "Crypto-to-Crypto", body: "Accept BTC, ETH, SOL, TRX, SUI, and USDC and USDT on supported chains. Keep it as received or convert to USDC or USDT.", icon: "ramp", drawer: "sales" },
-  { title: "Crypto-to-Fiat Payouts", body: "Pay out to bank accounts in 100+ countries. Payouts powered by our Mastercard partnership, available only where Mastercard transfers are supported.", icon: "bank", drawer: "sales" },
-  { title: "11 networks", body: "Bitcoin, Ethereum, Solana, Tron, Sui, Base, Polygon, Arbitrum, Optimism, BNB Chain and Avalanche.", icon: "globe", drawer: "assets" },
-  { title: "Compliance built in", body: "Registered with FinCEN as a Money Services Business. Every business verified. Every transfer screened.", icon: "kyc", drawer: "sales" },
-  { title: "Fiat-to-Crypto · Coming soon", body: "Let your customers buy crypto with fiat. Not available yet. Join the waitlist.", icon: "card", drawer: "waitlist" },
+  { title: "Crypto-to-Fiat Payouts", body: "Pay out to bank accounts in supported countries. See the conversion before you confirm.", icon: "bank", drawer: "sales" },
+  { title: "Supported networks", body: "Bitcoin, Ethereum, Solana, Tron, Sui, Base, Polygon, Arbitrum, Optimism, BNB Chain and Avalanche.", icon: "globe", drawer: "assets" },
 ];
 
 // Network, native coin (null shows a dash), USDC, USDT. Remove any tick that is not confirmed at launch.
@@ -34,18 +32,17 @@ const networkMarks = {
 };
 
 // Old section links (footer, bookmarks) that point at sections no longer on the page.
-const legacyHashes = { "#gaming": "#faq", "#disburse": "#integrate", "#usecases": "#collect", "#industries": "#covered", "#stack": "#covered" };
+const legacyHashes = { "#gaming": "#faq", "#disburse": "#integrate", "#usecases": "#integrate", "#collect": "#integrate", "#waitlist": "#integrate", "#industries": "#covered", "#stack": "#covered" };
 
 const faqs = {
   "Getting started": [
-    ["What is TokenPe?", "TokenPe is a US company that lets businesses accept crypto, settle in crypto, and pay out to bank accounts in 100+ countries."],
-    ["Is TokenPe registered?", 'Yes. [LEGAL ENTITY NAME] is registered with FinCEN as a Money Services Business, Registration No. [FINCEN MSB NUMBER]. You can verify it on FinCEN\'s public <a href="https://www.fincen.gov/msb-registrant-search" target="_blank" rel="noopener">MSB Registrant Search</a>. Registration is not a licence or an endorsement.'],
+    ["What is TokenPe?", "TokenPe lets businesses accept crypto, settle in crypto, and pay out to bank accounts."],
     ["How do I open an account?", "Use Get started. We verify your business, its owners and its activities before you go live. TokenPe serves businesses only."],
   ],
   "Products": [
-    ["Which products are live?", "Crypto-to-Crypto and Crypto-to-Fiat Payouts are live. Fiat-to-Crypto is coming soon and is not available yet. You can join the waitlist."],
+    ["Which products are live?", "Crypto-to-Crypto and Crypto-to-Fiat Payouts are live."],
     ["Which networks and assets do you support?", "Bitcoin, Ethereum, Solana, Tron, Sui, Base, Polygon, Arbitrum, Optimism, BNB Chain and Avalanche. Assets are BTC, ETH, SOL, TRX, SUI, and USDC and USDT on supported chains."],
-    ["Which countries can you pay out to?", "Bank accounts in 100+ countries. Payouts powered by our Mastercard partnership, available only where Mastercard transfers are supported. We confirm coverage for your corridors during onboarding."],
+    ["Which countries can you pay out to?", "Bank payouts are available in supported countries. We confirm coverage for your corridors during onboarding."],
   ],
   "Payments": [
     ["Can crypto payments be charged back?", "Confirmed blockchain payments cannot be reversed by a card issuer. You can still send refunds to your customers."],
@@ -113,38 +110,47 @@ const coverVisuals = {
 };
 
 function renderStatic() {
-  const strip = `<div class="marquee-group">${features.map((n) => `<span class="word">${netGlyph(n)}${n}</span>`).join("")}</div>`;
-  $("#marquee").innerHTML = strip + strip.replace("<div", '<div aria-hidden="true"');
   const plain = `<div class="marquee-group">${features.map((n) => `<span class="word">${n}</span>`).join("")}</div>`;
-  $("#marquee-cta").innerHTML = plain + plain;
+  const ctaMarquee = $("#marquee-cta");
+  if (ctaMarquee) ctaMarquee.innerHTML = plain + plain;
 
-  $("#cover-grid").innerHTML = products.map((p, i) => `
+  const cover = $("#cover-grid");
+  if (cover) {
+    cover.innerHTML = products.map((p, i) => `
     <button class="cover-card cover-${p.icon}" type="button" data-product="${i}">
       <span class="cover-head"><span class="cover-title"><span>${p.title}</span></span><span class="arrow">${arrowIcon}</span></span>
       <span class="cover-body">${p.body}</span>
       ${coverVisuals[p.icon]()}
     </button>`).join("");
+  }
 
-  $("#method-grid").innerHTML = ["BTC", "ETH", "SOL", "TRX", "SUI", "USDC", "USDT", "11 networks"]
-    .map((m) => `<div class="method">${m}</div>`).join("");
+  const methods = $("#method-grid");
+  if (methods) {
+    methods.innerHTML = ["BTC", "ETH", "SOL", "TRX", "SUI", "USDC", "USDT"]
+      .map((m) => `<div class="method">${m}</div>`).join("");
+  }
 
-  const subs = ["As received", "USDC", "USDT"];
-  $("#sub-list").insertAdjacentHTML("beforeend", subs.map((s, i) =>
-    `<button type="button" class="${i === 0 ? "is-on" : ""}">${s}</button>`).join(""));
-  $("#sub-list").addEventListener("click", (e) => {
-    const btn = e.target.closest("button");
-    if (!btn) return;
-    $$("#sub-list button").forEach((b) => b.classList.remove("is-on"));
-    btn.classList.add("is-on");
-  });
+  const subList = $("#sub-list");
+  if (subList) {
+    const subs = ["As received", "USDC", "USDT"];
+    subList.insertAdjacentHTML("beforeend", subs.map((s, i) =>
+      `<button type="button" class="${i === 0 ? "is-on" : ""}">${s}</button>`).join(""));
+    subList.addEventListener("click", (e) => {
+      const btn = e.target.closest("button");
+      if (!btn) return;
+      $$("#sub-list button").forEach((b) => b.classList.remove("is-on"));
+      btn.classList.add("is-on");
+    });
+  }
 
   $("#faq-pills").innerHTML = Object.keys(faqs).map((name, i) =>
     `<button type="button" data-faq="${name}" class="${i === 0 ? "is-on" : ""}" aria-pressed="${i === 0}">${name}</button>`).join("");
   renderFaq("Getting started");
 
-  $("#code-block").textContent = codeSample;
-  renderSettle();
-  renderNetworks();
+  const codeBlock = $("#code-block");
+  if (codeBlock) codeBlock.textContent = codeSample;
+  if ($("#settle-card")) renderSettle();
+  if ($("#net-list")) renderNetworks();
 }
 
 function renderFaq(name) {
@@ -314,7 +320,7 @@ async function sendForm(name, data) {
 const docs = {
   payments: ["Payments", "Create a payment request. Show the address and QR code to your customer. Get a webhook when it confirms.", codeSample],
   webhooks: ["Webhooks", "Get an event for every payment and payout status change. Full API documentation is shared with verified merchants during onboarding.", null],
-  payouts: ["Payouts", "Send crypto to wallets, or pay out to bank accounts in 100+ countries. Payouts powered by our Mastercard partnership, available only where Mastercard transfers are supported.", null],
+  payouts: ["Payouts", "Send crypto to wallets, or pay out to bank accounts in supported countries.", null],
 };
 
 function openDocs(key) {
@@ -390,7 +396,7 @@ function bind() {
     if (window.innerWidth > 980 && $(".burger").getAttribute("aria-expanded") === "true") setMobileNav(false);
   }, { passive: true });
 
-  $("#cover-grid").addEventListener("pointermove", (e) => {
+  $("#cover-grid")?.addEventListener("pointermove", (e) => {
     const card = e.target.closest(".cover-card");
     if (!card) return;
     const box = card.getBoundingClientRect();
@@ -500,13 +506,13 @@ function bind() {
     }
   });
 
-  $("#theme-pay").addEventListener("click", () => toast("Preview only. No payout was sent."));
-  $("#net-search").addEventListener("input", (e) => {
+  $("#theme-pay")?.addEventListener("click", () => toast("Preview only. No payout was sent."));
+  $("#net-search")?.addEventListener("input", (e) => {
     netState.query = e.target.value;
     renderNetworks();
   });
 
-  $("#copy-code").addEventListener("click", async () => {
+  $("#copy-code")?.addEventListener("click", async () => {
     try { await navigator.clipboard.writeText($("#code-block").textContent); toast("Copied"); }
     catch { toast("Copy blocked in this browser"); }
   });

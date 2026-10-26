@@ -4,11 +4,11 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>TokenPe — Crypto Payments and Global Payouts for Business</title>
-  <meta name="description" content="Accept crypto on 11 networks and pay out to bank accounts in 100+ countries. TokenPe is a US company registered with FinCEN as a Money Services Business.">
-  <meta name="theme-color" content="#ffffff">
+  <meta name="description" content="Accept crypto on supported networks, settle in crypto or USDC and USDT, and pay out to bank accounts.">
+  <meta name="theme-color" content="#fefefe">
   <meta property="og:type" content="website">
   <meta property="og:title" content="TokenPe — Crypto Payments and Global Payouts for Business">
-  <meta property="og:description" content="Accept crypto on 11 networks, settle in crypto or USDC and USDT, and pay out to 100+ countries.">
+  <meta property="og:description" content="Accept crypto on supported networks, settle in crypto or USDC and USDT, and pay out to bank accounts.">
   <meta name="twitter:card" content="summary">
   <link rel="icon" href="assets/favicon.svg" type="image/svg+xml">
   <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -30,12 +30,11 @@
           <button class="menu-btn" type="button" aria-expanded="false">Products <svg class="caret" viewBox="0 0 12 12" aria-hidden="true"><path d="M2 4l4 4 4-4" fill="none" stroke="currentColor" stroke-width="1.6"/></svg></button>
           <div class="menu-panel">
             <a href="#integrate"><strong>Crypto-to-Crypto</strong><span>Accept crypto, settle in crypto</span></a>
-            <a href="#integrate"><strong>Crypto-to-Fiat Payouts</strong><span>Payouts to 100+ countries</span></a>
-            <a href="#waitlist"><strong>Fiat-to-Crypto</strong><span>Coming soon · join the waitlist</span></a>
-            <a href="#networks"><strong>Supported networks</strong><span>11 networks, USDC and USDT</span></a>
+            <a href="#integrate"><strong>Crypto-to-Fiat Payouts</strong><span>Payouts to bank accounts</span></a>
+            <a href="#networks"><strong>Supported networks</strong><span>USDC and USDT</span></a>
           </div>
         </div>
-        <a class="nav-link" href="#collect">Accept</a>
+        <a class="nav-link" href="#integrate">Accept</a>
         <a class="nav-link" href="#networks">Networks</a>
         <div class="menu">
           <button class="menu-btn" type="button" aria-expanded="false">Developers <svg class="caret" viewBox="0 0 12 12" aria-hidden="true"><path d="M2 4l4 4 4-4" fill="none" stroke="currentColor" stroke-width="1.6"/></svg></button>
@@ -69,8 +68,8 @@
     <section class="hero" id="top" aria-label="Hero">
       <div class="container hero-grid">
         <div class="hero-copy">
-          <h1 class="hero-title"><span class="line"><span>Accept payments</span></span><span class="line"><span>from anywhere.</span></span></h1>
-          <p class="hero-lede">Get paid in crypto by customers worldwide on 11 networks, settle in USDC or USDT, and pay out to bank accounts in 100+ countries.</p>
+          <h1 class="hero-title"><span class="line"><span>Get paid</span></span><span class="line"><span>from anywhere.</span></span><span class="line"><span>Pay out</span></span><span class="line"><span>everywhere.</span></span></h1>
+          <p class="hero-lede">Get paid in crypto by customers worldwide on supported networks, settle in USDC or USDT, and pay out to bank accounts.</p>
           <div class="hero-actions">
             <button class="pill pill-dark pill-lg" type="button" data-open="signup">Get started</button>
             <a class="pill pill-light pill-lg" href="#covered">Learn more</a>
@@ -80,15 +79,13 @@
         <div class="hero-visual" aria-hidden="true">
           <div class="hv-stage">
             <div class="hv-panel">
-              <div class="hv-tile"><span>Networks</span><b>11</b></div>
-              <div class="hv-tile"><span>Payout countries</span><b>100+</b></div>
               <div class="hv-tile"><span>Settle as</span><b>USDC · USDT</b></div>
               <div class="hv-tile hv-bars"><span>Payments</span><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div>
             </div>
             <div class="hv-phone">
               <div class="hv-notch"></div>
               <div class="hv-screen">
-                <div class="hv-head"><span>Pay Acme</span><i>×</i></div>
+                <div class="hv-head"><span>Payment</span><i>×</i></div>
                 <p class="hv-amount">250.00 <small>USDC</small></p>
                 <p class="hv-label">Any wallet or exchange</p>
                 <div class="hv-row is-on"><em>Selected</em><span><i class="dot" style="background:#1d4bff"></i>USDC · Solana</span></div>
@@ -98,21 +95,12 @@
                 <div class="hv-cta">Show QR code</div>
               </div>
             </div>
-            <div class="coin coin-a"><span>T</span></div>
-            <div class="coin coin-b"><span>$</span></div>
-            <div class="coin coin-c"><span>T</span></div>
             <div class="hv-shadow"></div>
           </div>
         </div>
       </div>
 
       <div class="hero-skyline" aria-hidden="true"></div>
-      <div class="logo-strip" aria-label="Supported networks">
-        <p class="sr-only">Supported networks</p>
-        <div class="marquee">
-          <div class="marquee-track" id="marquee"></div>
-        </div>
-      </div>
     </section>
 
     <section class="section" id="covered">
@@ -144,7 +132,7 @@
             <input id="net-search" type="search" placeholder="Search by network…" autocomplete="off">
           </label>
           <ul class="net-list" id="net-list" aria-live="polite"></ul>
-          <p class="fine">Bitcoin does not support USDC or USDT. Always send on the network shown in your payment request. Funds sent on the wrong network may be lost.</p>
+          <p class="fine callout"><svg viewBox="0 0 20 20" aria-hidden="true"><path d="M10 2.5 18 17H2L10 2.5Z" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"/><path d="M10 8v4.2" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/><circle cx="10" cy="14.6" r="0.8" fill="currentColor"/></svg><span>Bitcoin does not support USDC or USDT. Always send on the network shown in your payment request. Funds sent on the wrong network may be lost.</span></p>
         </div>
         <div class="globe-wrap" aria-hidden="true">
           <div class="globe-halo"></div>
@@ -190,14 +178,13 @@
               <h3>Crypto-to-Fiat Payouts</h3>
               <button class="arrow" type="button" data-open="sales" aria-label="Talk to sales about Crypto-to-Fiat Payouts"><svg viewBox="0 0 20 20" aria-hidden="true"><path d="M6 14L14 6M7 6h7v7" fill="none" stroke="currentColor" stroke-width="1.8"/></svg></button>
             </header>
-            <p class="sub">Convert crypto. Pay out to 100+ countries.</p>
+            <p class="sub">Convert crypto. Pay out to bank accounts.</p>
             <ul class="checks">
-              <li><svg width="16" height="16" viewBox="0 0 16 16"><path d="M3 8l3 3 7-7" fill="none" stroke="currentColor" stroke-width="1.8"/></svg>Bank payouts in 100+ countries</li>
+              <li><svg width="16" height="16" viewBox="0 0 16 16"><path d="M3 8l3 3 7-7" fill="none" stroke="currentColor" stroke-width="1.8"/></svg>Bank payouts in supported countries</li>
               <li><svg width="16" height="16" viewBox="0 0 16 16"><path d="M3 8l3 3 7-7" fill="none" stroke="currentColor" stroke-width="1.8"/></svg>See the conversion before you confirm</li>
-              <li><svg width="16" height="16" viewBox="0 0 16 16"><path d="M3 8l3 3 7-7" fill="none" stroke="currentColor" stroke-width="1.8"/></svg>Track every payout by webhook</li>
+              <li><svg width="16" height="16" viewBox="0 0 16 16"><path d="M3 8l3 3 7-7" fill="none" stroke="currentColor" stroke-width="1.8"/></svg>Track every payout with webhooks</li>
             </ul>
             <button class="pill pill-dark" type="button" data-open="sales">Talk to sales</button>
-            <p class="small-print">Payouts powered by our Mastercard partnership, available only where Mastercard transfers are supported.</p>
             <div class="widget" id="theme-phone">
               <div class="w-field" aria-hidden="true">
                 <div><label>You send</label><div class="w-value">250</div></div>
@@ -208,78 +195,6 @@
               </div>
               <p class="w-note" id="theme-status" aria-hidden="true">Rate shown before you confirm.</p>
               <button class="w-cta" type="button" id="theme-pay">Confirm payout</button>
-            </div>
-          </article>
-        </div>
-      </div>
-    </section>
-
-    <section class="section" id="collect">
-      <div class="container">
-        <div class="center-head">
-          <p class="tag">Accept</p>
-          <h2 class="display-md">Crypto payments, end to end</h2>
-          <p class="lede">Payment requests, 11 networks, stablecoin settlement and webhooks. One integration covers it all.</p>
-        </div>
-        <div class="bento">
-          <article class="bento-card">
-            <h3>Payment requests</h3>
-            <p>Create a payment by API. Show the address and QR code. Get notified when it confirms.</p>
-            <div class="glass-stage swirl-blue">
-              <div class="glass saved-pay" aria-hidden="true">
-                <div class="saved-head"><span>Pay Acme</span><b>250.00 USDC</b></div>
-                <div class="saved-row is-on"><i class="dot" style="background:#1d4bff"></i><span>USDC · Solana</span><em>Selected</em></div>
-                <div class="saved-row"><i class="dot" style="background:#12b76a"></i><span>USDT · Tron</span></div>
-                <div class="saved-cta">Show QR code</div>
-              </div>
-              <div class="stat-float"><span>Networks</span><b>11</b></div>
-            </div>
-          </article>
-          <article class="bento-card">
-            <h3>Coins and stablecoins</h3>
-            <p>BTC, ETH, SOL, TRX, SUI, and USDC and USDT on supported chains.</p>
-            <div class="glass-stage swirl-violet">
-              <div class="glass method-grid" id="method-grid"></div>
-            </div>
-          </article>
-          <article class="bento-card">
-            <h3>Stablecoin settlement</h3>
-            <p>Keep payments in the asset received, or convert them to USDC or USDT to reduce exposure to price swings.</p>
-            <div class="glass-stage swirl-teal">
-              <div class="glass pay-list" id="sub-list">
-                <div class="pay-list-head">Settle as</div>
-              </div>
-            </div>
-          </article>
-          <article class="bento-card">
-            <h3>Webhooks</h3>
-            <p>Real-time events for every payment and payout status change, sent to your platform.</p>
-            <div class="glass-stage swirl-blue">
-              <div class="glass event" aria-hidden="true">
-                <b>TokenPe</b>
-                <code>payment.confirmed</code>
-                <div class="note">250.00 USDC on Solana<br>order_1234</div>
-              </div>
-            </div>
-          </article>
-          <article class="bento-card" id="waitlist">
-            <h3>Fiat-to-Crypto · Coming soon</h3>
-            <p>Let your customers buy crypto with fiat. It is not available yet. Join the waitlist and we will email you when it launches.</p>
-            <div class="glass-stage swirl-orange">
-              <form class="glass mini-form" id="mini-form" name="waitlist" novalidate>
-                <label>Work email<input name="email" type="email" required autocomplete="email"></label>
-                <label>Company<input name="company" required autocomplete="organization"></label>
-                <label class="hp" aria-hidden="true">Leave this empty<input name="bot-field" tabindex="-1" autocomplete="off"></label>
-                <button class="pill pill-dark" type="submit">Join the waitlist</button>
-                <p id="mini-form-note" role="status"></p>
-              </form>
-            </div>
-          </article>
-          <article class="bento-card">
-            <h3>Screened transfers</h3>
-            <p>Every incoming and outgoing transfer is screened with blockchain analytics and OFAC sanctions checks.</p>
-            <div class="glass-stage swirl-teal">
-              <div class="glass settle" id="settle-card"></div>
             </div>
           </article>
         </div>
@@ -302,7 +217,7 @@
           <div class="story-intro" data-story-intro>
             <span class="story-badge" aria-hidden="true">API</span>
             <h2 class="display-md" id="dev-title">Integrate once. Accept, convert and pay out.</h2>
-            <p class="lede">A REST API for payments, conversions and payouts across 11 networks. Webhooks for every status change.</p>
+            <p class="lede">A REST API for payments, conversions and payouts. Webhooks for every status change.</p>
           </div>
 
           <div class="story-chip" aria-hidden="true">
@@ -336,7 +251,6 @@
               <div class="story-text">
                 <h3>Webhooks</h3>
                 <p>Get an event for every payment and payout status change, delivered to your platform.</p>
-                <button class="pill pill-dark" type="button" data-open="docs" data-doc="webhooks">Open docs</button>
               </div>
             </article>
             <article class="story-step" data-story-step="3">
@@ -377,9 +291,9 @@
           <span class="note-meander note-meander-bottom" aria-hidden="true"></span>
 
           <div class="note-head" aria-hidden="true">
-            <span class="note-denom">11</span>
+            <span class="note-denom">TP</span>
             <span class="note-frieze"></span>
-            <span class="note-denom">100+</span>
+            <span class="note-denom">TP</span>
           </div>
           <h2 class="note-title" id="cta-title"><span>Crypto in.</span> <span>Fiat out.</span></h2>
 
@@ -394,26 +308,25 @@
                 <defs><path id="note-ring" d="M120 120m-101 0a101 101 0 1 1 202 0a101 101 0 1 1-202 0"/></defs>
                 <circle cx="120" cy="120" r="116"/>
                 <circle cx="120" cy="120" r="88"/>
-                <text><textPath href="#note-ring" textLength="628" lengthAdjust="spacing">TOKENPE · CRYPTO IN · FIAT OUT · 11 NETWORKS · 100+ COUNTRIES ·</textPath></text>
+                <text><textPath href="#note-ring" textLength="628" lengthAdjust="spacing">TOKENPE · CRYPTO IN · FIAT OUT · TOKENPE · CRYPTO IN · FIAT OUT ·</textPath></text>
               </svg>
               <span class="note-face"></span>
             </div>
             <ol class="note-blocks note-blocks-right" start="4">
-              <li><span class="note-num" aria-hidden="true">IV</span><h3>Pay out</h3><p>Bank payouts in 100+ countries.</p></li>
+              <li><span class="note-num" aria-hidden="true">IV</span><h3>Pay out</h3><p>Bank payouts in supported countries.</p></li>
               <li><span class="note-num" aria-hidden="true">V</span><h3>Convert</h3><p>See the conversion before you confirm.</p></li>
-              <li><span class="note-num" aria-hidden="true">VI</span><h3>Comply</h3><p>Registered with FinCEN as a Money Services Business.</p></li>
             </ol>
           </div>
 
           <div class="note-foot" aria-hidden="true">
-            <span class="note-serial">TokenPe · US company</span>
+            <span class="note-serial">TokenPe</span>
             <span class="note-vine"></span>
-            <span class="note-serial">Nº 000011 A</span>
+            <span class="note-serial">Crypto · Fiat</span>
           </div>
         </div>
 
         <div class="cta-row">
-          <p>Accept crypto · Pay out in 100+ countries</p>
+          <p>Accept crypto · Pay out to bank accounts</p>
           <button class="pill pill-dark pill-lg" type="button" data-open="signup">Get started</button>
         </div>
       </div>
