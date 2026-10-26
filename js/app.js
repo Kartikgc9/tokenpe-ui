@@ -74,7 +74,6 @@ const codeSample = `curl -X POST https://api.tokenpe.com/v1/payments \\
 const checkIcon = '<svg width="16" height="16" viewBox="0 0 16 16"><path d="M3 8l3 3 7-7" fill="none" stroke="currentColor" stroke-width="1.8"/></svg>';
 const arrowIcon = '<svg viewBox="0 0 20 20" aria-hidden="true"><path d="M6 14L14 6M7 6h7v7" fill="none" stroke="currentColor" stroke-width="1.8"/></svg>';
 const plusIcon = '<svg viewBox="0 0 20 20" aria-hidden="true"><path d="M10 3v14M3 10h14" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"/></svg>';
-const markIcon = '<svg class="mark" viewBox="0 0 32 20" aria-hidden="true"><circle cx="10" cy="10" r="8" fill="none" stroke="currentColor" stroke-width="2.4"/><circle cx="22" cy="10" r="8" fill="none" stroke="currentColor" stroke-width="2.4"/></svg>';
 
 const attr = (value) => String(value).replace(/&/g, "&amp;").replace(/"/g, "&quot;").replace(/</g, "&lt;");
 const escapeText = (value) => String(value).replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;");
@@ -101,7 +100,7 @@ const coverVisuals = {
   bank: () => `<span class="cv cv-flow" aria-hidden="true">
       <svg viewBox="0 0 100 100" preserveAspectRatio="none"><path d="M27 16 V41 Q27 49 35 49 H42 M73 16 V41 Q73 49 65 49 H58"/><path d="M50 62 V84 M50 68 Q50 74 44 74 H24 Q18 74 18 80 V84 M50 68 Q50 74 56 74 H76 Q82 74 82 80 V84"/></svg>
       <span class="fl-node fl-a">Crypto balance</span><span class="fl-node fl-b">Conversion</span>
-      <span class="fl-hub">${markIcon}</span>
+      <span class="fl-hub">TokenPe</span>
       <span class="fl-node fl-c"><i>${checkIcon}</i>Bank account</span><span class="fl-node fl-d"><i>${checkIcon}</i>Bank account</span><span class="fl-node fl-e"><i>${checkIcon}</i>Bank account</span>
     </span>`,
   globe: () => {
@@ -120,7 +119,7 @@ function renderStatic() {
 
   $("#cover-grid").innerHTML = products.map((p, i) => `
     <button class="cover-card cover-${p.icon}" type="button" data-product="${i}">
-      <span class="cover-head"><span class="cover-title">${markIcon}<span>${p.title}</span></span><span class="arrow">${arrowIcon}</span></span>
+      <span class="cover-head"><span class="cover-title"><span>${p.title}</span></span><span class="arrow">${arrowIcon}</span></span>
       <span class="cover-body">${p.body}</span>
       ${coverVisuals[p.icon]()}
     </button>`).join("");
