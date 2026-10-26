@@ -107,7 +107,8 @@ const coverVisuals = {
     const row = (list) => `<span class="orbs-row"><span class="orbs-track">${[...list, ...list, ...list].map((n) => `<span class="orb" style="--c:${networkMarks[n][0]}">${networkMarks[n][1]}</span>`).join("")}</span></span>`;
     return `<span class="cv cv-orbs" aria-hidden="true">${row(features.slice(0, 6))}${row(features.slice(5))}</span>`;
   },
-  kyc: () => `<span class="cv cv-checks" aria-hidden="true">${["Money Services Business", "Every business verified", "Every transfer screened"].map((t) => `<span class="ck"><i>${checkIcon}</i>${t}</span>`).join("")}</span>`,
+  // Engraved institution from the RampPay brand kit, with the compliance checks pinned over it.
+  kyc: () => `<span class="cv cv-institution" aria-hidden="true"><img src="assets/rampay/institution.webp" alt="" width="520" height="458" loading="lazy" decoding="async"><span class="cv-checks">${["Money Services Business", "Every business verified", "Every transfer screened"].map((t) => `<span class="ck"><i>${checkIcon}</i>${t}</span>`).join("")}</span></span>`,
   card: () => `<span class="cv cv-soon" aria-hidden="true"><span class="soon-pill">Coming soon</span><span class="soon-field"><small>Pay with</small><b>Fiat</b></span><span class="soon-field"><small>Receive</small><b>Crypto</b></span></span>`,
 };
 

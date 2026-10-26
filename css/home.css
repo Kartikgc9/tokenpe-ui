@@ -178,7 +178,7 @@ a { color: inherit; }
 .burger[aria-expanded="true"] span:nth-child(2) { top: 25px; transform: rotate(-45deg); }
 
 /* ---------- Hero ---------- */
-.hero { position: relative; padding-top: calc(var(--header-h) + 40px); overflow: hidden; }
+.hero { position: relative; padding-top: calc(var(--header-h) + 40px); overflow: hidden; overflow: clip; }
 .hero-grid { display: grid; grid-template-columns: 1.05fr 0.95fr; gap: 32px; align-items: center; min-height: min(760px, calc(100svh - 200px)); }
 .hero-title {
   margin: 0; font-weight: 500; font-size: clamp(46px, 5.6vw, 90px); line-height: 0.98; letter-spacing: -0.05em;
@@ -273,7 +273,15 @@ a { color: inherit; }
 @keyframes coin-float { 0%, 100% { translate: 0 0; } 50% { translate: 0 -16px; } }
 
 /* Networks logo strip under the hero. */
-.logo-strip { margin-top: 56px; padding: 30px 0; border-top: 1px solid var(--line); }
+/* RampPay's mirrored skyline, filled in a pale blue, standing on the networks strip. */
+.hero-grid { position: relative; z-index: 1; }
+.hero-skyline {
+  height: clamp(90px, 13vw, 200px); margin-top: calc(clamp(40px, 6vw, 110px) * -1); pointer-events: none;
+  background: linear-gradient(to top, #cfd8ff, #edf0ff);
+  -webkit-mask: url("../assets/rampay/skyline.webp") center bottom / auto 100% repeat-x;
+  mask: url("../assets/rampay/skyline.webp") center bottom / auto 100% repeat-x;
+}
+.logo-strip { padding: 30px 0; border-top: 1px solid var(--line); }
 .marquee { overflow: hidden; -webkit-mask-image: linear-gradient(90deg, transparent, #000 8%, #000 92%, transparent); mask-image: linear-gradient(90deg, transparent, #000 8%, #000 92%, transparent); }
 .marquee-track { display: flex; width: max-content; animation: marquee 46s linear infinite; }
 .marquee-group { display: flex; align-items: center; gap: 64px; padding-right: 64px; }
@@ -286,7 +294,7 @@ a { color: inherit; }
 .split-aside { display: flex; flex-direction: column; align-items: flex-start; gap: 24px; justify-self: end; }
 .cover-grid { display: grid; grid-template-columns: repeat(6, 1fr); gap: 24px; }
 .cover-card {
-  position: relative; grid-column: span 2; overflow: hidden;
+  position: relative; grid-column: span 2; overflow: hidden; overflow: clip;
   display: flex; flex-direction: column; text-align: left;
   min-height: 460px; padding: 32px 36px; border: 0; border-radius: var(--radius);
   background: var(--surface); color: var(--ink);
@@ -379,6 +387,11 @@ a { color: inherit; }
   box-shadow: inset 0 0 0 3px color-mix(in srgb, var(--c) 22%, #fff), 0 8px 18px rgba(20, 20, 60, 0.06);
 }
 .cv-checks { display: grid; gap: 8px; }
+.cv-institution { min-height: 250px; }
+.cv-institution img { position: absolute; right: -6%; bottom: -4%; width: 82%; max-width: 360px; height: auto; transition: transform 0.8s var(--ease); }
+.cover-card:hover .cv-institution img { transform: translateY(-6px); }
+.cv-institution .cv-checks { position: relative; z-index: 1; width: min(250px, 82%); gap: 6px; }
+.cv-institution .ck { padding: 10px 12px; font-size: 14px; background: rgba(255, 255, 255, 0.88); -webkit-backdrop-filter: blur(8px); backdrop-filter: blur(8px); box-shadow: 0 10px 24px rgba(20, 20, 70, 0.08); }
 .ck { display: flex; align-items: center; gap: 12px; padding: 13px 16px; border-radius: 14px; background: #fff; font-size: 15.5px; font-weight: 500; }
 .ck i { display: grid; place-items: center; width: 24px; height: 24px; border-radius: 50%; background: #e4f8ec; color: var(--green); flex: none; }
 .ck i svg { width: 13px; height: 13px; }
@@ -430,7 +443,7 @@ a { color: inherit; }
 .center-head .lede { margin-left: auto; margin-right: auto; }
 .integrate-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; }
 .product-card {
-  position: relative; overflow: hidden; isolation: isolate;
+  position: relative; overflow: hidden; overflow: clip; isolation: isolate;
   display: flex; flex-direction: column; align-items: flex-start;
   padding: 36px; border-radius: var(--radius); background: var(--surface);
 }
@@ -471,7 +484,7 @@ button.w-cta:hover { background: #2c2c33; }
 /* ---------- Accept: product grid ---------- */
 .bento { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; }
 .bento-card {
-  display: flex; flex-direction: column; overflow: hidden;
+  display: flex; flex-direction: column; overflow: hidden; overflow: clip;
   padding: 34px 36px 0; border-radius: var(--radius); background: var(--surface);
 }
 .bento-card h3 { display: flex; align-items: center; gap: 12px; margin: 0; font-size: clamp(26px, 2.4vw, 34px); font-weight: 500; letter-spacing: -0.03em; line-height: 1.1; }
@@ -532,7 +545,7 @@ button.w-cta:hover { background: #2c2c33; }
 
 /* ---------- Developers: pinned story ---------- */
 .story { position: relative; background: var(--surface); }
-.story-pin { position: relative; overflow: hidden; }
+.story-pin { position: relative; overflow: hidden; overflow: clip; }
 .story-lines { position: absolute; inset: 0; width: 100%; height: 100%; display: none; }
 .story-lines path { fill: none; stroke: #fff; stroke-width: 2; vector-effect: non-scaling-stroke; }
 .story-lines .pulse { stroke: var(--blue); stroke-width: 2.5; stroke-dasharray: 6 94; animation: pulse 3.6s linear infinite; }
@@ -636,19 +649,117 @@ button.w-cta:hover { background: #2c2c33; }
 
 /* ---------- Closing band ---------- */
 .cta-band {
-  position: relative; overflow: hidden; isolation: isolate; color: #fff; padding-top: 150px;
+  position: relative; overflow: hidden; overflow: clip; isolation: isolate; color: #fff; padding-top: 120px;
   background:
     radial-gradient(60% 80% at 15% 0%, rgba(120, 160, 255, 0.55), transparent 60%),
     radial-gradient(50% 70% at 100% 100%, rgba(80, 30, 255, 0.55), transparent 60%),
     linear-gradient(120deg, #2c55ff 0%, #1d3bff 45%, #1424e6 100%);
 }
 .cta-glow { position: absolute; z-index: -1; inset: auto -10% -40% 30%; height: 80%; background: repeating-radial-gradient(circle at 60% 100%, transparent 0 34px, rgba(255, 255, 255, 0.12) 35px 36px); -webkit-mask-image: radial-gradient(closest-side, #000, transparent); mask-image: radial-gradient(closest-side, #000, transparent); }
-.cta-title span { display: inline-block; }
-.cta-title { margin: 0; font-size: clamp(60px, 11vw, 160px); font-weight: 500; line-height: 0.92; letter-spacing: -0.055em; }
-.cta-row { display: flex; flex-wrap: wrap; justify-content: space-between; align-items: center; gap: 24px; margin-top: 56px; }
+.cta-row { display: flex; flex-wrap: wrap; justify-content: space-between; align-items: center; gap: 24px; margin-top: 48px; }
 .cta-row p { margin: 0; font-size: clamp(20px, 2vw, 28px); font-weight: 500; letter-spacing: -0.02em; }
-.coin-cta-a { z-index: -1; width: clamp(140px, 17vw, 250px); right: 3%; top: 5%; font-size: clamp(14px, 1.6vw, 22px); transform: rotateX(30deg) rotateY(-32deg) rotateZ(14deg); }
-.coin-cta-b { z-index: -1; width: clamp(80px, 9vw, 130px); left: 52%; top: 58%; font-size: clamp(8px, 0.9vw, 12px); transform: rotateX(-36deg) rotateY(28deg); animation-delay: -3s; }
+
+/* ---------- Engraved note (closing band) ----------
+   A port of the RampPay "building blocks" banknote: guilloche watermark, acanthus
+   corners, meander borders, a classical frieze, a vine band and a Medusa medallion.
+   The ornaments are alpha masks from assets/rampay/, filled with TokenPe blue. */
+.cta-inner { container-type: inline-size; }
+.banknote {
+  --note-ink: #1a33d4;
+  --note-fill: var(--blue);
+  --note-corner: clamp(52px, 10cqw, 124px);
+  position: relative; isolation: isolate;
+  padding: clamp(44px, 6.5cqw, 84px) clamp(22px, 7cqw, 96px) clamp(40px, 5.5cqw, 72px);
+  color: var(--note-ink);
+  background: radial-gradient(ellipse at 50% 42%, #ffffff 0%, #f6f8ff 58%, #e8edff 100%);
+  border: 1px solid var(--note-ink);
+  outline: 1px solid rgba(26, 51, 212, 0.55); outline-offset: -9px;
+  box-shadow: 0 40px 80px -30px rgba(5, 10, 80, 0.55);
+}
+.banknote::before {
+  content: ""; position: absolute; inset: 0; z-index: -1; pointer-events: none;
+  background: var(--note-ink); opacity: 0.13;
+  -webkit-mask: url("../assets/rampay/guilloche.svg") center 56% / min(74cqw, 720px) no-repeat;
+  mask: url("../assets/rampay/guilloche.svg") center 56% / min(74cqw, 720px) no-repeat;
+}
+.note-corner {
+  position: absolute; z-index: 1; width: var(--note-corner); aspect-ratio: 1; pointer-events: none;
+  background: var(--note-ink);
+  -webkit-mask: url("../assets/rampay/filigree-mask.webp") center / contain no-repeat;
+  mask: url("../assets/rampay/filigree-mask.webp") center / contain no-repeat;
+}
+/* The engraving is a bottom-right corner; the others are its mirrors. */
+.note-corner-br { right: 14px; bottom: 14px; }
+.note-corner-bl { left: 14px; bottom: 14px; transform: scaleX(-1); }
+.note-corner-tr { right: 14px; top: 14px; transform: scaleY(-1); }
+.note-corner-tl { left: 14px; top: 14px; transform: scale(-1, -1); }
+.note-meander {
+  position: absolute; left: calc(14px + var(--note-corner)); right: calc(14px + var(--note-corner)); height: 16px; pointer-events: none;
+  background: var(--note-ink);
+  -webkit-mask: url("../assets/rampay/meander.svg") left center / 16px 16px round no-repeat;
+  mask: url("../assets/rampay/meander.svg") left center / 16px 16px round no-repeat;
+}
+.note-meander-top { top: 16px; }
+.note-meander-bottom { bottom: 16px; }
+.note-head, .note-foot { display: grid; grid-template-columns: minmax(0, 1fr) auto minmax(0, 1fr); align-items: center; gap: 16px; }
+.note-head > :last-child, .note-foot > :last-child { justify-self: end; }
+.note-denom {
+  font-size: clamp(34px, 6.4cqw, 80px); font-weight: 700; line-height: 0.8; letter-spacing: -0.02em;
+  color: transparent; -webkit-text-stroke: 1.3px var(--note-ink);
+}
+.note-frieze, .note-vine {
+  display: block; background: var(--note-ink);
+  -webkit-mask-position: center; mask-position: center;
+  -webkit-mask-size: contain; mask-size: contain;
+  -webkit-mask-repeat: no-repeat; mask-repeat: no-repeat;
+}
+.note-frieze { width: clamp(170px, 36cqw, 430px); aspect-ratio: 712 / 210; -webkit-mask-image: url("../assets/rampay/frieze-mask.webp"); mask-image: url("../assets/rampay/frieze-mask.webp"); }
+.note-vine { width: clamp(160px, 34cqw, 420px); aspect-ratio: 726 / 147; -webkit-mask-image: url("../assets/rampay/vine-mask.webp"); mask-image: url("../assets/rampay/vine-mask.webp"); }
+.note-title {
+  margin: clamp(18px, 2.6cqw, 32px) 0 clamp(26px, 3.6cqw, 48px); text-align: center;
+  font-size: clamp(40px, 7.4cqw, 96px); font-weight: 500; line-height: 0.95; letter-spacing: -0.05em; color: var(--note-ink);
+}
+.note-title span { display: inline-block; }
+.note-body { display: grid; grid-template-columns: minmax(0, 1fr) clamp(190px, 25cqw, 290px) minmax(0, 1fr); gap: clamp(20px, 3cqw, 44px); align-items: center; }
+.note-blocks { list-style: none; margin: 0; padding: 0; display: grid; gap: clamp(18px, 2.4cqw, 30px); }
+.note-blocks li { display: grid; column-gap: 14px; align-items: baseline; }
+/* Numerals face the medallion from both sides. */
+.note-blocks-left li { grid-template-columns: minmax(0, 1fr) 2.4em; grid-template-areas: "t n" "p n"; text-align: right; }
+.note-blocks-right li { grid-template-columns: 2.4em minmax(0, 1fr); grid-template-areas: "n t" "n p"; }
+.note-num { grid-area: n; font-size: clamp(20px, 2.4cqw, 30px); font-weight: 500; line-height: 0.9; letter-spacing: 0.02em; color: var(--note-fill); text-align: center; }
+.note-blocks h3 { grid-area: t; margin: 0 0 6px; font-size: clamp(22px, 2.5cqw, 32px); font-weight: 500; letter-spacing: -0.03em; line-height: 1; color: var(--ink); }
+.note-blocks p { grid-area: p; margin: 0; font-size: clamp(14px, 1.35cqw, 16px); line-height: 1.35; color: var(--ink-2); }
+.note-medallion { position: relative; width: 100%; aspect-ratio: 1; }
+.note-medallion svg { position: absolute; inset: 0; width: 100%; height: 100%; overflow: visible; fill: none; stroke: var(--note-ink); stroke-width: 1.2; animation: note-turn 90s linear infinite; }
+.note-medallion text { fill: var(--note-ink); stroke: none; font-family: var(--mono); font-size: 11.5px; letter-spacing: 0.08em; }
+.note-face {
+  position: absolute; inset: 21%; border-radius: 50%; background: var(--note-ink);
+  -webkit-mask: url("../assets/rampay/medusa-mask.webp") center / 122% no-repeat;
+  mask: url("../assets/rampay/medusa-mask.webp") center / 122% no-repeat;
+}
+@keyframes note-turn { to { transform: rotate(360deg); } }
+.note-foot { margin-top: clamp(24px, 3.4cqw, 44px); }
+.note-serial { font-family: var(--mono); font-size: clamp(10px, 1.1cqw, 13px); letter-spacing: 0.16em; text-transform: uppercase; color: var(--note-fill); white-space: nowrap; }
+@container (max-width: 760px) {
+  .note-body { grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); }
+  .note-medallion { grid-column: 1 / -1; order: -1; width: min(220px, 60%); justify-self: center; }
+  .note-blocks-left li { grid-template-columns: 2.4em minmax(0, 1fr); grid-template-areas: "n t" "n p"; text-align: left; }
+}
+@container (max-width: 540px) {
+  .banknote { outline-offset: -6px; }
+  .note-body { grid-template-columns: minmax(0, 1fr); }
+  .note-head { grid-template-columns: minmax(0, 1fr); justify-items: center; }
+  .note-denom { display: none; }
+  .note-foot { grid-template-columns: minmax(0, 1fr); justify-items: center; gap: 10px; }
+  .note-foot > :last-child { justify-self: center; }
+  .note-meander { height: 12px; -webkit-mask-size: 12px 12px; mask-size: 12px 12px; }
+  .note-meander-top { top: 12px; }
+  .note-meander-bottom { bottom: 12px; }
+  .note-corner-br { right: 10px; bottom: 10px; }
+  .note-corner-bl { left: 10px; bottom: 10px; }
+  .note-corner-tr { right: 10px; top: 10px; }
+  .note-corner-tl { left: 10px; top: 10px; }
+}
 .marquee-light { margin-top: 110px; padding: 34px 0; border-top: 1px solid rgba(255, 255, 255, 0.2); }
 .marquee-light .word { color: rgba(255, 255, 255, 0.85); font-size: 30px; }
 .marquee-light .marquee-track { animation-duration: 60s; }
@@ -779,7 +890,7 @@ body.cookie-open .toast { bottom: 132px; }
   .hero-lede { margin-top: 20px; }
   .hero-actions { margin-top: 28px; }
   .hero-actions .pill { flex: 1; }
-  .logo-strip { margin-top: 32px; padding: 22px 0; }
+  .logo-strip { padding: 22px 0; }
   .marquee .word { font-size: 19px; }
   .marquee-group { gap: 40px; padding-right: 40px; }
   .cover-card, .product-card { padding: 26px 22px; }
@@ -810,7 +921,7 @@ body.cookie-open .toast { bottom: 132px; }
   .faq-item .q { padding: 22px; gap: 16px; }
   .faq-item .a > div { padding: 0 22px; font-size: 16px; }
   .faq-item.is-open .a { padding-bottom: 22px; }
-  .cta-band { padding-top: 100px; }
+  .cta-band { padding-top: 72px; }
   .cta-row .pill { width: 100%; }
   .marquee-light { margin-top: 72px; padding: 24px 0; }
   .marquee-light .word { font-size: 22px; }
