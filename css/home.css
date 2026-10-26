@@ -670,15 +670,15 @@ button.w-cta:hover { background: #2c2c33; }
 .cta-row p { margin: 0; font-size: clamp(20px, 2vw, 28px); font-weight: 500; letter-spacing: -0.02em; }
 
 /* ---------- Engraved note (closing band) ----------
-   A port of the RampPay "building blocks" banknote: guilloche watermark, acanthus
-   corners, meander borders, a classical frieze, a vine band and a Medusa medallion.
-   The ornaments are alpha masks from assets/rampay/, filled with TokenPe blue. */
+   A port of the RampPay "building blocks" banknote: a guilloche on the right,
+   acanthus corners, meander borders, a classical frieze, a vine band and a medallion.
+   The ornaments are alpha masks from assets/rampay/. */
 .cta-inner { container-type: inline-size; }
 .banknote {
   --note-ink: #1e1e1e;
   --note-fill: #d45bb6;
   --note-corner: clamp(52px, 10cqw, 124px);
-  position: relative; isolation: isolate;
+  position: relative; isolation: isolate; overflow: hidden;
   padding: clamp(44px, 6.5cqw, 84px) clamp(22px, 7cqw, 96px) clamp(40px, 5.5cqw, 72px);
   color: var(--note-ink);
   background: radial-gradient(ellipse at 50% 42%, #ffffff 0%, #fbf7f4 58%, #f3ebe4 100%);
@@ -686,12 +686,38 @@ button.w-cta:hover { background: #2c2c33; }
   outline: 1px solid rgba(30, 30, 30, 0.45); outline-offset: -9px;
   box-shadow: 0 40px 80px -30px rgba(5, 10, 80, 0.55);
 }
-.banknote::before {
-  content: ""; position: absolute; inset: 0; z-index: -1; pointer-events: none;
-  background: var(--note-ink); opacity: 0.13;
-  -webkit-mask: url("../assets/rampay/guilloche.svg") center 56% / min(74cqw, 720px) no-repeat;
-  mask: url("../assets/rampay/guilloche.svg") center 56% / min(74cqw, 720px) no-repeat;
+/* Guilloche sits on the right of the plate and turns like a lathe. The plate clips it. */
+.note-rosette {
+  position: absolute; z-index: 0; top: 52%; right: -20%;
+  width: min(720px, 62cqw); aspect-ratio: 1; pointer-events: none;
+  translate: calc(var(--nx, 0) * 16px) calc(-50% + var(--ny, 0) * 12px);
+  rotate: calc(var(--nx, 0) * 6deg);
+  transition: translate 0.7s var(--ease), rotate 0.7s var(--ease);
 }
+.note-rosette-ring {
+  display: block; width: 100%; height: 100%;
+  background: var(--note-ink); opacity: 0.18;
+  -webkit-mask:
+    linear-gradient(90deg, transparent 0%, #000 18%, #000 72%, transparent 96%),
+    url("../assets/rampay/guilloche.svg");
+  -webkit-mask-composite: source-in;
+  -webkit-mask-repeat: no-repeat;
+  -webkit-mask-position: center;
+  -webkit-mask-size: 100% 100%, contain;
+  mask-image:
+    linear-gradient(90deg, transparent 0%, #000 18%, #000 72%, transparent 96%),
+    url("../assets/rampay/guilloche.svg");
+  mask-composite: intersect;
+  mask-repeat: no-repeat;
+  mask-position: center;
+  mask-size: 100% 100%, contain;
+  animation: note-turn 46s linear infinite;
+  transition: opacity 0.6s ease;
+}
+@media (hover: hover) {
+  .banknote:hover .note-rosette-ring { opacity: 0.24; }
+}
+.note-head, .note-title, .note-body, .note-foot { position: relative; z-index: 1; }
 .note-corner {
   position: absolute; z-index: 1; width: var(--note-corner); aspect-ratio: 1; pointer-events: none;
   background: var(--note-ink);
@@ -754,6 +780,12 @@ button.w-cta:hover { background: #2c2c33; }
   .note-body { grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); }
   .note-medallion { grid-column: 1 / -1; order: -1; width: min(220px, 60%); justify-self: center; }
   .note-blocks-left li { grid-template-columns: 2.4em minmax(0, 1fr); grid-template-areas: "n t" "n p"; text-align: left; }
+  .note-rosette {
+    top: auto; bottom: 4%; right: -16%;
+    width: min(380px, 72cqw);
+    translate: calc(var(--nx, 0) * 10px) calc(var(--ny, 0) * 8px);
+  }
+  .note-rosette-ring { opacity: 0.12; }
 }
 @container (max-width: 540px) {
   .banknote { outline-offset: -6px; }
@@ -769,6 +801,8 @@ button.w-cta:hover { background: #2c2c33; }
   .note-corner-bl { left: 10px; bottom: 10px; }
   .note-corner-tr { right: 10px; top: 10px; }
   .note-corner-tl { left: 10px; top: 10px; }
+  .note-rosette { width: min(250px, 70cqw); right: -22%; bottom: 2%; }
+  .note-rosette-ring { opacity: 0.1; }
 }
 .marquee-light { margin-top: 110px; padding: 34px 0; border-top: 1px solid rgba(255, 255, 255, 0.2); }
 .marquee-light .word { color: rgba(255, 255, 255, 0.85); font-size: 30px; }

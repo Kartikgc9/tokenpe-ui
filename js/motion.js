@@ -92,6 +92,33 @@
   layoutStory();
   onScroll();
 
+  // The note's guilloche leans a few degrees toward a fine pointer. The spin stays in CSS.
+  const rosette = document.querySelector(".note-rosette");
+  const note = rosette && rosette.closest(".banknote");
+  if (rosette && note && !reduce && window.matchMedia("(pointer: fine)").matches) {
+    let raf = 0;
+    let nx = 0;
+    let ny = 0;
+    const paint = () => {
+      raf = 0;
+      rosette.style.setProperty("--nx", nx.toFixed(3));
+      rosette.style.setProperty("--ny", ny.toFixed(3));
+    };
+    note.addEventListener("pointermove", (e) => {
+      const box = note.getBoundingClientRect();
+      nx = (e.clientX - box.left) / box.width - 0.5;
+      ny = (e.clientY - box.top) / box.height - 0.5;
+      if (raf) return;
+      raf = requestAnimationFrame(paint);
+    });
+    note.addEventListener("pointerleave", () => {
+      nx = 0;
+      ny = 0;
+      if (raf) return;
+      raf = requestAnimationFrame(paint);
+    });
+  }
+
   // Hero visual drifts a little with the pointer.
   const visual = document.querySelector(".slip");
   if (visual && !reduce && window.matchMedia("(pointer: fine)").matches) {
