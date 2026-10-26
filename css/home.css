@@ -181,11 +181,11 @@ a { color: inherit; }
 .hero { position: relative; padding-top: calc(var(--header-h) + 40px); overflow: hidden; }
 .hero-grid { display: grid; grid-template-columns: 1.05fr 0.95fr; gap: 32px; align-items: center; min-height: min(760px, calc(100svh - 200px)); }
 .hero-title {
-  margin: 0; font-weight: 500; font-size: clamp(60px, 8.4vw, 124px); line-height: 0.95; letter-spacing: -0.055em;
+  margin: 0; font-weight: 500; font-size: clamp(46px, 5.6vw, 90px); line-height: 0.98; letter-spacing: -0.05em;
 }
-.hero-title .line { display: block; overflow: hidden; padding-bottom: 0.06em; }
+.hero-title .line { display: block; overflow: hidden; padding-bottom: 0.06em; white-space: nowrap; }
 .hero-title .line > span { display: inline-block; }
-.hero-lede { margin: 28px 0 0; font-size: clamp(19px, 1.7vw, 24px); line-height: 1.4; color: var(--muted); max-width: 30ch; }
+.hero-lede { margin: 28px 0 0; font-size: clamp(18px, 1.5vw, 22px); line-height: 1.45; color: var(--muted); max-width: 40ch; text-wrap: pretty; }
 .hero-actions { display: flex; flex-wrap: wrap; gap: 12px; margin-top: 40px; }
 
 /* One orchestrated entrance: lines rise, then copy and the visual settle in. */
@@ -214,7 +214,7 @@ a { color: inherit; }
 }
 .hv-tile { background: var(--surface); border-radius: 1em; padding: 0.9em 1em; }
 .hv-tile span { display: block; font-size: 0.85em; color: var(--muted); }
-.hv-tile b { display: block; margin-top: 0.2em; font-size: 1.75em; font-weight: 500; letter-spacing: -0.03em; }
+.hv-tile b { display: block; margin-top: 0.2em; white-space: nowrap; font-size: 1.6em; font-weight: 500; letter-spacing: -0.03em; }
 .hv-bars { display: flex; align-items: flex-end; gap: 0.3em; }
 .hv-bars span { position: absolute; }
 .hv-bars { position: relative; padding-top: 2.2em; min-height: 6em; }
@@ -759,6 +759,7 @@ body.cookie-open .toast { bottom: 132px; }
 
   .hero { padding-top: calc(var(--header-h) + 40px); }
   .hero-grid { grid-template-columns: 1fr; min-height: 0; gap: 24px; }
+  .hero-title { font-size: clamp(36px, 11.2vw, 76px); }
   .hv-stage { margin: 0 auto; max-width: 520px; font-size: clamp(7px, 1.9vw, 12px); }
   .split-head { grid-template-columns: 1fr; gap: 28px; margin-bottom: 44px; }
   .split-aside { justify-self: start; flex-direction: row; align-items: center; flex-wrap: wrap; }
