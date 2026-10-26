@@ -26,21 +26,15 @@ const supportedAssets = [
   ["Avalanche", null, true, true],
 ];
 
-const useCases = [
-  { id: "stores", label: "Online stores", title: "Crypto checkout for online stores", body: "Create a payment request for each order. Customers pay from any wallet or exchange on a supported network.", points: ["A payment request for every order", "Address and QR code for the customer", "Webhook when the payment confirms", "Settle in crypto, USDC or USDT"], nodes: ["Customer", "Store"] },
-  { id: "digital", label: "Digital services", title: "Get paid for software and digital goods", body: "Take crypto from customers anywhere, with no card chargebacks on crypto payments.", points: ["BTC, ETH, SOL, TRX and SUI", "USDC and USDT on supported chains", "No card chargebacks on crypto payments", "One API for every network"], nodes: ["Customer", "Business"] },
-  { id: "marketplaces", label: "Marketplaces", title: "Collect from buyers. Pay out sellers.", body: "Accept crypto from buyers, then pay sellers in crypto or to their bank account.", points: ["Crypto payments from buyers", "Crypto payouts to seller wallets", "Single or bulk payouts by API", "Bank payouts in 100+ countries"], nodes: ["Buyer", "Seller"] },
-  { id: "partners", label: "Contractors & affiliates", title: "Pay partners worldwide from one balance", body: "Send commissions and payments to wallets or bank accounts from your TokenPe balance.", points: ["Wallet payouts, single or in bulk", "Bank payouts in 100+ countries", "See the conversion before you confirm", "Track every payout by webhook"], nodes: ["Business", "Partner"] },
-  { id: "treasury", label: "Treasury", title: "Turn crypto revenue into local currency", body: "Convert your crypto balance and pay out to your business bank account. Payouts powered by our Mastercard partnership, available only where Mastercard transfers are supported.", points: ["Convert to USDC or USDT", "Pay out to your business bank account", "Rate shown before you confirm", "Coverage confirmed during onboarding"], nodes: ["Business", "Bank"] },
-];
+// Brand-ish colour and short code for each network, used by the logo strip and the networks list.
+const networkMarks = {
+  Bitcoin: ["#f7931a", "BTC"], Ethereum: ["#627eea", "ETH"], Solana: ["#9945ff", "SOL"], Tron: ["#ff2a3a", "TRX"],
+  Sui: ["#4da2ff", "SUI"], Base: ["#0052ff", "BASE"], Polygon: ["#8247e5", "POL"], Arbitrum: ["#28a0f0", "ARB"],
+  Optimism: ["#ff0420", "OP"], "BNB Chain": ["#f0b90b", "BNB"], Avalanche: ["#e84142", "AVAX"],
+};
 
-const industries = [
-  { id: "registration", label: "Registration", title: "Registered with FinCEN.", body: '[LEGAL ENTITY NAME] is registered with FinCEN as a Money Services Business, Registration No. [FINCEN MSB NUMBER]. Registration is not a licence or an endorsement. Verify it on FinCEN\'s public <a href="https://www.fincen.gov/msb-registrant-search" target="_blank" rel="noopener">MSB Registrant Search</a>.', chips: ["Money Services Business", "US company", "Bank Secrecy Act", "Public MSB search"] },
-  { id: "verification", label: "Verification", title: "Every business verified.", body: "We verify every business, its owners and its licences before it goes live. Gaming operators get enhanced due diligence.", chips: ["KYB", "Beneficial owners", "Licence checks", "Enhanced due diligence"] },
-  { id: "screening", label: "Screening", title: "Every transfer screened.", body: "We screen businesses, counterparties and wallet addresses against OFAC sanctions lists, and every transfer with blockchain analytics.", chips: ["OFAC screening", "Blockchain analytics", "Wallet screening", "Restricted jurisdictions blocked"] },
-  { id: "monitoring", label: "Monitoring", title: "Ongoing monitoring.", body: "We monitor transactions for unusual activity, report suspicious activity as the law requires, and keep records for at least five years.", chips: ["Transaction monitoring", "Suspicious activity reports", "Five-year records", "Independent testing"] },
-  { id: "security", label: "Account security", title: "Account security.", body: 'Protect your account and your team\'s access. Compliance questions: <a href="mailto:compliance@tokenpe.com">compliance@tokenpe.com</a>.', chips: ["Two-factor authentication", "Team roles", "Address allow-listing", "API key controls"] },
-];
+// Old section links (footer, bookmarks) that point at sections no longer on the page.
+const legacyHashes = { "#gaming": "#faq", "#disburse": "#integrate", "#usecases": "#collect", "#industries": "#covered", "#stack": "#covered" };
 
 const faqs = {
   "Getting started": [
@@ -78,19 +72,12 @@ const codeSample = `curl -X POST https://api.tokenpe.com/v1/payments \\
   }'`;
 
 const checkIcon = '<svg width="16" height="16" viewBox="0 0 16 16"><path d="M3 8l3 3 7-7" fill="none" stroke="currentColor" stroke-width="1.8"/></svg>';
-
-function icon(name) {
-  const paths = {
-    ramp: '<path d="M8 14a6 6 0 1 1 1.5 3.9" fill="none" stroke="currentColor" stroke-width="1.7"/><path d="M8 14l-3 1M8 14l1.2-3.2" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"/>',
-    bank: '<path d="M4 10l8-5 8 5M6 10v6M10 10v6M14 10v6M18 10v6M4 16h16" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linejoin="round"/>',
-    globe: '<circle cx="12" cy="12" r="8" fill="none" stroke="currentColor" stroke-width="1.7"/><path d="M4 12h16M12 4c2.5 2.4 2.5 11.6 0 16M12 4c-2.5 2.4-2.5 11.6 0 16" fill="none" stroke="currentColor" stroke-width="1.6"/>',
-    kyc: '<circle cx="12" cy="9" r="3" fill="none" stroke="currentColor" stroke-width="1.7"/><path d="M6 18c1.2-2.4 3-3.5 6-3.5S16.8 15.6 18 18" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"/><path d="M16 8.5l1.2 1.2L20 7" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/>',
-    card: '<rect x="3" y="6" width="18" height="12" rx="2" fill="none" stroke="currentColor" stroke-width="1.7"/><path d="M3 10h18" stroke="currentColor" stroke-width="1.7"/>',
-  };
-  return `<svg class="ic" viewBox="0 0 24 24" aria-hidden="true">${paths[name]}</svg>`;
-}
+const arrowIcon = '<svg viewBox="0 0 20 20" aria-hidden="true"><path d="M6 14L14 6M7 6h7v7" fill="none" stroke="currentColor" stroke-width="1.8"/></svg>';
+const plusIcon = '<svg viewBox="0 0 20 20" aria-hidden="true"><path d="M10 3v14M3 10h14" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"/></svg>';
+const markIcon = '<svg class="mark" viewBox="0 0 32 20" aria-hidden="true"><circle cx="10" cy="10" r="8" fill="none" stroke="currentColor" stroke-width="2.4"/><circle cx="22" cy="10" r="8" fill="none" stroke="currentColor" stroke-width="2.4"/></svg>';
 
 const attr = (value) => String(value).replace(/&/g, "&amp;").replace(/"/g, "&quot;").replace(/</g, "&lt;");
+const escapeText = (value) => String(value).replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;");
 
 function toast(message) {
   const el = $("#toast");
@@ -100,15 +87,42 @@ function toast(message) {
   toast._t = setTimeout(() => el.classList.remove("is-on"), 2400);
 }
 
+function netGlyph(name) {
+  const [color, code] = networkMarks[name] || ["#666", name];
+  return `<span class="net-ic" style="--c:${color}" aria-hidden="true">${code.slice(0, 1)}</span>`;
+}
+
+// Product card visuals. Everything inside is decorative (aria-hidden); the card text carries the meaning.
+const coverVisuals = {
+  ramp: () => `<span class="cv cv-stack" aria-hidden="true"><span class="cv-swirl"></span>
+      ${[["USDC · Solana", "250.00 USDC", "#2775ca", "$"], ["USDT · Tron", "250.00 USDT", "#26a17b", "₮"], ["BTC · Bitcoin", "As received", "#f7931a", "₿"]].map(([n, v, c, g], i) => `
+      <span class="stk stk-${i + 1}"><span class="stk-ic" style="--c:${c}">${g}</span><span class="stk-t"><b>${n}</b>${i === 0 ? "<em>Settle as</em>" : ""}</span><span class="stk-v">${v}</span></span>`).join("")}
+    </span>`,
+  bank: () => `<span class="cv cv-flow" aria-hidden="true">
+      <svg viewBox="0 0 100 100" preserveAspectRatio="none"><path d="M27 16 V41 Q27 49 35 49 H42 M73 16 V41 Q73 49 65 49 H58"/><path d="M50 62 V84 M50 68 Q50 74 44 74 H24 Q18 74 18 80 V84 M50 68 Q50 74 56 74 H76 Q82 74 82 80 V84"/></svg>
+      <span class="fl-node fl-a">Crypto balance</span><span class="fl-node fl-b">Conversion</span>
+      <span class="fl-hub">${markIcon}</span>
+      <span class="fl-node fl-c"><i>${checkIcon}</i>Bank account</span><span class="fl-node fl-d"><i>${checkIcon}</i>Bank account</span><span class="fl-node fl-e"><i>${checkIcon}</i>Bank account</span>
+    </span>`,
+  globe: () => {
+    const row = (list) => `<span class="orbs-row"><span class="orbs-track">${[...list, ...list, ...list].map((n) => `<span class="orb" style="--c:${networkMarks[n][0]}">${networkMarks[n][1]}</span>`).join("")}</span></span>`;
+    return `<span class="cv cv-orbs" aria-hidden="true">${row(features.slice(0, 6))}${row(features.slice(5))}</span>`;
+  },
+  kyc: () => `<span class="cv cv-checks" aria-hidden="true">${["Money Services Business", "Every business verified", "Every transfer screened"].map((t) => `<span class="ck"><i>${checkIcon}</i>${t}</span>`).join("")}</span>`,
+  card: () => `<span class="cv cv-soon" aria-hidden="true"><span class="soon-pill">Coming soon</span><span class="soon-field"><small>Pay with</small><b>Fiat</b></span><span class="soon-field"><small>Receive</small><b>Crypto</b></span></span>`,
+};
+
 function renderStatic() {
-  const group = `<div class="marquee-group">${features.map((n) => `<span class="word">${n}</span>`).join("")}</div>`;
-  $("#marquee").innerHTML = group + group.replace("<div", '<div aria-hidden="true"');
+  const strip = `<div class="marquee-group">${features.map((n) => `<span class="word">${netGlyph(n)}${n}</span>`).join("")}</div>`;
+  $("#marquee").innerHTML = strip + strip.replace("<div", '<div aria-hidden="true"');
+  const plain = `<div class="marquee-group">${features.map((n) => `<span class="word">${n}</span>`).join("")}</div>`;
+  $("#marquee-cta").innerHTML = plain + plain;
 
   $("#cover-grid").innerHTML = products.map((p, i) => `
-    <button class="cover-card ${i < 2 ? "wide" : ""}" type="button" data-product="${i}">
-      ${icon(p.icon)}
-      <h3>${p.title}</h3>
-      <p>${p.body}</p>
+    <button class="cover-card cover-${p.icon}" type="button" data-product="${i}">
+      <span class="cover-head"><span class="cover-title">${markIcon}<span>${p.title}</span></span><span class="arrow">${arrowIcon}</span></span>
+      <span class="cover-body">${p.body}</span>
+      ${coverVisuals[p.icon]()}
     </button>`).join("");
 
   $("#method-grid").innerHTML = ["BTC", "ETH", "SOL", "TRX", "SUI", "USDC", "USDT", "11 networks"]
@@ -124,96 +138,45 @@ function renderStatic() {
     btn.classList.add("is-on");
   });
 
-  $("#usecase-pills").innerHTML = useCases.map((u, i) =>
-    `<button type="button" role="tab" data-usecase="${u.id}" class="${i === 0 ? "is-on" : ""}" aria-selected="${i === 0}">${u.label}</button>`).join("");
-  $("#usecase-panels").innerHTML = useCases.map((u, i) => `
-    <article class="usecase-panel ${i === 0 ? "is-on" : ""}" data-panel="${u.id}">
-      <div>
-        <h3>${u.title}</h3>
-        <p>${u.body}</p>
-        <ul class="checks">${u.points.map((pt) => `<li>${checkIcon}${pt}</li>`).join("")}</ul>
-      </div>
-      <div class="rail" data-from="${u.nodes[0]}" data-to="${u.nodes[1]}">
-        <div class="rail-steps" aria-hidden="true">
-          <span data-step="1" class="is-on">1 · Customer pays</span>
-          <span data-step="2">2 · TokenPe confirms</span>
-          <span data-step="3">3 · You settle</span>
-        </div>
-        <svg class="diagram" viewBox="0 0 420 230" aria-hidden="true">
-          <path class="rail-track" d="M70 156 C 150 210, 270 210, 350 156" fill="none" stroke="#c5d8f7" stroke-width="3"/>
-          <path class="rail-dash" pathLength="100" d="M70 156 C 150 210, 270 210, 350 156" fill="none" stroke="#1461DB" stroke-width="2.5" stroke-dasharray="6 7"/>
-          <circle cx="70" cy="78" r="42" fill="#fff" stroke="#d5e4fb"/>
-          <g class="rail-hub">
-            <circle cx="210" cy="78" r="44" fill="#1461DB"/>
-            <text x="210" y="83" text-anchor="middle" font-size="13" font-weight="700" fill="#fff">TokenPe</text>
-          </g>
-          <circle cx="350" cy="78" r="42" fill="#fff" stroke="#d5e4fb"/>
-          <text x="70" y="83" text-anchor="middle" font-size="11" font-weight="700" fill="#1461DB">${u.nodes[0]}</text>
-          <text x="350" y="83" text-anchor="middle" font-size="11" font-weight="700" fill="#1461DB">${u.nodes[1]}</text>
-        </svg>
-        <p class="rail-caption" data-rail-caption>Every payment is confirmed and screened by TokenPe.</p>
-      </div>
-    </article>`).join("");
-
-  $("#payouts").innerHTML = [
-    { title: "Fiat payouts", body: "Convert crypto and pay out to bank accounts in 100+ countries. Payouts powered by our Mastercard partnership, available only where Mastercard transfers are supported.", cta: "Talk to sales", visual: "bulk" },
-    { title: "Crypto payouts", body: "Send crypto to wallets, one at a time or in bulk, by API.", cta: "Get API access", visual: "crypto" },
-  ].map((p, i) => `
-    <article class="payout-item ${i === 0 ? "is-open" : ""}">
-      <header><button type="button" aria-expanded="${i === 0}"><span class="ic" style="width:18px">${icon("bank")}</span> ${p.title}</button></header>
-      <div class="payout-collapse"><div>
-      <div class="payout-body">
-        <div><p>${p.body}</p><button class="btn btn-green btn-sm" type="button" data-open="sales">${p.cta}</button></div>
-        ${p.visual === "bulk" ? `<div class="bulk"><div class="file" id="payout-file">Payout batch · in progress</div><div class="line"><span>Destination</span><b>Bank account</b></div><div class="line"><span>Coverage</span><b>100+ countries</b></div><div class="line"><span>Status</span><span id="payout-left">In progress</span></div><div class="bar"><span id="payout-bar"></span></div></div>` : `<div class="receive-box"><b>Send 250 USDC</b><label><span>Solana</span><input type="radio" name="recv" checked></label><label><span>Tron</span><input type="radio" name="recv"></label><label><span>Ethereum</span><input type="radio" name="recv"></label><p class="flow-status" id="recv-status">Choose a network</p><button class="btn btn-green" type="button" id="recv-go" style="width:100%;margin-top:8px">Send payout</button></div>`}
-      </div>
-      </div></div>
-    </article>`).join("");
-  syncPayoutInert();
-
-  $("#industry-pills").innerHTML = industries.map((ind, i) =>
-    `<button type="button" data-industry="${ind.id}" class="${i === 0 ? "is-on" : ""}">${ind.label}</button>`).join("");
-  $("#industry-panels").innerHTML = industries.map((ind, i) => `
-    <article class="industry-panel ${i === 0 ? "is-on" : ""}" data-industry-panel="${ind.id}">
-      <div class="scene">
-        <div class="mock-checkout">
-          <div style="display:flex;justify-content:space-between;align-items:center">Transfer screening <i class="switch"></i></div>
-          <div class="riskpill"><span class="on">Low</span><span>Medium</span><span>High</span></div>
-          <div style="background:#0c2414;border-radius:12px;padding:10px;margin-top:8px">
-            <div>Transfer · 250 USDC</div>
-            <div style="display:flex;justify-content:space-between;margin-top:8px"><span>Screened</span><span>Cleared</span></div>
-          </div>
-        </div>
-        <div class="scene-copy">
-          <h3>${ind.title}</h3>
-          <p>${ind.body}</p>
-          <div class="chips">${ind.chips.map((c) => `<span class="chip">${c}</span>`).join("")}</div>
-        </div>
-      </div>
-    </article>`).join("");
-
   $("#faq-pills").innerHTML = Object.keys(faqs).map((name, i) =>
-    `<button type="button" data-faq="${name}" class="${i === 0 ? "is-on" : ""}">${name}</button>`).join("");
+    `<button type="button" data-faq="${name}" class="${i === 0 ? "is-on" : ""}" aria-pressed="${i === 0}">${name}</button>`).join("");
   renderFaq("Getting started");
 
   $("#code-block").textContent = codeSample;
   renderSettle();
+  renderNetworks();
 }
 
 function renderFaq(name) {
   $("#faq-list").innerHTML = faqs[name].map(([q, a], i) => `
     <div class="faq-item ${i === 0 ? "is-open" : ""}">
-      <button class="q" type="button" aria-expanded="${i === 0}" aria-controls="faq-a-${i}">${q}<span class="pm" aria-hidden="true">${i === 0 ? "–" : "+"}</span></button>
+      <button class="q" type="button" aria-expanded="${i === 0}" aria-controls="faq-a-${i}">${q}<span class="pm" aria-hidden="true">${plusIcon}</span></button>
       <div class="a" id="faq-a-${i}"><div ${i === 0 ? "" : "inert"}>${a}</div></div>
     </div>`).join("");
 }
 
-// Collapsed accordion content stays in the DOM for the height animation,
-// so take it out of the tab order and the accessibility tree while closed.
-function syncPayoutInert() {
-  $$(".payout-item").forEach((item) => {
-    const inner = $(".payout-collapse > div", item);
-    if (inner) inner.inert = !item.classList.contains("is-open");
+function showFaq(name) {
+  $$("#faq-pills button").forEach((b) => {
+    const on = b.dataset.faq === name;
+    b.classList.toggle("is-on", on);
+    b.setAttribute("aria-pressed", on);
   });
+  renderFaq(name);
+}
+
+// Supported networks explorer: filter by stablecoin and search by name or coin.
+const netState = { filter: "all", query: "" };
+function renderNetworks() {
+  const q = netState.query.trim().toLowerCase();
+  const rows = supportedAssets.filter(([net, coin, usdc, usdt]) => {
+    if (netState.filter === "usdc" && !usdc) return false;
+    if (netState.filter === "usdt" && !usdt) return false;
+    return !q || net.toLowerCase().includes(q) || (coin || "").toLowerCase().includes(q);
+  });
+  const tag = (label, on) => `<em class="${on ? "on" : "off"}" aria-label="${label} ${on ? "supported" : "not supported"}">${label}</em>`;
+  $("#net-list").innerHTML = rows.length
+    ? rows.map(([net, coin, usdc, usdt]) => `<li>${netGlyph(net)}<b>${net}</b><span class="net-tags">${coin ? `<em class="native">${coin}</em>` : ""}${tag("USDC", usdc)}${tag("USDT", usdt)}</span></li>`).join("")
+    : `<li class="net-empty">No supported network matches “${escapeText(netState.query.trim())}”. Try Ethereum, Solana or Tron.</li>`;
 }
 
 function renderSettle() {
@@ -224,7 +187,7 @@ function renderSettle() {
   ];
   $("#settle-card").innerHTML = `<p class="settle-phase">Screening</p>` +
     rows.map((r) => `<div class="mini-row"><b>${r[0]}</b><span>${r[1]}</span></div>`).join("") +
-    `<a class="btn btn-green btn-sm" href="/legal/aml.html" style="margin-top:8px">Read our AML policy</a>`;
+    `<a class="pill pill-dark pill-sm" href="/legal/aml.html">Read our AML policy</a>`;
 }
 
 function assetsTable() {
@@ -241,13 +204,13 @@ function openProduct(p) {
   if (p.drawer === "assets") {
     html += assetsTable() +
       `<p>Bitcoin does not support USDC or USDT. Stablecoins are accepted only on the networks marked ✓. Always send on the network shown in your payment request. Funds sent on the wrong network may be lost.</p>` +
-      `<button class="btn btn-blue" type="button" data-open="sales">Talk to sales</button>`;
+      `<button class="pill pill-blue" type="button" data-open="sales">Talk to sales</button>`;
   } else if (p.drawer === "waitlist") {
     html += `<p>Fiat-to-Crypto is not available yet. Join the waitlist and we will email you when it launches.</p>` +
-      `<a class="btn btn-blue" href="#waitlist" data-close>Join the waitlist</a>`;
+      `<a class="pill pill-blue" href="#waitlist" data-close>Join the waitlist</a>`;
   } else {
     html += `<p>Talk to sales to see how this works for your business. Custom pricing for your volume.</p>` +
-      `<button class="btn btn-blue" type="button" data-open="sales">Talk to sales</button>`;
+      `<button class="pill pill-blue" type="button" data-open="sales">Talk to sales</button>`;
   }
   openDrawer(html);
 }
@@ -319,7 +282,7 @@ function formShell(title, text, fields, submitLabel, formName) {
       <input type="hidden" name="title" value="${attr(title)}">
       ${fields.map((f) => `<label>${f.label}${f.required ? " *" : ""}<input name="${f.name}" type="${f.type || "text"}" ${f.required ? "required" : ""} ${f.placeholder ? `placeholder="${attr(f.placeholder)}"` : ""} ${f.value ? `value="${attr(f.value)}"` : ""} ${f.autocomplete ? `autocomplete="${f.autocomplete}"` : ""}><span class="err"></span></label>`).join("")}
       ${honeypot}
-      <button class="btn btn-blue" type="submit">${submitLabel}</button>
+      <button class="pill pill-blue" type="submit">${submitLabel}</button>
       <p class="err" data-form-error role="alert"></p>
     </form>`;
 }
@@ -405,6 +368,13 @@ function hideCookie() {
 }
 
 function openFromHash() {
+  const moved = legacyHashes[location.hash];
+  if (moved) {
+    if (location.hash === "#gaming") showFaq("Gaming & support");
+    history.replaceState(null, "", moved);
+    document.querySelector(moved).scrollIntoView();
+    return;
+  }
   const forms = { "#get-started": () => salesForm("Get started with TokenPe"), "#contact": () => salesForm("Talk to sales") };
   const form = forms[location.hash];
   if (!form) return;
@@ -444,24 +414,22 @@ function bind() {
       if (product.tagName === "A") e.preventDefault();
       openProduct(products[product.dataset.product]);
     }
-    const usecase = e.target.closest("[data-usecase]");
-    if (usecase && usecase.dataset.usecase) showUsecase(usecase.dataset.usecase);
-    const industry = e.target.closest("[data-industry]");
-    if (industry && !industry.dataset.industryPanel) {
-      $$("[data-industry]").forEach((b) => b.classList.toggle("is-on", b === industry));
-      $$("[data-industry-panel]").forEach((p) => p.classList.toggle("is-on", p.dataset.industryPanel === industry.dataset.industry));
-    }
     const faq = e.target.closest("[data-faq]");
-    if (faq && $("#faq-pills").contains(faq)) {
-      $$("#faq-pills button").forEach((b) => b.classList.toggle("is-on", b === faq));
-      renderFaq(faq.dataset.faq);
+    if (faq && $("#faq-pills").contains(faq)) showFaq(faq.dataset.faq);
+    const netFilter = e.target.closest("[data-net-filter]");
+    if (netFilter) {
+      netState.filter = netFilter.dataset.netFilter;
+      $$("[data-net-filter]").forEach((b) => {
+        b.classList.toggle("is-on", b === netFilter);
+        b.setAttribute("aria-pressed", b === netFilter);
+      });
+      renderNetworks();
     }
     const q = e.target.closest(".faq-item .q");
     if (q) {
       const item = q.closest(".faq-item");
       const open = item.classList.toggle("is-open");
       q.setAttribute("aria-expanded", open);
-      $(".pm", q).textContent = open ? "–" : "+";
       const answer = $(".a > div", item);
       if (answer) answer.inert = !open;
     }
@@ -532,19 +500,10 @@ function bind() {
     }
   });
 
-  $("#payouts").addEventListener("click", (e) => {
-    const head = e.target.closest(".payout-item header button");
-    if (!head) return;
-    const item = head.closest(".payout-item");
-    $$(".payout-item").forEach((el) => {
-      const on = el === item;
-      el.classList.toggle("is-open", on);
-      $("header button", el).setAttribute("aria-expanded", on);
-    });
-    syncPayoutInert();
-  });
-  document.addEventListener("click", (e) => {
-    if (e.target.id === "recv-go" || e.target.id === "theme-pay") toast("Preview only. No payout was sent.");
+  $("#theme-pay").addEventListener("click", () => toast("Preview only. No payout was sent."));
+  $("#net-search").addEventListener("input", (e) => {
+    netState.query = e.target.value;
+    renderNetworks();
   });
 
   $("#copy-code").addEventListener("click", async () => {
@@ -586,27 +545,8 @@ function setMobileNav(open) {
   document.body.classList.toggle("modal-open", open);
 }
 
-function showUsecase(id) {
-  $$("#usecase-pills button").forEach((b) => {
-    const on = b.dataset.usecase === id;
-    b.classList.toggle("is-on", on);
-    b.setAttribute("aria-selected", on);
-  });
-  $$("#usecase-panels .usecase-panel").forEach((p) => p.classList.toggle("is-on", p.dataset.panel === id));
-}
-
 function onScroll() {
   $("#sticky").classList.toggle("scrolled", window.scrollY > 8);
-  const ids = ["collect", "disburse"];
-  const nav = $("#section-nav");
-  const start = $("#collect").getBoundingClientRect().top;
-  const end = $("#industries").getBoundingClientRect().top;
-  nav.classList.toggle("is-hidden", start > 200 || end < 120);
-  let current = ids[0];
-  ids.forEach((id) => {
-    if (document.getElementById(id).getBoundingClientRect().top < 180) current = id;
-  });
-  $$("#section-nav a").forEach((a) => a.classList.toggle("is-on", a.getAttribute("href") === `#${current}`));
 }
 
 renderStatic();

@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>TokenPe — Crypto Payments and Global Payouts for Business</title>
   <meta name="description" content="Accept crypto on 11 networks and pay out to bank accounts in 100+ countries. TokenPe is a US company registered with FinCEN as a Money Services Business.">
-  <meta name="theme-color" content="#050505">
+  <meta name="theme-color" content="#ffffff">
   <meta property="og:type" content="website">
   <meta property="og:title" content="TokenPe — Crypto Payments and Global Payouts for Business">
   <meta property="og:description" content="Accept crypto on 11 networks, settle in crypto or USDC and USDT, and pay out to 100+ countries.">
@@ -13,42 +13,33 @@
   <link rel="icon" href="assets/favicon.svg" type="image/svg+xml">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="css/styles.css">
+  <link href="https://fonts.googleapis.com/css2?family=Geist:wght@400;500;600;700&family=Geist+Mono:wght@400;500&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/home.css">
+  <script>document.documentElement.classList.add("js")</script>
 </head>
 <body>
   <a class="skip" href="#main">Skip to content</a>
+
   <div class="sticky-wrap" id="sticky">
     <header class="nav container">
-      <a class="brand" href="#top" aria-label="TokenPe home">TokenPe</a>
-      <button class="burger" type="button" aria-expanded="false" aria-controls="nav-links">
-        <span></span><span></span><span></span>
-        <span class="sr" style="position:absolute;left:-999px">Menu</span>
-      </button>
+      <a class="brand" href="#top" aria-label="TokenPe home">
+        <svg class="brand-mark" viewBox="0 0 32 20" aria-hidden="true"><circle cx="10" cy="10" r="8.2" fill="none" stroke="currentColor" stroke-width="2.4"/><circle cx="22" cy="10" r="8.2" fill="none" stroke="currentColor" stroke-width="2.4"/></svg>
+        <span>TokenPe</span>
+      </a>
       <nav class="nav-links" id="nav-links" aria-label="Primary">
         <div class="menu">
-          <button class="menu-btn" type="button" aria-expanded="false">Products <svg class="caret" viewBox="0 0 12 12"><path d="M2 4l4 4 4-4" fill="none" stroke="currentColor" stroke-width="1.5"/></svg></button>
+          <button class="menu-btn" type="button" aria-expanded="false">Products <svg class="caret" viewBox="0 0 12 12" aria-hidden="true"><path d="M2 4l4 4 4-4" fill="none" stroke="currentColor" stroke-width="1.6"/></svg></button>
           <div class="menu-panel">
             <a href="#integrate"><strong>Crypto-to-Crypto</strong><span>Accept crypto, settle in crypto</span></a>
-            <a href="#disburse"><strong>Crypto-to-Fiat Payouts</strong><span>Payouts to 100+ countries</span></a>
+            <a href="#integrate"><strong>Crypto-to-Fiat Payouts</strong><span>Payouts to 100+ countries</span></a>
             <a href="#waitlist"><strong>Fiat-to-Crypto</strong><span>Coming soon · join the waitlist</span></a>
-            <a href="#covered" data-product="2"><strong>Supported networks</strong><span>11 networks, USDC and USDT</span></a>
-            <a href="#industries"><strong>Security &amp; compliance</strong><span>Registered with FinCEN as an MSB</span></a>
+            <a href="#networks"><strong>Supported networks</strong><span>11 networks, USDC and USDT</span></a>
           </div>
         </div>
-        <a href="#gaming">Gaming &amp; Casino</a>
+        <a class="nav-link" href="#collect">Accept</a>
+        <a class="nav-link" href="#networks">Networks</a>
         <div class="menu">
-          <button class="menu-btn" type="button" aria-expanded="false">Use cases <svg class="caret" viewBox="0 0 12 12"><path d="M2 4l4 4 4-4" fill="none" stroke="currentColor" stroke-width="1.5"/></svg></button>
-          <div class="menu-panel">
-            <a href="#usecases" data-usecase="stores"><strong>Online stores</strong><span>Crypto checkout for every order</span></a>
-            <a href="#usecases" data-usecase="digital"><strong>Digital services</strong><span>Software and digital goods</span></a>
-            <a href="#usecases" data-usecase="marketplaces"><strong>Marketplaces</strong><span>Collect from buyers, pay sellers</span></a>
-            <a href="#usecases" data-usecase="partners"><strong>Contractors &amp; affiliates</strong><span>Pay partners worldwide</span></a>
-            <a href="#usecases" data-usecase="treasury"><strong>Treasury</strong><span>Crypto revenue to your bank</span></a>
-          </div>
-        </div>
-        <div class="menu">
-          <button class="menu-btn" type="button" aria-expanded="false">Developers <svg class="caret" viewBox="0 0 12 12"><path d="M2 4l4 4 4-4" fill="none" stroke="currentColor" stroke-width="1.5"/></svg></button>
+          <button class="menu-btn" type="button" aria-expanded="false">Developers <svg class="caret" viewBox="0 0 12 12" aria-hidden="true"><path d="M2 4l4 4 4-4" fill="none" stroke="currentColor" stroke-width="1.6"/></svg></button>
           <div class="menu-panel">
             <a href="#developers" data-open="docs" data-doc="payments"><strong>API overview</strong><span>Payments, conversions, payouts</span></a>
             <a href="#developers" data-open="docs" data-doc="webhooks"><strong>Webhooks</strong><span>Events for every status change</span></a>
@@ -56,411 +47,343 @@
           </div>
         </div>
         <div class="menu">
-          <button class="menu-btn" type="button" aria-expanded="false">Resources <svg class="caret" viewBox="0 0 12 12"><path d="M2 4l4 4 4-4" fill="none" stroke="currentColor" stroke-width="1.5"/></svg></button>
+          <button class="menu-btn" type="button" aria-expanded="false">Resources <svg class="caret" viewBox="0 0 12 12" aria-hidden="true"><path d="M2 4l4 4 4-4" fill="none" stroke="currentColor" stroke-width="1.6"/></svg></button>
           <div class="menu-panel">
             <a href="#faq"><strong>FAQ</strong><span>Setup, payouts and support</span></a>
             <a href="/legal/terms.html"><strong>Legal</strong><span>Terms, privacy and policies</span></a>
           </div>
         </div>
+        <a class="nav-link nav-mobile-only" href="https://app.tokenpe.com">Sign in</a>
       </nav>
       <div class="nav-actions">
-        <a class="btn btn-ghost btn-sm" href="https://app.tokenpe.com">Sign in</a>
-        <button class="btn btn-black btn-sm" type="button" data-open="signup">Get started</button>
+        <a class="pill pill-glass" href="https://app.tokenpe.com">Sign in</a>
+        <button class="pill pill-dark" type="button" data-open="signup">Get started</button>
       </div>
+      <button class="burger" type="button" aria-expanded="false" aria-controls="nav-links">
+        <span></span><span></span>
+        <span class="sr-only">Menu</span>
+      </button>
     </header>
   </div>
 
   <main id="main">
-    <section class="horizon" id="top" aria-label="Hero">
-      <div class="horizon-stage">
-        <div class="horizon-lines" aria-hidden="true"></div>
-        <div class="horizon-drift" aria-hidden="true"></div>
-        <div class="horizon-spot" aria-hidden="true"></div>
-        <div class="horizon-streaks" aria-hidden="true">
-          <span style="--left:2%;--sx:0.68;--sy:0.79;--peak:0.2;--dur:7s;--delay:0s"></span>
-          <span style="--left:10%;--sx:0.54;--sy:0.65;--peak:0.16;--dur:9s;--delay:3.2s"></span>
-          <span style="--left:29%;--sx:0.63;--sy:0.92;--peak:0.22;--dur:8s;--delay:1.4s"></span>
-          <span style="--left:41%;--sx:1;--sy:0.66;--peak:0.21;--dur:10s;--delay:5.1s"></span>
-          <span style="--left:67%;--sx:0.71;--sy:0.65;--peak:0.26;--dur:7.5s;--delay:2.3s"></span>
-          <span style="--left:81%;--sx:0.86;--sy:0.9;--peak:0.18;--dur:8.5s;--delay:4.4s"></span>
-        </div>
-        <div class="horizon-copy">
-          <p class="horizon-eyebrow">Accept crypto · Pay out in 100+ countries</p>
-          <h1 class="horizon-title">
-            <span>Crypto in. Fiat out.</span>
-          </h1>
-          <div class="horizon-actions">
-            <button class="horizon-primary" type="button" data-open="signup">Get started</button>
-            <a class="horizon-secondary" href="#covered">Learn more</a>
+    <section class="hero" id="top" aria-label="Hero">
+      <div class="container hero-grid">
+        <div class="hero-copy">
+          <h1 class="hero-title"><span class="line"><span>Crypto in.</span></span><span class="line"><span>Fiat out.</span></span></h1>
+          <p class="hero-lede">Accept crypto · Pay out in 100+ countries</p>
+          <div class="hero-actions">
+            <button class="pill pill-dark pill-lg" type="button" data-open="signup">Get started</button>
+            <a class="pill pill-light pill-lg" href="#covered">Learn more</a>
           </div>
         </div>
-        <div class="horizon-halo" aria-hidden="true">
-          <div class="orb orb-halo"><div class="halo-fill"></div></div>
-        </div>
-        <div class="horizon-planet" aria-hidden="true">
-          <div class="rim-clip">
-            <div class="rim-filter">
-              <div class="rim-layer rim-soft"><div class="orb orb-rim orb-rim-soft"></div><div class="orb orb-sweep"></div></div>
-              <div class="rim-layer rim-sharp"><div class="orb orb-rim orb-rim-sharp"></div><div class="orb orb-sweep"></div></div>
+
+        <div class="hero-visual" aria-hidden="true">
+          <div class="hv-stage">
+            <div class="hv-panel">
+              <div class="hv-tile"><span>Networks</span><b>11</b></div>
+              <div class="hv-tile"><span>Payout countries</span><b>100+</b></div>
+              <div class="hv-tile"><span>Settle as</span><b>USDC · USDT</b></div>
+              <div class="hv-tile hv-bars"><span>Payments</span><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div>
             </div>
+            <div class="hv-phone">
+              <div class="hv-notch"></div>
+              <div class="hv-screen">
+                <div class="hv-head"><span>Pay Acme</span><i>×</i></div>
+                <p class="hv-amount">250.00 <small>USDC</small></p>
+                <p class="hv-label">Any wallet or exchange</p>
+                <div class="hv-row is-on"><em>Selected</em><span><i class="dot" style="background:#1d4bff"></i>USDC · Solana</span></div>
+                <div class="hv-row"><em>Selected</em><span><i class="dot" style="background:#12b76a"></i>USDT · Tron</span></div>
+                <div class="hv-row"><em>Selected</em><span><i class="dot" style="background:#f7931a"></i>BTC · Bitcoin</span></div>
+                <div class="hv-row"><em>Selected</em><span><i class="dot" style="background:#627eea"></i>ETH · Base</span></div>
+                <div class="hv-cta">Show QR code</div>
+              </div>
+            </div>
+            <div class="coin coin-a"><span>T</span></div>
+            <div class="coin coin-b"><span>$</span></div>
+            <div class="coin coin-c"><span>T</span></div>
+            <div class="hv-shadow"></div>
           </div>
-          <div class="orb orb-disk"></div>
-          <div class="orb orb-edge horizon-edge">
-            <svg viewBox="0 0 1000 1000" aria-hidden="true">
-              <defs>
-                <linearGradient id="horizon-edge" x1="0" x2="0" y1="0" y2="1">
-                  <stop offset="0" stop-color="#f4f4f5" stop-opacity="0.5"/>
-                  <stop offset="0.33" stop-color="#f4f4f5" stop-opacity="0"/>
-                </linearGradient>
-              </defs>
-              <circle cx="500" cy="500" r="500" fill="none" stroke="url(#horizon-edge)" stroke-width="1.5"/>
-            </svg>
-          </div>
-          <div class="horizon-globe"><canvas></canvas></div>
+        </div>
+      </div>
+
+      <div class="logo-strip" aria-label="Supported networks">
+        <p class="sr-only">Supported networks</p>
+        <div class="marquee">
+          <div class="marquee-track" id="marquee"></div>
         </div>
       </div>
     </section>
 
-    <button class="offer" type="button" data-open="sales">
-      <div class="offer-num">11</div>
-      <div>
-        <p>Networks, one integration. Registered with FinCEN as a Money Services Business.</p>
-        <ul>
-          <li>US company</li>
-          <li>Payouts to 100+ countries</li>
-          <li>Custom pricing for your volume</li>
-        </ul>
-      </div>
-    </button>
-
     <section class="section" id="covered">
       <div class="container">
-        <p class="eyebrow">Products</p>
-        <h2 class="section-title">Everything you need to accept crypto and pay out worldwide</h2>
+        <div class="split-head">
+          <h2 class="display" data-reveal-words>Everything you need to accept crypto and pay out worldwide</h2>
+          <div class="split-aside">
+            <p class="tag">Products</p>
+            <button class="pill pill-dark" type="button" data-open="sales">Talk to sales</button>
+          </div>
+        </div>
         <div class="cover-grid" id="cover-grid"></div>
       </div>
     </section>
 
-    <section class="marquee-wrap" aria-label="Supported networks">
-      <p class="marquee-label">SUPPORTED NETWORKS</p>
-      <div class="marquee">
-        <div class="marquee-track" id="marquee"></div>
-      </div>
-    </section>
-
-    <section class="section stack" id="stack">
-      <div class="container">
-        <div class="sim" id="pay-sim">
-          <p class="sim-status" id="sim-status" aria-live="polite">Name your business, set an amount, then run the simulation.</p>
-          <div class="sim-steps" aria-hidden="true">
-            <span data-sim-step="1">1. Customer pays</span>
-            <span data-sim-step="2">2. TokenPe confirms</span>
-            <span data-sim-step="3">3. You settle</span>
+    <section class="section networks" id="networks">
+      <div class="container networks-grid">
+        <div class="networks-copy">
+          <h2 class="display-md">Supported networks</h2>
+          <p class="lede">Bitcoin, Ethereum, Solana, Tron, Sui, Base, Polygon, Arbitrum, Optimism, BNB Chain and Avalanche.</p>
+          <div class="seg" role="group" aria-label="Filter networks by asset">
+            <button type="button" class="is-on" data-net-filter="all" aria-pressed="true">All assets</button>
+            <button type="button" data-net-filter="usdc" aria-pressed="false">USDC</button>
+            <button type="button" data-net-filter="usdt" aria-pressed="false">USDT</button>
           </div>
-          <div class="sim-board">
-            <svg viewBox="0 0 1000 300" aria-hidden="true">
-              <path id="sim-route" d="M150 118 C 300 196, 400 160, 480 130 C 560 160, 720 196, 860 118" fill="none" stroke="#7aa2ff" stroke-width="2.5" stroke-linecap="round"/>
-              <circle id="sim-packet" cx="190" cy="158" r="7" fill="#fff"/>
-              <circle id="sim-packet-glow" cx="190" cy="158" r="14" fill="#fff" opacity="0.28"/>
-            </svg>
-            <article class="sim-node left" id="sim-left">
-              <b id="sim-left-kicker">Acme</b>
-              <strong id="sim-left-title">Your website</strong>
-              <span id="sim-left-sub">Customer checkout sits here</span>
-            </article>
-            <article class="sim-card" id="sim-card">
-              <header>
-                <span id="sim-card-kicker">Payment request</span>
-                <span>Illustrative</span>
-              </header>
-              <div class="sim-amount" id="sim-amount">$100.00</div>
-              <p id="sim-card-where">USD on Acme</p>
-              <p class="sim-wait" id="sim-wait">Waiting for the customer.</p>
-              <div class="sim-wallets" id="sim-wallets" hidden>
-                <p>Any wallet or exchange</p>
-                <div class="sim-icons" aria-hidden="true">
-                  <i style="background:#f6851b"></i><i style="background:#ab9ff2"></i><i style="background:#ffd84d"></i><i style="background:#0052ff"></i>
-                  <i style="background:#e11d48"></i><i style="background:#14b8a6"></i><i style="background:#a3e635"></i><i style="background:#111"></i>
-                </div>
-              </div>
-              <div class="sim-qr" id="sim-qr" hidden></div>
-              <button class="sim-open" id="sim-open" type="button">Pay</button>
-              <div class="sim-paid" id="sim-paid" hidden>Payment confirmed</div>
-            </article>
-            <article class="sim-node right" id="sim-right">
-              <b>TokenPe treasury</b>
-              <strong id="sim-right-title">USDC</strong>
-              <span id="sim-right-sub">Settle in crypto, USDC or USDT</span>
-            </article>
-          </div>
-          <div class="sim-controls">
-            <label>Business name
-              <input id="sim-business" type="text" value="Acme" maxlength="32" autocomplete="off">
-            </label>
-            <label>Amount USD
-              <input id="sim-usd" type="text" inputmode="decimal" value="100.00" autocomplete="off">
-            </label>
-            <div class="sim-field">
-              <span>Buyer pays with</span>
-              <div class="sim-seg" role="group" aria-label="Buyer pays with">
-                <button type="button" data-sim-pay="wallet" class="is-on">Wallet</button>
-                <button type="button" data-sim-pay="qr">QR</button>
-              </div>
-            </div>
-            <button class="sim-run" id="sim-run" type="button">Run simulation</button>
-          </div>
-          <p class="sim-note">Illustration only. Customers pay in crypto on a supported network. Nothing is sent.</p>
+          <label class="search">
+            <svg viewBox="0 0 20 20" aria-hidden="true"><circle cx="9" cy="9" r="6" fill="none" stroke="currentColor" stroke-width="1.7"/><path d="M13.5 13.5L17 17" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"/></svg>
+            <span class="sr-only">Search by network</span>
+            <input id="net-search" type="search" placeholder="Search by network…" autocomplete="off">
+          </label>
+          <ul class="net-list" id="net-list" aria-live="polite"></ul>
+          <p class="fine">Bitcoin does not support USDC or USDT. Always send on the network shown in your payment request. Funds sent on the wrong network may be lost.</p>
         </div>
-        <div class="stack-stage">
-          <article class="float-card chart">
-            <div class="chart-top"><span>Networks</span><b>11</b></div>
-            <p class="chart-note">Bitcoin, Ethereum, Solana, Tron, Sui, Base, Polygon, Arbitrum, Optimism, BNB Chain and Avalanche.</p>
-          </article>
-          <article class="float-card pay">
-            <div class="mini-row pay-line"><span><i class="dot" style="background:#1461db"></i>BTC</span><span>Bitcoin</span></div>
-            <div class="mini-row pay-line"><span><i class="dot" style="background:#12b76a"></i>USDT</span><span>Tron</span></div>
-            <div class="mini-row pay-line"><span><i class="dot" style="background:#7a3e9d"></i>USDC</span><span>Solana</span></div>
-            <div class="mini-row pay-line"><span><i class="dot" style="background:#e08a3c"></i>ETH</span><span>Base</span></div>
-          </article>
-          <article class="float-card chat">
-            <div class="bubble" id="stack-a">250 USDC received on Solana.</div>
-            <div class="bubble" id="stack-b">Waiting for confirmation.</div>
-          </article>
-        </div>
-      </div>
-    </section>
-
-    <section class="section" id="collect" style="padding-top:10px">
-      <div class="container">
-        <p class="eyebrow">Accept</p>
-        <h2 class="section-title">Crypto payments, end to end</h2>
-        <p class="lede">Payment requests, 11 networks, stablecoin settlement and webhooks. One integration covers it all.</p>
-        <div class="bento" style="margin-top:28px">
-          <article class="bento-card checkout">
-            <h3>Payment requests</h3>
-            <p>Create a payment by API. Show the address and QR code. Get notified when it confirms.</p>
-            <div class="stat"><div><span>Networks</span><b>11</b></div></div>
-            <div class="ui-panel saved-pay" aria-hidden="true">
-              <div class="saved-head"><span>Pay Acme</span><b>250.00 USDC</b></div>
-              <div class="saved-row is-on"><i class="dot" style="background:#1461db"></i><span>USDC · Solana</span><em>Selected</em></div>
-              <div class="saved-row"><i class="dot" style="background:#12b76a"></i><span>USDT · Tron</span></div>
-              <div class="saved-cta">Show QR code</div>
-            </div>
-          </article>
-          <article class="bento-card methods">
-            <h3>Coins and stablecoins</h3>
-            <p>BTC, ETH, SOL, TRX, SUI, and USDC and USDT on supported chains.</p>
-            <div class="ui-panel method-grid" id="method-grid"></div>
-          </article>
-          <article class="bento-card subs">
-            <h3>Stablecoin settlement</h3>
-            <p>Keep payments in the asset received, or convert them to USDC or USDT to reduce exposure to price swings.</p>
-            <div class="ui-panel pay-list" id="sub-list">
-              <div style="padding:8px 8px 0;font-weight:700">Settle as</div>
-            </div>
-          </article>
-          <article class="bento-card links">
-            <h3>Webhooks</h3>
-            <p>Real-time events for every payment and payout status change, sent to your platform.</p>
-            <div class="wa">
-              <b>TokenPe</b>
-              payment.confirmed
-              <div class="note">250.00 USDC on Solana<br>order_1234</div>
-            </div>
-          </article>
-          <article class="bento-card forms" id="waitlist">
-            <h3>Fiat-to-Crypto · Coming soon</h3>
-            <p>Let your customers buy crypto with fiat. It is not available yet. Join the waitlist and we will email you when it launches.</p>
-            <form class="ui-panel" style="padding:14px" id="mini-form" name="waitlist" novalidate>
-              <label>Work email<br><input name="email" type="email" required autocomplete="email" style="width:100%;margin-top:4px;border:1px solid #e4e7ec;border-radius:8px;padding:8px"></label>
-              <label style="display:block;margin-top:8px">Company<br><input name="company" required autocomplete="organization" style="width:100%;margin-top:4px;border:1px solid #e4e7ec;border-radius:8px;padding:8px"></label>
-              <label class="hp" aria-hidden="true">Leave this empty<input name="bot-field" tabindex="-1" autocomplete="off"></label>
-              <button class="btn btn-blue btn-sm" style="margin-top:10px;width:100%" type="submit">Join the waitlist</button>
-              <p id="mini-form-note" role="status" style="min-height:1.2em;font-size:13px"></p>
-            </form>
-          </article>
-          <article class="bento-card settle">
-            <h3>Screened transfers</h3>
-            <p>Every incoming and outgoing transfer is screened with blockchain analytics and OFAC sanctions checks.</p>
-            <div class="ui-panel" id="settle-card" style="padding:14px"></div>
-          </article>
+        <div class="globe-wrap" aria-hidden="true">
+          <div class="globe-halo"></div>
+          <canvas class="globe-canvas"></canvas>
         </div>
       </div>
     </section>
 
     <section class="section" id="integrate">
       <div class="container">
-        <p class="eyebrow">Live today</p>
-        <h2 class="section-title">Two products, live today.</h2>
+        <div class="center-head">
+          <p class="tag">Live today</p>
+          <h2 class="display-md">Two products, live today.</h2>
+        </div>
         <div class="integrate-grid">
-          <article class="integrate-card">
-            <h3>Crypto-to-Crypto</h3>
+          <article class="product-card tone-blue">
+            <header>
+              <h3><svg class="mark" viewBox="0 0 32 20" aria-hidden="true"><circle cx="10" cy="10" r="8" fill="none" stroke="currentColor" stroke-width="2.4"/><circle cx="22" cy="10" r="8" fill="none" stroke="currentColor" stroke-width="2.4"/></svg>Crypto-to-Crypto</h3>
+              <button class="arrow" type="button" data-open="sales" aria-label="Get started with Crypto-to-Crypto"><svg viewBox="0 0 20 20" aria-hidden="true"><path d="M6 14L14 6M7 6h7v7" fill="none" stroke="currentColor" stroke-width="1.8"/></svg></button>
+            </header>
             <p class="sub">Accept crypto. Settle in crypto.</p>
             <ul class="checks">
               <li><svg width="16" height="16" viewBox="0 0 16 16"><path d="M3 8l3 3 7-7" fill="none" stroke="currentColor" stroke-width="1.8"/></svg>BTC, ETH, SOL, TRX and SUI</li>
               <li><svg width="16" height="16" viewBox="0 0 16 16"><path d="M3 8l3 3 7-7" fill="none" stroke="currentColor" stroke-width="1.8"/></svg>USDC and USDT on supported chains</li>
               <li><svg width="16" height="16" viewBox="0 0 16 16"><path d="M3 8l3 3 7-7" fill="none" stroke="currentColor" stroke-width="1.8"/></svg>Keep as received or convert to USDC or USDT</li>
             </ul>
-            <button class="btn btn-outline btn-sm" type="button" data-open="sales">Get started</button>
-            <div class="phone-slot">
-              <div class="phone" id="widget-phone">
-                <div class="phone-bar"><span>13:13</span><span>TokenPe</span><span></span></div>
-                <div class="phone-body">
-                  <div class="field">
-                    <div><label>Amount due</label><div class="receive">250.00</div></div>
-                    <span class="chip">USDC</span>
-                  </div>
-                  <div class="field">
-                    <div><label>Network</label><div class="receive">Solana</div></div>
-                  </div>
-                  <div class="rate-line">Send only USDC on Solana to this address.</div>
-                  <div class="btn btn-blue" aria-hidden="true">Show QR code</div>
-                </div>
+            <button class="pill pill-dark" type="button" data-open="sales">Get started</button>
+            <div class="widget" id="widget-phone" aria-hidden="true">
+              <div class="w-field">
+                <div><label>Amount due</label><div class="w-value">250.00</div></div>
+                <span class="w-chip"><i class="dot" style="background:#2775ca"></i>USDC <svg viewBox="0 0 12 12"><path d="M3 4.5l3 3 3-3" fill="none" stroke="currentColor" stroke-width="1.5"/></svg></span>
               </div>
+              <div class="w-field">
+                <div><label>Network</label><div class="w-value">Solana</div></div>
+                <span class="w-chip"><i class="dot" style="background:#9945ff"></i>SOL <svg viewBox="0 0 12 12"><path d="M3 4.5l3 3 3-3" fill="none" stroke="currentColor" stroke-width="1.5"/></svg></span>
+              </div>
+              <p class="w-note">Send only USDC on Solana to this address.</p>
+              <div class="w-cta">Show QR code</div>
             </div>
           </article>
-          <article class="integrate-card">
-            <h3>Crypto-to-Fiat Payouts</h3>
+          <article class="product-card tone-orange">
+            <header>
+              <h3><svg class="mark" viewBox="0 0 32 20" aria-hidden="true"><circle cx="10" cy="10" r="8" fill="none" stroke="currentColor" stroke-width="2.4"/><circle cx="22" cy="10" r="8" fill="none" stroke="currentColor" stroke-width="2.4"/></svg>Crypto-to-Fiat Payouts</h3>
+              <button class="arrow" type="button" data-open="sales" aria-label="Talk to sales about Crypto-to-Fiat Payouts"><svg viewBox="0 0 20 20" aria-hidden="true"><path d="M6 14L14 6M7 6h7v7" fill="none" stroke="currentColor" stroke-width="1.8"/></svg></button>
+            </header>
             <p class="sub">Convert crypto. Pay out to 100+ countries.</p>
             <ul class="checks">
               <li><svg width="16" height="16" viewBox="0 0 16 16"><path d="M3 8l3 3 7-7" fill="none" stroke="currentColor" stroke-width="1.8"/></svg>Bank payouts in 100+ countries</li>
               <li><svg width="16" height="16" viewBox="0 0 16 16"><path d="M3 8l3 3 7-7" fill="none" stroke="currentColor" stroke-width="1.8"/></svg>See the conversion before you confirm</li>
               <li><svg width="16" height="16" viewBox="0 0 16 16"><path d="M3 8l3 3 7-7" fill="none" stroke="currentColor" stroke-width="1.8"/></svg>Track every payout by webhook</li>
             </ul>
-            <button class="btn btn-outline btn-sm" type="button" data-open="sales">Talk to sales</button>
-            <p class="sub small-print">Payouts powered by our Mastercard partnership, available only where Mastercard transfers are supported.</p>
-            <div class="phone-slot">
-              <div class="phone" id="theme-phone">
-                <div class="phone-bar"><span>13:13</span><span>Payout</span></div>
-                <div class="phone-body">
-                  <div style="font-size:40px;font-weight:750;letter-spacing:-.04em">250 <small style="font-size:16px">USDC</small></div>
-                  <div class="field"><span>Payout to</span><span>Bank account</span></div>
-                  <p class="rate-line" id="theme-status" aria-hidden="true">Rate shown before you confirm.</p>
-                  <button class="btn btn-blue" type="button" id="theme-pay">Confirm payout</button>
-                </div>
+            <button class="pill pill-dark" type="button" data-open="sales">Talk to sales</button>
+            <p class="small-print">Payouts powered by our Mastercard partnership, available only where Mastercard transfers are supported.</p>
+            <div class="widget" id="theme-phone">
+              <div class="w-field" aria-hidden="true">
+                <div><label>You send</label><div class="w-value">250</div></div>
+                <span class="w-chip"><i class="dot" style="background:#2775ca"></i>USDC <svg viewBox="0 0 12 12"><path d="M3 4.5l3 3 3-3" fill="none" stroke="currentColor" stroke-width="1.5"/></svg></span>
+              </div>
+              <div class="w-field" aria-hidden="true">
+                <div><label>Payout to</label><div class="w-value">Bank account</div></div>
+              </div>
+              <p class="w-note" id="theme-status" aria-hidden="true">Rate shown before you confirm.</p>
+              <button class="w-cta" type="button" id="theme-pay">Confirm payout</button>
+            </div>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="collect">
+      <div class="container">
+        <div class="center-head">
+          <p class="tag">Accept</p>
+          <h2 class="display-md">Crypto payments, end to end</h2>
+          <p class="lede">Payment requests, 11 networks, stablecoin settlement and webhooks. One integration covers it all.</p>
+        </div>
+        <div class="bento">
+          <article class="bento-card">
+            <h3><svg class="mark" viewBox="0 0 32 20" aria-hidden="true"><circle cx="10" cy="10" r="8" fill="none" stroke="currentColor" stroke-width="2.4"/><circle cx="22" cy="10" r="8" fill="none" stroke="currentColor" stroke-width="2.4"/></svg>Payment requests</h3>
+            <p>Create a payment by API. Show the address and QR code. Get notified when it confirms.</p>
+            <div class="glass-stage swirl-blue">
+              <div class="glass saved-pay" aria-hidden="true">
+                <div class="saved-head"><span>Pay Acme</span><b>250.00 USDC</b></div>
+                <div class="saved-row is-on"><i class="dot" style="background:#1d4bff"></i><span>USDC · Solana</span><em>Selected</em></div>
+                <div class="saved-row"><i class="dot" style="background:#12b76a"></i><span>USDT · Tron</span></div>
+                <div class="saved-cta">Show QR code</div>
+              </div>
+              <div class="stat-float"><span>Networks</span><b>11</b></div>
+            </div>
+          </article>
+          <article class="bento-card">
+            <h3><svg class="mark" viewBox="0 0 32 20" aria-hidden="true"><circle cx="10" cy="10" r="8" fill="none" stroke="currentColor" stroke-width="2.4"/><circle cx="22" cy="10" r="8" fill="none" stroke="currentColor" stroke-width="2.4"/></svg>Coins and stablecoins</h3>
+            <p>BTC, ETH, SOL, TRX, SUI, and USDC and USDT on supported chains.</p>
+            <div class="glass-stage swirl-violet">
+              <div class="glass method-grid" id="method-grid"></div>
+            </div>
+          </article>
+          <article class="bento-card">
+            <h3><svg class="mark" viewBox="0 0 32 20" aria-hidden="true"><circle cx="10" cy="10" r="8" fill="none" stroke="currentColor" stroke-width="2.4"/><circle cx="22" cy="10" r="8" fill="none" stroke="currentColor" stroke-width="2.4"/></svg>Stablecoin settlement</h3>
+            <p>Keep payments in the asset received, or convert them to USDC or USDT to reduce exposure to price swings.</p>
+            <div class="glass-stage swirl-teal">
+              <div class="glass pay-list" id="sub-list">
+                <div class="pay-list-head">Settle as</div>
               </div>
             </div>
           </article>
-        </div>
-      </div>
-    </section>
-
-    <section class="section" id="usecases">
-      <div class="container">
-        <p class="eyebrow">Use cases</p>
-        <h2 class="section-title">Whatever you sell, TokenPe gets you paid.</h2>
-        <div class="pills" id="usecase-pills" role="tablist"></div>
-        <div id="usecase-panels"></div>
-      </div>
-    </section>
-
-    <section class="section" id="disburse">
-      <div class="container">
-        <p class="eyebrow">Payouts</p>
-        <h2 class="section-title">Payouts to 100+ countries.</h2>
-        <div class="payout-stack" id="payouts"></div>
-      </div>
-    </section>
-
-    <section class="section" id="gaming">
-      <div class="container">
-        <p class="eyebrow">Gaming &amp; Casino</p>
-        <h2 class="section-title">Crypto payments for licensed gaming operators.</h2>
-        <p class="lede">Fast crypto deposits, wallet payouts and fiat payouts for your business. From a US company registered with FinCEN as a Money Services Business.</p>
-        <article class="usecase-panel is-on" data-panel="gaming">
-          <div>
-            <h3>Deposit. Confirm. Pay out.</h3>
-            <p>Players deposit from any wallet or exchange on a supported network. TokenPe confirms and screens every transfer, then notifies your platform.</p>
-            <ul class="checks">
-              <li><svg width="16" height="16" viewBox="0 0 16 16"><path d="M3 8l3 3 7-7" fill="none" stroke="currentColor" stroke-width="1.8"/></svg>A dedicated deposit address for each player</li>
-              <li><svg width="16" height="16" viewBox="0 0 16 16"><path d="M3 8l3 3 7-7" fill="none" stroke="currentColor" stroke-width="1.8"/></svg>Wallet payouts by API, single or in bulk</li>
-              <li><svg width="16" height="16" viewBox="0 0 16 16"><path d="M3 8l3 3 7-7" fill="none" stroke="currentColor" stroke-width="1.8"/></svg>No card chargebacks on crypto deposits</li>
-              <li><svg width="16" height="16" viewBox="0 0 16 16"><path d="M3 8l3 3 7-7" fill="none" stroke="currentColor" stroke-width="1.8"/></svg>Fiat payouts to 100+ countries, after an eligibility review</li>
-            </ul>
-            <p>Licensed operators only. 18+. US players only where the operator is licensed by the player's state.</p>
-            <div class="chips">
-              <button class="btn btn-blue btn-sm" type="button" data-open="sales" data-preset-industry="Gaming &amp; Casino">Talk to our gaming team</button>
-              <a class="btn btn-outline btn-sm" href="/legal/gaming-operators.html">Operator requirements</a>
+          <article class="bento-card">
+            <h3><svg class="mark" viewBox="0 0 32 20" aria-hidden="true"><circle cx="10" cy="10" r="8" fill="none" stroke="currentColor" stroke-width="2.4"/><circle cx="22" cy="10" r="8" fill="none" stroke="currentColor" stroke-width="2.4"/></svg>Webhooks</h3>
+            <p>Real-time events for every payment and payout status change, sent to your platform.</p>
+            <div class="glass-stage swirl-blue">
+              <div class="glass event" aria-hidden="true">
+                <b>TokenPe</b>
+                <code>payment.confirmed</code>
+                <div class="note">250.00 USDC on Solana<br>order_1234</div>
+              </div>
             </div>
-          </div>
-          <div class="rail" data-from="Player" data-to="Operator">
-            <div class="rail-steps" aria-hidden="true">
-              <span data-step="1" class="is-on">1 · Customer pays</span>
-              <span data-step="2">2 · TokenPe confirms</span>
-              <span data-step="3">3 · You settle</span>
-            </div>
-            <svg class="diagram" viewBox="0 0 420 230" aria-hidden="true">
-              <path class="rail-track" d="M70 156 C 150 210, 270 210, 350 156" fill="none" stroke="#c5d8f7" stroke-width="3"/>
-              <path class="rail-dash" pathLength="100" d="M70 156 C 150 210, 270 210, 350 156" fill="none" stroke="#1461DB" stroke-width="2.5" stroke-dasharray="6 7"/>
-              <circle cx="70" cy="78" r="42" fill="#fff" stroke="#d5e4fb"/>
-              <g class="rail-hub">
-                <circle cx="210" cy="78" r="44" fill="#1461DB"/>
-                <text x="210" y="83" text-anchor="middle" font-size="13" font-weight="700" fill="#fff">TokenPe</text>
-              </g>
-              <circle cx="350" cy="78" r="42" fill="#fff" stroke="#d5e4fb"/>
-              <text x="70" y="83" text-anchor="middle" font-size="11" font-weight="700" fill="#1461DB">Player</text>
-              <text x="350" y="83" text-anchor="middle" font-size="11" font-weight="700" fill="#1461DB">Operator</text>
-            </svg>
-            <p class="rail-caption" data-rail-caption>Every payment is confirmed and screened by TokenPe.</p>
-          </div>
-        </article>
-      </div>
-    </section>
-
-    <section class="section" id="industries">
-      <div class="container">
-        <p class="eyebrow">Security &amp; compliance</p>
-        <h2 class="section-title">Compliance is part of the product.</h2>
-        <p class="lede">TokenPe is registered with FinCEN as a Money Services Business and runs a risk-based AML programme under the Bank Secrecy Act.</p>
-        <div class="pills" id="industry-pills"></div>
-        <div id="industry-panels"></div>
-      </div>
-    </section>
-
-    <section class="section" id="developers">
-      <div class="container">
-        <p class="eyebrow">Developer experience</p>
-        <h2 class="section-title">Integrate once. Accept, convert and pay out.</h2>
-        <p class="lede">A REST API for payments, conversions and payouts across 11 networks. Webhooks for every status change.</p>
-        <div class="dev-grid">
-          <article class="dev-card">
-            <h3>API-first</h3>
-            <p>Example request. Full API documentation is shared with verified merchants during onboarding.</p>
-            <div class="lang">
-              <button type="button" class="is-on">curl</button>
-            </div>
-            <div class="code"><button class="copy" type="button" id="copy-code">Copy</button><pre id="code-block" style="margin:0"></pre></div>
           </article>
-          <article class="dev-card">
-            <h3>Webhooks</h3>
-            <p>Get an event for every payment and payout status change, delivered to your platform.</p>
-            <button class="btn btn-outline btn-sm" type="button" data-open="docs" data-doc="webhooks">Open docs</button>
+          <article class="bento-card" id="waitlist">
+            <h3><svg class="mark" viewBox="0 0 32 20" aria-hidden="true"><circle cx="10" cy="10" r="8" fill="none" stroke="currentColor" stroke-width="2.4"/><circle cx="22" cy="10" r="8" fill="none" stroke="currentColor" stroke-width="2.4"/></svg>Fiat-to-Crypto · Coming soon</h3>
+            <p>Let your customers buy crypto with fiat. It is not available yet. Join the waitlist and we will email you when it launches.</p>
+            <div class="glass-stage swirl-orange">
+              <form class="glass mini-form" id="mini-form" name="waitlist" novalidate>
+                <label>Work email<input name="email" type="email" required autocomplete="email"></label>
+                <label>Company<input name="company" required autocomplete="organization"></label>
+                <label class="hp" aria-hidden="true">Leave this empty<input name="bot-field" tabindex="-1" autocomplete="off"></label>
+                <button class="pill pill-dark" type="submit">Join the waitlist</button>
+                <p id="mini-form-note" role="status"></p>
+              </form>
+            </div>
           </article>
-          <article class="dev-card">
-            <h3>Get API access</h3>
-            <p>Apply, complete business verification, receive your API keys and documentation, then test with our team and go live.</p>
-            <button class="btn btn-blue btn-sm" type="button" data-open="sales">Get API access</button>
+          <article class="bento-card">
+            <h3><svg class="mark" viewBox="0 0 32 20" aria-hidden="true"><circle cx="10" cy="10" r="8" fill="none" stroke="currentColor" stroke-width="2.4"/><circle cx="22" cy="10" r="8" fill="none" stroke="currentColor" stroke-width="2.4"/></svg>Screened transfers</h3>
+            <p>Every incoming and outgoing transfer is screened with blockchain analytics and OFAC sanctions checks.</p>
+            <div class="glass-stage swirl-teal">
+              <div class="glass settle" id="settle-card"></div>
+            </div>
           </article>
         </div>
       </div>
     </section>
 
-    <section class="section" id="faq">
+    <section class="story" id="developers" aria-labelledby="dev-title">
+      <div class="story-pin">
+        <svg class="story-lines" viewBox="0 0 1200 900" preserveAspectRatio="none" aria-hidden="true">
+          <path d="M120 -10 C 380 160, 560 210, 588 330"/>
+          <path d="M330 -10 C 470 140, 570 220, 594 330"/>
+          <path d="M500 -10 C 560 140, 590 230, 600 330"/>
+          <path d="M700 -10 C 640 140, 610 230, 606 330"/>
+          <path d="M870 -10 C 730 140, 630 220, 612 330"/>
+          <path d="M1080 -10 C 820 160, 640 210, 618 330"/>
+          <path d="M588 330 V 910"/><path d="M596 330 V 910"/><path d="M604 330 V 910"/><path d="M612 330 V 910"/>
+          <path class="pulse" pathLength="100" d="M500 -10 C 560 140, 590 230, 600 330 V 910"/>
+        </svg>
+        <div class="story-inner container">
+          <div class="story-intro" data-story-intro>
+            <span class="story-badge" aria-hidden="true">API</span>
+            <h2 class="display-md" id="dev-title">Integrate once. Accept, convert and pay out.</h2>
+            <p class="lede">A REST API for payments, conversions and payouts across 11 networks. Webhooks for every status change.</p>
+          </div>
+
+          <div class="story-chip" aria-hidden="true">
+            <svg viewBox="0 0 32 20"><circle cx="10" cy="10" r="8" fill="none" stroke="currentColor" stroke-width="2.2"/><circle cx="22" cy="10" r="8" fill="none" stroke="currentColor" stroke-width="2.2"/></svg>
+            <span>TokenPe API</span>
+          </div>
+
+          <div class="story-steps">
+            <article class="story-step" data-story-step="1">
+              <div class="story-visual">
+                <div class="code-card">
+                  <div class="code-top">
+                    <div class="lang"><button type="button" class="is-on">curl</button></div>
+                    <button class="copy" type="button" id="copy-code">Copy</button>
+                  </div>
+                  <pre id="code-block"></pre>
+                </div>
+              </div>
+              <div class="story-text">
+                <h3>API-first</h3>
+                <p>Example request. Full API documentation is shared with verified merchants during onboarding.</p>
+              </div>
+            </article>
+            <article class="story-step" data-story-step="2">
+              <div class="story-visual">
+                <div class="event-card" aria-hidden="true">
+                  <div class="event-row is-on"><i></i><code>payment.confirmed</code><span>250.00 USDC</span></div>
+                  <div class="event-row"><i></i><code>payout.completed</code><span>Bank account</span></div>
+                  <div class="event-row"><i></i><code>payment.received</code><span>Solana</span></div>
+                </div>
+              </div>
+              <div class="story-text">
+                <h3>Webhooks</h3>
+                <p>Get an event for every payment and payout status change, delivered to your platform.</p>
+                <button class="pill pill-dark" type="button" data-open="docs" data-doc="webhooks">Open docs</button>
+              </div>
+            </article>
+            <article class="story-step" data-story-step="3">
+              <div class="story-visual">
+                <div class="check-orb" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M6 12.5l4 4 8-9" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+              </div>
+              <div class="story-text">
+                <h3>Get API access</h3>
+                <p>Apply, complete business verification, receive your API keys and documentation, then test with our team and go live.</p>
+                <button class="pill pill-blue" type="button" data-open="sales">Get API access</button>
+              </div>
+            </article>
+          </div>
+
+          <div class="story-progress" aria-hidden="true"><i></i><i></i><i></i></div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section faq" id="faq">
       <div class="container">
-        <h2 class="section-title">Frequently asked questions</h2>
-        <div class="pills" id="faq-pills"></div>
+        <h2 class="display">Frequently asked questions.</h2>
+        <div class="faq-pills" id="faq-pills"></div>
         <div class="faq-list" id="faq-list"></div>
       </div>
     </section>
 
+    <section class="cta-band" aria-labelledby="cta-title">
+      <div class="cta-glow" aria-hidden="true"></div>
+      <div class="coin coin-cta-a" aria-hidden="true"><span>T</span></div>
+      <div class="coin coin-cta-b" aria-hidden="true"><span>$</span></div>
+      <div class="container cta-inner">
+        <h2 class="cta-title" id="cta-title"><span>Crypto in.</span> <span>Fiat out.</span></h2>
+        <div class="cta-row">
+          <p>Accept crypto · Pay out in 100+ countries</p>
+          <button class="pill pill-dark pill-lg" type="button" data-open="signup">Get started</button>
+        </div>
+      </div>
+      <div class="marquee marquee-light" aria-hidden="true">
+        <div class="marquee-track" id="marquee-cta"></div>
+      </div>
+    </section>
   </main>
 
   <div id="site-footer"></div>
 
-  <nav class="section-nav is-hidden" id="section-nav" aria-label="Page sections">
-    <a href="#collect">Accept</a>
-    <a href="#disburse">Payouts</a>
-  </nav>
   <div class="cookie" id="cookie" role="dialog" aria-label="Cookies" hidden>
     <div>
       <p>We use strictly necessary cookies to run this site. With your consent, we also use analytics cookies to understand how the site is used. See our <a href="/legal/cookies.html">Cookie Policy</a>.</p>
@@ -470,9 +393,9 @@
       </div>
     </div>
     <div class="actions">
-      <button class="btn btn-ghost btn-sm" type="button" id="cookie-settings">Cookie settings</button>
-      <button class="btn btn-blue btn-sm" type="button" id="cookie-reject">Reject all</button>
-      <button class="btn btn-blue btn-sm" type="button" id="cookie-accept">Accept all</button>
+      <button class="pill pill-light pill-sm" type="button" id="cookie-settings">Cookie settings</button>
+      <button class="pill pill-dark pill-sm" type="button" id="cookie-reject">Reject all</button>
+      <button class="pill pill-dark pill-sm" type="button" id="cookie-accept">Accept all</button>
     </div>
   </div>
 
@@ -493,11 +416,10 @@
   <div class="modal" id="modal" role="dialog" aria-modal="true" aria-labelledby="modal-title"></div>
   <aside class="drawer" id="drawer" aria-hidden="true"></aside>
   <div class="toast" id="toast" role="status"></div>
-  <script src="js/hero.js"></script>
   <script src="js/app.js"></script>
   <script src="js/footer.js"></script>
+  <script src="js/motion.js"></script>
   <script src="js/flow.js"></script>
-  <script src="js/sim.js"></script>
   <script type="module" src="js/globe.js"></script>
 </body>
 </html>

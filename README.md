@@ -9,12 +9,12 @@ Plain HTML, CSS, and JavaScript. No framework and no package install.
 | --- | --- |
 | `index.html` | Home page markup, section by section |
 | `legal/` | Terms, privacy, cookie, AML, acceptable use, risk, complaints and gaming operator pages |
-| `css/styles.css` | All styles, including responsive and reduced-motion rules |
-| `js/hero.js` | Hero intro sequence (horizon rim wipe, copy fade-in) |
-| `js/app.js` | Content data, rendering, menus, forms, modals, drawer, tabs, accordions, cookie consent |
-| `js/sim.js` | "Customer pays → TokenPe confirms → you settle" payment simulation |
-| `js/flow.js` | Looping product demos (floating cards, bento cards, payout phone, payouts, rail diagrams) |
-| `js/globe.js` | Rotating cobe globe in the hero planet (port of the 21st.dev Globe component) |
+| `css/home.css` | Home page styles: white theme, frosted pill nav, cards, pinned developer story, responsive and reduced-motion rules |
+| `css/styles.css` | Styles for the legal pages |
+| `js/app.js` | Content data, rendering, menus, forms, modals, drawer, networks explorer, FAQ, cookie consent |
+| `js/motion.js` | Hero entrance, word-by-word headline reveal, and the scroll-pinned developer story |
+| `js/flow.js` | Looping product demos (hero phone, payout widget, bento panels, webhook events) |
+| `js/globe.js` | Rotating cobe globe beside the supported networks list (port of the 21st.dev Globe component) |
 | `js/vendor/` | Vendored [cobe](https://github.com/shuding/cobe) 0.6.5 and its dependency phenomenon (MIT) |
 | `js/footer.js` | Footer with the glyph wordmark, shutter letter, and product-updates form (also used on legal pages) |
 | `21stcomps/` | Original React component references the vanilla JS was ported from (not deployed) |
