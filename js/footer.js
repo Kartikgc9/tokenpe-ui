@@ -9,8 +9,8 @@
     {
       title: "Product",
       links: [
-        { name: "Crypto-to-Crypto", href: home + "#integrate" },
-        { name: "Payouts", href: home + "#integrate" },
+        { name: "Crypto payments", href: home + "#integrate" },
+        { name: "Off-ramp", href: home + "#integrate" },
         { name: "Settle", href: home + "#networks" },
         { name: "Developers", href: home + "#developers" },
         { name: "FAQ", href: home + "#faq" },
@@ -98,7 +98,7 @@
   mark.className = "tp-foot-mark";
   mark.textContent = "TokenPe";
   const title = document.createElement("h2");
-  title.innerHTML = "Get paid from anywhere.<br>Pay out everywhere.";
+  title.innerHTML = "Global payments<br>infrastructure layer.";
   const base = document.createElement("div");
   base.className = "tp-foot-base";
   const social = document.createElement("div");

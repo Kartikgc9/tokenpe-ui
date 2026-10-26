@@ -4,8 +4,8 @@ const $$ = (sel, root = document) => [...root.querySelectorAll(sel)];
 const features = ["Bitcoin", "Ethereum", "Solana", "Tron", "Sui", "Base", "Polygon", "Arbitrum", "Optimism", "BNB Chain", "Avalanche"];
 
 const products = [
-  { title: "Crypto-to-Crypto", body: "Accept BTC, ETH, SOL, TRX, SUI, and USDC and USDT on supported chains. Keep it as received or convert to USDC or USDT.", icon: "ramp", drawer: "sales" },
-  { title: "Crypto-to-Fiat Payouts", body: "Pay out to bank accounts in supported countries. See the conversion before you confirm.", icon: "bank", drawer: "sales" },
+  { title: "Crypto payments", body: "Accept BTC, ETH, SOL, TRX, SUI, and USDC and USDT on supported chains. Keep it as received or convert to USDC or USDT.", icon: "ramp", drawer: "sales" },
+  { title: "Off-ramp", body: "Pay out to bank accounts in supported countries. See the conversion before you confirm.", icon: "bank", drawer: "sales" },
 ];
 
 // Network, native coin (null shows a dash), USDC, USDT. Remove any tick that is not confirmed at launch.
@@ -39,7 +39,7 @@ const faqs = {
     ["How do I open an account?", 'Email <a href="mailto:contact@tokenpe.com">contact@tokenpe.com</a>. We verify your business, its owners and its activities before you go live. TokenPe serves businesses only.'],
   ],
   "Products": [
-    ["Which products are live?", "Crypto-to-Crypto and Crypto-to-Fiat Payouts are live."],
+    ["Which products are live?", "Crypto payments and Off-ramp are live."],
     ["Which networks and assets do you support?", "Bitcoin, Ethereum, Solana, Tron, Sui, Base, Polygon, Arbitrum, Optimism, BNB Chain and Avalanche. Assets are BTC, ETH, SOL, TRX, SUI, and USDC and USDT on supported chains."],
     ["Which countries can you pay out to?", "Bank payouts are available in supported countries. We confirm coverage for your corridors during onboarding."],
   ],
