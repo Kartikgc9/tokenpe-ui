@@ -11,21 +11,15 @@
       links: [
         { name: "Crypto-to-Crypto", href: home + "#integrate" },
         { name: "Payouts", href: home + "#integrate" },
-        { name: "Networks", href: home + "#networks" },
+        { name: "Settle", href: home + "#networks" },
         { name: "Developers", href: home + "#developers" },
         { name: "FAQ", href: home + "#faq" },
-        onHome
-          ? { name: "Get started", href: "#top", open: "signup" }
-          : { name: "Get started", href: "/#get-started" },
+        { name: "Contact us", href: "mailto:contact@tokenpe.com" },
       ],
     },
     {
       title: "Company",
       links: [
-        { name: "Sign in", href: "https://app.tokenpe.com" },
-        onHome
-          ? { name: "Contact", href: "#top", open: "sales" }
-          : { name: "Contact", href: "/#contact" },
         { name: "Terms", href: "/legal/terms.html" },
         { name: "Privacy", href: "/legal/privacy.html" },
         { name: "Cookies", href: "/legal/cookies.html" },
@@ -116,13 +110,10 @@
   const note = document.createElement("p");
   note.className = "tp-foot-note";
   note.append("Not a bank. Balances are not FDIC or SIPC insured. Crypto is volatile and transfers are irreversible. Gaming: licensed operators only. 18+. ");
-  ["sales@tokenpe.com", "support@tokenpe.com", "compliance@tokenpe.com"].forEach((address, index) => {
-    if (index) note.append(" · ");
-    const mail = document.createElement("a");
-    mail.href = "mailto:" + address;
-    mail.textContent = address;
-    note.appendChild(mail);
-  });
+  const mail = document.createElement("a");
+  mail.href = "mailto:contact@tokenpe.com";
+  mail.textContent = "contact@tokenpe.com";
+  note.appendChild(mail);
   base.append(social, copy, note);
   brand.append(mark, title, base);
 

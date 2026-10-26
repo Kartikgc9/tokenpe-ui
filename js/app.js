@@ -6,7 +6,6 @@ const features = ["Bitcoin", "Ethereum", "Solana", "Tron", "Sui", "Base", "Polyg
 const products = [
   { title: "Crypto-to-Crypto", body: "Accept BTC, ETH, SOL, TRX, SUI, and USDC and USDT on supported chains. Keep it as received or convert to USDC or USDT.", icon: "ramp", drawer: "sales" },
   { title: "Crypto-to-Fiat Payouts", body: "Pay out to bank accounts in supported countries. See the conversion before you confirm.", icon: "bank", drawer: "sales" },
-  { title: "Supported networks", body: "Bitcoin, Ethereum, Solana, Tron, Sui, Base, Polygon, Arbitrum, Optimism, BNB Chain and Avalanche.", icon: "globe", drawer: "assets" },
 ];
 
 // Network, native coin (null shows a dash), USDC, USDT. Remove any tick that is not confirmed at launch.
@@ -37,7 +36,7 @@ const legacyHashes = { "#gaming": "#faq", "#disburse": "#integrate", "#usecases"
 const faqs = {
   "Getting started": [
     ["What is TokenPe?", "TokenPe lets businesses accept crypto, settle in crypto, and pay out to bank accounts."],
-    ["How do I open an account?", "Use Get started. We verify your business, its owners and its activities before you go live. TokenPe serves businesses only."],
+    ["How do I open an account?", 'Email <a href="mailto:contact@tokenpe.com">contact@tokenpe.com</a>. We verify your business, its owners and its activities before you go live. TokenPe serves businesses only.'],
   ],
   "Products": [
     ["Which products are live?", "Crypto-to-Crypto and Crypto-to-Fiat Payouts are live."],
@@ -46,13 +45,13 @@ const faqs = {
   ],
   "Payments": [
     ["Can crypto payments be charged back?", "Confirmed blockchain payments cannot be reversed by a card issuer. You can still send refunds to your customers."],
-    ["What if a customer sends on the wrong network?", 'Funds sent on the wrong network or as an unsupported token may be lost. Contact <a href="mailto:support@tokenpe.com">support@tokenpe.com</a> straight away. Recovery is not always possible.'],
-    ["How much does TokenPe cost?", "Custom pricing for your volume. Contact sales for pricing."],
+    ["What if a customer sends on the wrong network?", 'Funds sent on the wrong network or as an unsupported token may be lost. Contact <a href="mailto:contact@tokenpe.com">contact@tokenpe.com</a> straight away. Recovery is not always possible.'],
+    ["How much does TokenPe cost?", 'Custom pricing for your volume. Email <a href="mailto:contact@tokenpe.com">contact@tokenpe.com</a>.'],
   ],
   "Gaming & support": [
     ["Do you work with gaming and casino operators?", "Yes, with operators licensed for the products and markets they serve. Every application gets a full business and licence review."],
     ["Do you accept US players?", "Only for operators licensed by the US state where the player is located, and only where the transaction is lawful."],
-    ["How do I get help or report a security issue?", 'Email <a href="mailto:support@tokenpe.com">support@tokenpe.com</a>. For security issues, use the subject "Security".'],
+    ["How do I get help or report a security issue?", 'Email <a href="mailto:contact@tokenpe.com">contact@tokenpe.com</a>. For security issues, use the subject "Security".'],
   ],
 };
 
@@ -210,13 +209,13 @@ function openProduct(p) {
   if (p.drawer === "assets") {
     html += assetsTable() +
       `<p>Bitcoin does not support USDC or USDT. Stablecoins are accepted only on the networks marked ✓. Always send on the network shown in your payment request. Funds sent on the wrong network may be lost.</p>` +
-      `<button class="pill pill-blue" type="button" data-open="sales">Talk to sales</button>`;
+      `<a class="pill pill-blue" href="mailto:contact@tokenpe.com">Contact us</a>`;
   } else if (p.drawer === "waitlist") {
     html += `<p>Fiat-to-Crypto is not available yet. Join the waitlist and we will email you when it launches.</p>` +
       `<a class="pill pill-blue" href="#waitlist" data-close>Join the waitlist</a>`;
   } else {
-    html += `<p>Talk to sales to see how this works for your business. Custom pricing for your volume.</p>` +
-      `<button class="pill pill-blue" type="button" data-open="sales">Talk to sales</button>`;
+    html += `<p>Email <a href="mailto:contact@tokenpe.com">contact@tokenpe.com</a> to see how this works for your business.</p>` +
+      `<a class="pill pill-blue" href="mailto:contact@tokenpe.com">Contact us</a>`;
   }
   openDrawer(html);
 }
@@ -381,11 +380,9 @@ function openFromHash() {
     document.querySelector(moved).scrollIntoView();
     return;
   }
-  const forms = { "#get-started": () => salesForm("Get started with TokenPe"), "#contact": () => salesForm("Talk to sales") };
-  const form = forms[location.hash];
-  if (!form) return;
-  openModal(form());
-  history.replaceState(null, "", location.pathname + location.search);
+  if (location.hash === "#get-started" || location.hash === "#contact") {
+    history.replaceState(null, "", location.pathname + location.search);
+  }
 }
 
 function bind() {
@@ -476,7 +473,7 @@ function bind() {
         note.textContent = "You are on the list. We will email you when Fiat-to-Crypto launches.";
         form.reset();
       } catch (err) {
-        note.textContent = "Something went wrong. Please try again or email sales@tokenpe.com.";
+        note.textContent = "Something went wrong. Please try again or email contact@tokenpe.com.";
       }
       button.disabled = false;
       return;
@@ -500,7 +497,7 @@ function bind() {
         await sendForm(form.dataset.form, new FormData(form));
         form.outerHTML = `<div class="success"><strong>Thank you.</strong><p>We have received your request and will reply by email.</p></div>`;
       } catch (err) {
-        error.textContent = "Something went wrong. Please try again or email sales@tokenpe.com.";
+        error.textContent = "Something went wrong. Please try again or email contact@tokenpe.com.";
         button.disabled = false;
       }
     }

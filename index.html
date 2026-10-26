@@ -31,17 +31,17 @@
           <div class="menu-panel">
             <a href="#integrate"><strong>Crypto-to-Crypto</strong><span>Accept crypto, settle in crypto</span></a>
             <a href="#integrate"><strong>Crypto-to-Fiat Payouts</strong><span>Payouts to bank accounts</span></a>
-            <a href="#networks"><strong>Supported networks</strong><span>USDC and USDT</span></a>
+            <a href="#networks"><strong>Settle</strong><span>USDC and USDT</span></a>
           </div>
         </div>
         <a class="nav-link" href="#integrate">Accept</a>
-        <a class="nav-link" href="#networks">Networks</a>
+        <a class="nav-link" href="#networks">Settle</a>
         <div class="menu">
           <button class="menu-btn" type="button" aria-expanded="false">Developers <svg class="caret" viewBox="0 0 12 12" aria-hidden="true"><path d="M2 4l4 4 4-4" fill="none" stroke="currentColor" stroke-width="1.6"/></svg></button>
           <div class="menu-panel">
             <a href="#developers" data-open="docs" data-doc="payments"><strong>API overview</strong><span>Payments, conversions, payouts</span></a>
             <a href="#developers" data-open="docs" data-doc="webhooks"><strong>Webhooks</strong><span>Events for every status change</span></a>
-            <a href="#developers" data-open="sales"><strong>Get API access</strong><span>Apply for keys</span></a>
+            <a href="mailto:contact@tokenpe.com"><strong>Contact us</strong><span>contact@tokenpe.com</span></a>
           </div>
         </div>
         <div class="menu">
@@ -51,11 +51,10 @@
             <a href="/legal/terms.html"><strong>Legal</strong><span>Terms, privacy and policies</span></a>
           </div>
         </div>
-        <a class="nav-link nav-mobile-only" href="https://app.tokenpe.com">Sign in</a>
+        <a class="nav-link nav-mobile-only" href="mailto:contact@tokenpe.com">Contact us</a>
       </nav>
       <div class="nav-actions">
-        <a class="pill pill-glass" href="https://app.tokenpe.com">Sign in</a>
-        <button class="pill pill-dark" type="button" data-open="signup">Get started</button>
+        <a class="pill pill-dark" href="mailto:contact@tokenpe.com">Contact us</a>
       </div>
       <button class="burger" type="button" aria-expanded="false" aria-controls="nav-links">
         <span></span><span></span>
@@ -71,31 +70,28 @@
           <h1 class="hero-title"><span class="line"><span>Get paid</span></span><span class="line"><span>from anywhere.</span></span><span class="line"><span>Pay out</span></span><span class="line"><span>everywhere.</span></span></h1>
           <p class="hero-lede">Get paid in crypto by customers worldwide on supported networks, settle in USDC or USDT, and pay out to bank accounts.</p>
           <div class="hero-actions">
-            <button class="pill pill-dark pill-lg" type="button" data-open="signup">Get started</button>
+            <a class="pill pill-dark pill-lg" href="mailto:contact@tokenpe.com">Contact us</a>
             <a class="pill pill-light pill-lg" href="#covered">Learn more</a>
           </div>
         </div>
 
-        <div class="hero-visual" aria-hidden="true">
-          <div class="hv-stage">
-            <div class="hv-panel">
-              <div class="hv-tile"><span>Settle as</span><b>USDC · USDT</b></div>
-              <div class="hv-tile hv-bars"><span>Payments</span><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div>
-            </div>
-            <div class="hv-phone">
-              <div class="hv-notch"></div>
-              <div class="hv-screen">
-                <div class="hv-head"><span>Payment</span><i>×</i></div>
-                <p class="hv-amount">250.00 <small>USDC</small></p>
-                <p class="hv-label">Any wallet or exchange</p>
-                <div class="hv-row is-on"><em>Selected</em><span><i class="dot" style="background:#1d4bff"></i>USDC · Solana</span></div>
-                <div class="hv-row"><em>Selected</em><span><i class="dot" style="background:#12b76a"></i>USDT · Tron</span></div>
-                <div class="hv-row"><em>Selected</em><span><i class="dot" style="background:#f7931a"></i>BTC · Bitcoin</span></div>
-                <div class="hv-row"><em>Selected</em><span><i class="dot" style="background:#627eea"></i>ETH · Base</span></div>
-                <div class="hv-cta">Show QR code</div>
+                <div class="hero-visual">
+          <div class="slip">
+            <div class="slip-sheet">
+              <span class="slip-meander slip-meander-top" aria-hidden="true"></span>
+              <div class="slip-mast">
+                <span>Payment</span>
+                <span>Example</span>
               </div>
+              <p class="slip-amount">250.00<small>USDC</small></p>
+              <p class="slip-from">Received on Solana</p>
+              <ol class="slip-path">
+                <li><b>Accept</b><span>Solana</span></li>
+                <li><b>Settle</b><span>USDC or USDT</span></li>
+                <li><b>Pay out</b><span>Bank account</span></li>
+              </ol>
+              <span class="slip-meander slip-meander-bottom" aria-hidden="true"></span>
             </div>
-            <div class="hv-shadow"></div>
           </div>
         </div>
       </div>
@@ -109,35 +105,47 @@
           <h2 class="display" data-reveal-words>Everything you need to accept crypto and pay out worldwide</h2>
           <div class="split-aside">
             <p class="tag">Products</p>
-            <button class="pill pill-dark" type="button" data-open="sales">Talk to sales</button>
+            <a class="pill pill-dark" href="mailto:contact@tokenpe.com">Contact us</a>
           </div>
         </div>
         <div class="cover-grid" id="cover-grid"></div>
       </div>
     </section>
 
-    <section class="section networks" id="networks">
-      <div class="container networks-grid">
-        <div class="networks-copy">
-          <h2 class="display-md">Supported networks</h2>
-          <p class="lede">Bitcoin, Ethereum, Solana, Tron, Sui, Base, Polygon, Arbitrum, Optimism, BNB Chain and Avalanche.</p>
-          <div class="seg" role="group" aria-label="Filter networks by asset">
-            <button type="button" class="is-on" data-net-filter="all" aria-pressed="true">All assets</button>
-            <button type="button" data-net-filter="usdc" aria-pressed="false">USDC</button>
-            <button type="button" data-net-filter="usdt" aria-pressed="false">USDT</button>
-          </div>
-          <label class="search">
-            <svg viewBox="0 0 20 20" aria-hidden="true"><circle cx="9" cy="9" r="6" fill="none" stroke="currentColor" stroke-width="1.7"/><path d="M13.5 13.5L17 17" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"/></svg>
-            <span class="sr-only">Search by network</span>
-            <input id="net-search" type="search" placeholder="Search by network…" autocomplete="off">
-          </label>
-          <ul class="net-list" id="net-list" aria-live="polite"></ul>
-          <p class="fine callout"><svg viewBox="0 0 20 20" aria-hidden="true"><path d="M10 2.5 18 17H2L10 2.5Z" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"/><path d="M10 8v4.2" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/><circle cx="10" cy="14.6" r="0.8" fill="currentColor"/></svg><span>Bitcoin does not support USDC or USDT. Always send on the network shown in your payment request. Funds sent on the wrong network may be lost.</span></p>
+    <section class="section settle" id="networks">
+      <div class="container">
+        <div class="settle-head">
+          <h2 class="display-md">Settle in USDC or USDT.</h2>
+          <p class="lede">Keep what you receive, or convert it, then pay out to a bank account.</p>
         </div>
-        <div class="globe-wrap" aria-hidden="true">
-          <div class="globe-halo"></div>
-          <canvas class="globe-canvas"></canvas>
+        <ul class="mark-rail">
+          <li><img src="assets/networks/btc.svg" alt="" width="36" height="36"><span>Bitcoin</span></li>
+          <li><img src="assets/networks/eth.svg" alt="" width="36" height="36"><span>Ethereum</span></li>
+          <li><img src="assets/networks/sol.svg" alt="" width="36" height="36"><span>Solana</span></li>
+          <li><img src="assets/networks/trx.svg" alt="" width="36" height="36"><span>Tron</span></li>
+          <li><img src="assets/networks/sui.svg" alt="" width="36" height="36"><span>Sui</span></li>
+          <li><img src="assets/networks/base.svg" alt="" width="36" height="36"><span>Base</span></li>
+          <li><img src="assets/networks/pol.svg" alt="" width="36" height="36"><span>Polygon</span></li>
+          <li><img src="assets/networks/arb.svg" alt="" width="36" height="36"><span>Arbitrum</span></li>
+          <li><img src="assets/networks/op.svg" alt="" width="36" height="36"><span>Optimism</span></li>
+          <li><img src="assets/networks/bnb.svg" alt="" width="36" height="36"><span>BNB Chain</span></li>
+          <li><img src="assets/networks/avax.svg" alt="" width="36" height="36"><span>Avalanche</span></li>
+        </ul>
+        <div class="settle-cols">
+          <article>
+            <h3>Accept</h3>
+            <p>BTC, ETH, SOL, TRX and SUI, and USDC and USDT on supported chains.</p>
+          </article>
+          <article>
+            <h3>Settle</h3>
+            <p>Keep as received or convert to USDC or USDT.</p>
+          </article>
+          <article>
+            <h3>Pay out</h3>
+            <p>Bank payouts in supported countries.</p>
+          </article>
         </div>
+        <p class="fine callout"><svg viewBox="0 0 20 20" aria-hidden="true"><path d="M10 2.5 18 17H2L10 2.5Z" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"/><path d="M10 8v4.2" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/><circle cx="10" cy="14.6" r="0.8" fill="currentColor"/></svg><span>Bitcoin does not support USDC or USDT. Always send on the network shown in your payment request. Funds sent on the wrong network may be lost.</span></p>
       </div>
     </section>
 
@@ -151,7 +159,7 @@
           <article class="product-card tone-blue">
             <header>
               <h3>Crypto-to-Crypto</h3>
-              <button class="arrow" type="button" data-open="sales" aria-label="Get started with Crypto-to-Crypto"><svg viewBox="0 0 20 20" aria-hidden="true"><path d="M6 14L14 6M7 6h7v7" fill="none" stroke="currentColor" stroke-width="1.8"/></svg></button>
+              <a class="arrow" href="mailto:contact@tokenpe.com" aria-label="Contact us about Crypto-to-Crypto"><svg viewBox="0 0 20 20" aria-hidden="true"><path d="M6 14L14 6M7 6h7v7" fill="none" stroke="currentColor" stroke-width="1.8"/></svg></a>
             </header>
             <p class="sub">Accept crypto. Settle in crypto.</p>
             <ul class="checks">
@@ -159,7 +167,7 @@
               <li><svg width="16" height="16" viewBox="0 0 16 16"><path d="M3 8l3 3 7-7" fill="none" stroke="currentColor" stroke-width="1.8"/></svg>USDC and USDT on supported chains</li>
               <li><svg width="16" height="16" viewBox="0 0 16 16"><path d="M3 8l3 3 7-7" fill="none" stroke="currentColor" stroke-width="1.8"/></svg>Keep as received or convert to USDC or USDT</li>
             </ul>
-            <button class="pill pill-dark" type="button" data-open="sales">Get started</button>
+            <a class="pill pill-dark" href="mailto:contact@tokenpe.com">Contact us</a>
             <div class="widget" id="widget-phone" aria-hidden="true">
               <div class="w-field">
                 <div><label>Amount due</label><div class="w-value">250.00</div></div>
@@ -176,7 +184,7 @@
           <article class="product-card tone-orange">
             <header>
               <h3>Crypto-to-Fiat Payouts</h3>
-              <button class="arrow" type="button" data-open="sales" aria-label="Talk to sales about Crypto-to-Fiat Payouts"><svg viewBox="0 0 20 20" aria-hidden="true"><path d="M6 14L14 6M7 6h7v7" fill="none" stroke="currentColor" stroke-width="1.8"/></svg></button>
+              <a class="arrow" href="mailto:contact@tokenpe.com" aria-label="Contact us about Crypto-to-Fiat Payouts"><svg viewBox="0 0 20 20" aria-hidden="true"><path d="M6 14L14 6M7 6h7v7" fill="none" stroke="currentColor" stroke-width="1.8"/></svg></a>
             </header>
             <p class="sub">Convert crypto. Pay out to bank accounts.</p>
             <ul class="checks">
@@ -184,7 +192,7 @@
               <li><svg width="16" height="16" viewBox="0 0 16 16"><path d="M3 8l3 3 7-7" fill="none" stroke="currentColor" stroke-width="1.8"/></svg>See the conversion before you confirm</li>
               <li><svg width="16" height="16" viewBox="0 0 16 16"><path d="M3 8l3 3 7-7" fill="none" stroke="currentColor" stroke-width="1.8"/></svg>Track every payout with webhooks</li>
             </ul>
-            <button class="pill pill-dark" type="button" data-open="sales">Talk to sales</button>
+            <a class="pill pill-dark" href="mailto:contact@tokenpe.com">Contact us</a>
             <div class="widget" id="theme-phone">
               <div class="w-field" aria-hidden="true">
                 <div><label>You send</label><div class="w-value">250</div></div>
@@ -260,7 +268,7 @@
               <div class="story-text">
                 <h3>Get API access</h3>
                 <p>Apply, complete business verification, receive your API keys and documentation, then test with our team and go live.</p>
-                <button class="pill pill-blue" type="button" data-open="sales">Get API access</button>
+                <a class="pill pill-blue" href="mailto:contact@tokenpe.com">Contact us</a>
               </div>
             </article>
           </div>
@@ -327,7 +335,7 @@
 
         <div class="cta-row">
           <p>Accept crypto · Pay out to bank accounts</p>
-          <button class="pill pill-dark pill-lg" type="button" data-open="signup">Get started</button>
+          <a class="pill pill-dark pill-lg" href="mailto:contact@tokenpe.com">Contact us</a>
         </div>
       </div>
       <div class="marquee marquee-light" aria-hidden="true">
@@ -374,6 +382,5 @@
   <script src="js/footer.js"></script>
   <script src="js/motion.js"></script>
   <script src="js/flow.js"></script>
-  <script type="module" src="js/globe.js"></script>
 </body>
 </html>

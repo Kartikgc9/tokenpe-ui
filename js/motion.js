@@ -93,7 +93,7 @@
   onScroll();
 
   // Hero visual drifts a little with the pointer.
-  const visual = document.querySelector(".hv-stage");
+  const visual = document.querySelector(".slip");
   if (visual && !reduce && window.matchMedia("(pointer: fine)").matches) {
     let raf = 0;
     document.querySelector(".hero").addEventListener("pointermove", (e) => {
