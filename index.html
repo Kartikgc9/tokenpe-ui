@@ -32,6 +32,7 @@
             <a href="#integrate"><strong>Crypto payments</strong><span>Accept crypto, settle in crypto</span></a>
             <a href="#integrate"><strong>Off-ramp</strong><span>Payouts to bank accounts</span></a>
             <a href="#networks"><strong>Settle</strong><span>USDC and USDT</span></a>
+            <a href="#usecases"><strong>Use cases</strong><span>Marketplaces, payroll, remittance</span></a>
           </div>
         </div>
         <a class="nav-link" href="#integrate">Accept</a>
@@ -67,11 +68,85 @@
     <section class="hero" id="top" aria-label="Hero">
       <div class="container hero-grid">
         <div class="hero-copy">
-          <h1 class="hero-title"><span class="line"><span>Global</span></span><span class="line"><span>payments</span></span><span class="line"><span>infrastructure</span></span><span class="line"><span>layer.</span></span></h1>
-          <p class="hero-lede">Get paid in crypto by customers worldwide on supported networks, settle in USDC or USDT, and pay out to bank accounts.</p>
+          <h1 class="hero-title"><span class="line"><span>Crypto</span></span><span class="line"><span>payments</span></span><span class="line"><span>&amp; global</span></span><span class="line"><span>payouts.</span></span></h1>
+          <p class="hero-lede">Accept crypto from customers worldwide, settle in USDC or USDT, and pay out to bank accounts with one unified flow.</p>
           <div class="hero-actions">
-            <a class="pill pill-dark pill-lg" href="mailto:contact@tokenpe.com">Contact us</a>
-            <a class="pill pill-light pill-lg" href="#covered">Learn more</a>
+            <a class="pill pill-dark pill-lg" href="mailto:contact@tokenpe.com">Get started</a>
+            <a class="pill pill-light pill-lg" href="#usecases">View use cases</a>
+          </div>
+        </div>
+
+        <div class="hero-visual">
+          <div class="ramp" id="ramp" data-mode="accept">
+            <div class="ramp-orbs" aria-hidden="true">
+              <span class="ramp-orb orb-btc"><img src="assets/networks/btc.svg" alt="" width="56" height="56"></span>
+              <span class="ramp-orb orb-eth"><img src="assets/networks/eth.svg" alt="" width="48" height="48"></span>
+              <span class="ramp-orb orb-sol"><img src="assets/networks/sol.svg" alt="" width="40" height="40"></span>
+              <span class="ramp-orb orb-trx"><img src="assets/networks/trx.svg" alt="" width="44" height="44"></span>
+              <span class="ramp-orb orb-sui"><img src="assets/networks/sui.svg" alt="" width="32" height="32"></span>
+            </div>
+
+            <div class="ramp-tabs" role="tablist" aria-label="Checkout mode">
+              <button type="button" role="tab" id="ramp-tab-accept" aria-controls="ramp-panel" aria-selected="true" data-ramp-mode="accept">Accept</button>
+              <button type="button" role="tab" id="ramp-tab-offramp" aria-controls="ramp-panel" aria-selected="false" data-ramp-mode="offramp">Off-ramp</button>
+              <button type="button" role="tab" id="ramp-tab-convert" aria-controls="ramp-panel" aria-selected="false" data-ramp-mode="convert">Convert</button>
+            </div>
+
+            <div class="ramp-card" id="ramp-panel" role="tabpanel" aria-labelledby="ramp-tab-accept">
+              <div class="ramp-field" data-field="in">
+                <div class="ramp-field-main">
+                  <label for="ramp-in-amount" id="ramp-in-label">You receive</label>
+                  <input id="ramp-in-amount" name="amount" type="text" inputmode="decimal" autocomplete="off" spellcheck="false" value="250" aria-describedby="ramp-quote">
+                </div>
+                <button class="ramp-chip" type="button" id="ramp-in-token" aria-haspopup="listbox" aria-expanded="false" data-menu="in">
+                  <span class="ramp-ic" data-ic="USDC"></span>
+                  <span data-code>USDC</span>
+                  <svg viewBox="0 0 12 12" aria-hidden="true"><path d="M3 4.5l3 3 3-3" fill="none" stroke="currentColor" stroke-width="1.5"/></svg>
+                </button>
+                <div class="ramp-menu" id="ramp-menu-in" role="listbox" hidden></div>
+              </div>
+
+              <div class="ramp-field ramp-field-out" data-field="out">
+                <div class="ramp-field-main">
+                  <span class="ramp-kicker" id="ramp-out-label">Customer sends</span>
+                  <div class="ramp-out-value" id="ramp-out-amount">0.064935</div>
+                </div>
+                <button class="ramp-chip" type="button" id="ramp-out-token" aria-haspopup="listbox" aria-expanded="false" data-menu="out">
+                  <span class="ramp-ic" data-ic="ETH"></span>
+                  <span data-code>ETH</span>
+                  <svg viewBox="0 0 12 12" aria-hidden="true"><path d="M3 4.5l3 3 3-3" fill="none" stroke="currentColor" stroke-width="1.5"/></svg>
+                </button>
+                <p class="ramp-net" id="ramp-network"><img src="assets/networks/eth.svg" alt="" width="14" height="14"> Ethereum</p>
+                <div class="ramp-menu" id="ramp-menu-out" role="listbox" hidden></div>
+              </div>
+
+              <div class="ramp-pay">
+                <span class="ramp-kicker" id="ramp-pay-label">Pay using</span>
+                <button class="ramp-pay-btn" type="button" id="ramp-pay-method" aria-haspopup="listbox" aria-expanded="false" data-menu="pay">
+                  <span class="ramp-pay-ic" aria-hidden="true"></span>
+                  <span class="ramp-pay-copy">
+                    <b id="ramp-pay-name">Wallet</b>
+                    <em>Recommended</em>
+                  </span>
+                  <svg viewBox="0 0 12 12" aria-hidden="true"><path d="M3 4.5l3 3 3-3" fill="none" stroke="currentColor" stroke-width="1.5"/></svg>
+                </button>
+                <div class="ramp-menu ramp-menu-pay" id="ramp-menu-pay" role="listbox" hidden></div>
+              </div>
+
+              <button class="ramp-cta is-ready" type="button" id="ramp-cta">Create payment</button>
+              <p class="ramp-quote" id="ramp-quote">Indicative. Live rates at checkout.</p>
+
+              <div class="ramp-foot">
+                <button class="ramp-help" type="button" id="ramp-help" aria-expanded="false" aria-controls="ramp-help-panel">
+                  <svg viewBox="0 0 16 16" aria-hidden="true"><circle cx="8" cy="8" r="5.5" fill="none" stroke="currentColor" stroke-width="1.4"/><path d="M8 10.2V8.1M8 5.8h.01" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/></svg>
+                  Help &amp; Settings
+                </button>
+                <p>Powered by <b>TokenPe</b></p>
+              </div>
+              <div class="ramp-help-panel" id="ramp-help-panel" hidden>
+                Preview of the TokenPe checkout. Email <a href="mailto:contact@tokenpe.com">contact@tokenpe.com</a> to go live. No payment is sent from this page.
+              </div>
+            </div>
           </div>
         </div>
       </div>
@@ -184,6 +259,117 @@
               <p class="w-note" id="theme-status" aria-hidden="true">Rate shown before you confirm.</p>
               <button class="w-cta" type="button" id="theme-pay">Confirm payout</button>
             </div>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section class="section usecases" id="usecases">
+      <div class="container">
+        <div class="split-head">
+          <h2 class="display">Use cases</h2>
+          <div class="split-aside">
+            <p class="tag">Who it's for</p>
+            <a class="pill pill-dark" href="mailto:contact@tokenpe.com">Contact us</a>
+          </div>
+        </div>
+        <p class="use-lede">Accept crypto, settle in USDC or USDT, pay out to bank. One unified flow for every business.</p>
+        <div class="use-unified" role="list">
+          <article class="use-card" role="listitem">
+            <div class="use-card-head">
+              <h3>Marketplaces</h3>
+              <span class="use-pill">Buyers & sellers</span>
+            </div>
+            <p>Collect crypto from buyers worldwide, settle in USDC or USDT, and pay sellers to bank accounts with full traceability.</p>
+            <ul class="use-steps">
+              <li><span>1</span>Accept crypto from buyers</li>
+              <li><span>2</span>Settle to USDC/USDT</li>
+              <li><span>3</span>Pay sellers to bank</li>
+            </ul>
+          </article>
+          <article class="use-card" role="listitem">
+            <div class="use-card-head">
+              <h3>Payroll</h3>
+              <span class="use-pill">Global teams</span>
+            </div>
+            <p>Fund in USDC or USDT and pay contractors and employees to local bank accounts in supported countries.</p>
+            <ul class="use-steps">
+              <li><span>1</span>Fund with USDC/USDT</li>
+              <li><span>2</span>Convert if needed</li>
+              <li><span>3</span>Pay to bank accounts</li>
+            </ul>
+          </article>
+          <article class="use-card" role="listitem">
+            <div class="use-card-head">
+              <h3>Remittance</h3>
+              <span class="use-pill">Cross-border</span>
+            </div>
+            <p>Receive crypto from senders, convert to local currency, and pay out to bank accounts quickly and reliably.</p>
+            <ul class="use-steps">
+              <li><span>1</span>Receive crypto</li>
+              <li><span>2</span>Convert to fiat</li>
+              <li><span>3</span>Pay out to bank</li>
+            </ul>
+          </article>
+          <article class="use-card" role="listitem">
+            <div class="use-card-head">
+              <h3>Fintechs</h3>
+              <span class="use-pill">Embed & scale</span>
+            </div>
+            <p>Embed crypto payments and bank payouts in neobanks, wallets, lending apps, and fintech platforms.</p>
+            <ul class="use-steps">
+              <li><span>1</span>Accept crypto</li>
+              <li><span>2</span>Settle to stablecoin</li>
+              <li><span>3</span>Pay out globally</li>
+            </ul>
+          </article>
+          <article class="use-card" role="listitem">
+            <div class="use-card-head">
+              <h3>Gaming</h3>
+              <span class="use-pill">Deposits & payouts</span>
+            </div>
+            <p>Accept crypto deposits from players worldwide, settle securely, and pay out winnings to bank accounts.</p>
+            <ul class="use-steps">
+              <li><span>1</span>Accept deposits</li>
+              <li><span>2</span>Settle instantly</li>
+              <li><span>3</span>Pay winnings</li>
+            </ul>
+          </article>
+          <article class="use-card" role="listitem">
+            <div class="use-card-head">
+              <h3>Treasury</h3>
+              <span class="use-pill">B2B payments</span>
+            </div>
+            <p>Hold USDC or USDT, convert incoming crypto, and pay suppliers and vendors to bank accounts efficiently.</p>
+            <ul class="use-steps">
+              <li><span>1</span>Receive crypto</li>
+              <li><span>2</span>Hold or convert</li>
+              <li><span>3</span>Pay suppliers</li>
+            </ul>
+          </article>
+          <article class="use-card" role="listitem">
+            <div class="use-card-head">
+              <h3>Luxury & Commerce</h3>
+              <span class="use-pill">High-value</span>
+            </div>
+            <p>Accept high-value crypto payments with reliable settlement and seamless bank payouts for premium goods and services.</p>
+            <ul class="use-steps">
+              <li><span>1</span>Accept crypto</li>
+              <li><span>2</span>Settle in stablecoin</li>
+              <li><span>3</span>Pay out to bank</li>
+            </ul>
+          </article>
+          <article class="use-card" role="listitem">
+            <div class="use-card-head">
+              <h3>Exchanges</h3>
+              <span class="use-pill">Off-ramp</span>
+            </div>
+            <p>Enable users to off-ramp crypto balances to bank accounts in supported countries with clear rates and fast payouts.</p>
+            <ul class="use-steps">
+              <li><span>1</span>User requests off-ramp</li>
+              <li><span>2</span>Convert crypto</li>
+              <li><span>3</span>Pay to bank account</li>
+            </ul>
           </article>
         </div>
       </div>
@@ -360,6 +546,7 @@
   <aside class="drawer" id="drawer" aria-hidden="true"></aside>
   <div class="toast" id="toast" role="status"></div>
   <script src="js/app.js"></script>
+  <script src="js/ramp.js"></script>
   <script src="js/footer.js"></script>
   <script src="js/motion.js"></script>
   <script src="js/flow.js"></script>
