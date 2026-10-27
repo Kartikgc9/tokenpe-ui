@@ -1304,10 +1304,13 @@ body.cookie-open .toast { bottom: 132px; }
   background: linear-gradient(180deg, rgba(255,255,255,0.98) 0%, #fff 100%);
   overflow: hidden;
 }
+.logo-marquee-large {
+  margin-top: -20px;
+}
 .logo-marquee-track {
   display: flex;
   width: max-content;
-  animation: logo-marquee 28s linear infinite;
+  animation: logo-marquee 32s linear infinite;
 }
 .logo-marquee:hover .logo-marquee-track {
   animation-play-state: paused;
@@ -1315,22 +1318,26 @@ body.cookie-open .toast { bottom: 132px; }
 .logo-marquee-group {
   display: flex;
   align-items: center;
-  gap: clamp(28px, 6vw, 56px);
-  padding: 14px clamp(20px, 6vw, 56px);
+  gap: clamp(36px, 8vw, 72px);
+  padding: clamp(18px, 3vw, 28px) clamp(24px, 8vw, 72px);
 }
 .logo-item {
   display: flex;
   align-items: center;
-  gap: 10px;
-  color: var(--muted);
-  font-size: 14px;
+  gap: 14px;
+  color: #000;
+  font-size: clamp(18px, 2.2vw, 28px);
+  font-weight: 600;
+  letter-spacing: -0.01em;
   white-space: nowrap;
 }
 .logo-item img {
-  width: 22px;
-  height: 22px;
-  filter: grayscale(100%);
-  opacity: 0.8;
+  width: clamp(36px, 4vw, 52px);
+  height: clamp(36px, 4vw, 52px);
+}
+.logo-item img[alt="USDC"], .logo-item img[alt="USDT"] {
+  filter: none;
+  opacity: 1;
 }
 @keyframes logo-marquee {
   from { transform: translateX(0); }
