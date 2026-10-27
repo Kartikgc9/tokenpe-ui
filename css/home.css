@@ -1331,7 +1331,7 @@ body.cookie-open .toast { bottom: 132px; }
   letter-spacing: -0.01em;
   white-space: nowrap;
 }
-.logo-item img {
+.logo-item img, .logo-item .logo-svg {
   width: clamp(36px, 4vw, 52px);
   height: clamp(36px, 4vw, 52px);
 }
