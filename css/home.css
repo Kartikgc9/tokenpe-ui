@@ -1295,6 +1295,48 @@ body.cookie-open .toast { bottom: 132px; }
   body.cookie-open .toast { bottom: 200px; }
 }
 
+.logo-marquee {
+  position: relative;
+  z-index: 2;
+  margin-top: -40px;
+  border-top: 1px solid var(--line);
+  border-bottom: 1px solid var(--line);
+  background: linear-gradient(180deg, rgba(255,255,255,0.98) 0%, #fff 100%);
+  overflow: hidden;
+}
+.logo-marquee-track {
+  display: flex;
+  width: max-content;
+  animation: logo-marquee 28s linear infinite;
+}
+.logo-marquee:hover .logo-marquee-track {
+  animation-play-state: paused;
+}
+.logo-marquee-group {
+  display: flex;
+  align-items: center;
+  gap: clamp(28px, 6vw, 56px);
+  padding: 14px clamp(20px, 6vw, 56px);
+}
+.logo-item {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  color: var(--muted);
+  font-size: 14px;
+  white-space: nowrap;
+}
+.logo-item img {
+  width: 22px;
+  height: 22px;
+  filter: grayscale(100%);
+  opacity: 0.8;
+}
+@keyframes logo-marquee {
+  from { transform: translateX(0); }
+  to { transform: translateX(-50%); }
+}
+
 @media (max-width: 360px) {
   .nav-actions .pill { padding: 0 16px; }
 }
