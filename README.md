@@ -18,7 +18,6 @@ Plain HTML, CSS, and JavaScript. No framework and no package install.
 | `assets/rampay/` | Engraving assets from the RampPay brand kit (skyline, institution, guilloche, filigree, frieze, vine, Medusa, meander), used as blue masks in the hero, the compliance card and the closing note |
 | `js/vendor/` | Vendored [cobe](https://github.com/shuding/cobe) 0.6.5 and its dependency phenomenon (MIT) |
 | `js/footer.js` | Footer with the glyph wordmark, shutter letter, and product-updates form (also used on legal pages) |
-| `21stcomps/` | Original React component references the vanilla JS was ported from (not deployed) |
 | `scripts/build.mjs` | Copies the public files into `dist/` for deployment |
 
 ## Run locally
